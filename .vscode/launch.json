@@ -12,10 +12,17 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Python",
+            "name": "decompress",
             "type": "python",
             "request": "launch",
             "program":"mp4_decompress.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "get_charms",
+            "type": "python",
+            "request": "launch",
+            "program":"extract_charms.py",
             "console": "integratedTerminal"
         }
     ]
