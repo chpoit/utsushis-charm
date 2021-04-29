@@ -2,46 +2,50 @@ import cv2
 import numpy as np
 import os
 from utils import *
+from skimage.metrics import structural_similarity
 
 
-#C:\Users\chpoit\AppData\Local\Tesseract-OCR
-frame_dir = "unique_frames"
+def extract_unique_frames(masked_dir, frame_dir):
+    currentFrame = 0
+    charm_count = 0
+    for f_loc in os.scandir(masked_dir):
+        if not f_loc.name.endswith(".masked.mp4"):
+            continue
+        print(f_loc.name)
 
-os.makedirs("unique_frames", exist_ok=True)
+        f_loc = f_loc.path
+        cap = cv2.VideoCapture(f_loc)
 
-found_charms = {}
+        previous_frame = None
+        while(True):
+            ret, frame = cap.read()
+            if not ret:
+                break
+            currentFrame += 1
+            name = os.path.join(frame_dir, f"frame{currentFrame}.png")
 
-currentFrame = 0
-for f_loc in os.scandir("masked"):
-    if not f_loc.name.endswith(".masked.mp4"):
-        continue
-    print(f_loc.name)
+            charm_border = get_charm_borders(frame)
+            shiny = only_keep_shiny_border(charm_border)
 
-    f_loc = f_loc.path
-    cap = cv2.VideoCapture(f_loc)
-    
-    while(True):
-        ret, frame = cap.read()
-        if not ret:
-            break
-        currentFrame += 1
-        # frameHSV = 
-        color = (137,116,75)
-        hsv =[10, 52, 64, 120, 106, 194]
-        name = os.path.join(frame_dir, f"frame{currentFrame}.png")
+            if previous_frame is not None:
+                shiny_grayscale = cv2.cvtColor(shiny, cv2.COLOR_BGR2GRAY)
+                score = structural_similarity(previous_frame, shiny_grayscale)
+                if score < 0.996:
+                    charm_count += 1
+                    print(
+                        f"Saving frame {currentFrame}, Estimated charms found: {charm_count}")
+                    cv2.imwrite(name, frame)
+            else:
+                cv2.imwrite(name, frame)
+            previous_frame = cv2.cvtColor(shiny, cv2.COLOR_BGR2GRAY)
 
-        detectColor(frame, hsv)
-        # cv2.imshow('FRAME', frame)
-        cv2.waitKey(0)
-        exit()
-        # print(currentFrame)
-
-
-        cv2.imwrite(name, frame)
-
-    cap.release()
-    cv2.destroyAllWindows()
-
+        cap.release()
+        cv2.destroyAllWindows()
 
 
+if __name__ == "__main__":
+    masked_dir = "masked"
+    frame_dir = "unique_frames"
+    os.makedirs(frame_dir, exist_ok=True)
 
+    extract_unique_frames(masked_dir, frame_dir)

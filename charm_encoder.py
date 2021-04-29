@@ -1,0 +1,7 @@
+
+import base64
+
+a = "CiAKDQoJR2VvbG9naXN0EAEKDQoJR29vZCBMdWNrEAEaAAonCg0KCUdvb2QgTHVjaxADCg4KCkJvbWJhcmRpZXIQAhoGCAMQAhgBCjAKDwoLQ2FydmluZyBQcm8QAQoVChFXaXJlYnVnIFdoaXNwZXJlchABGgYIAxACGAE="
+
+b= base64.b64decode(a)
+print(b)
