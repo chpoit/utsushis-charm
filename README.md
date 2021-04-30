@@ -24,13 +24,14 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
   - [Here](https://www.python.org/downloads/)
   - Check the box to add to path
 - This repository downloaded to your computer
+  - Installing everything in the requirements.txt with `pip install -r requirements.txt`. You might have to use `pip3` instead of `pip`
 - Some knowledge of how to type things in the terminal
 - Being able to read
 - The understanding that this might take you longer to setup than it would have taken you to enter the dozen charms you like.
 
 ### Adding something to the path (Windows)
 
-1. Copy the path to the executable, for example ffmpeg would likely be `C:\Users\"YOU"\Downloads\ffmpeg-4.4-full_build\bin`
+1. Copy the path to the executable, for example **ffmpeg** would likely be `C:\Users\"YOU"\Downloads\ffmpeg-4.4-full_build\bin`
    - Don't put the exe file in the path 
 2. type `env` in the windows serch bar
    - Alternatively type `Edit environment variables for your account`
@@ -96,10 +97,6 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
     
 
 
-
-
-
-
 # How does this work
 
 Using a combination of coding and algorithms, the developer was able to make drones fly without them crashing into each other. 
@@ -110,6 +107,11 @@ In all seriousness, the work is done in a couple broad steps:
 3. Using OpenCV once again, I apply filters to clean up the images, identify slots and skill levels and extract a smaller image that has the skill name
 4. The skill name image is passed to Google Tesseract that struggles to identify what is written
 5. Based on a list of corrections, simple spellchecking and potential user inputs, a charm is rebuilt
+
+# Contribute
+
+- If you ran everything and got new corrections in the [`skill_corrections.csv`](skill_corrections.csv) file, consider creating a pull request to add them for others.
+- If you feel like contributing anything, go ahead and submit a pull request I'll be happy to take a look and decide if it's something worth adding. 
 
 
 # TODOS: 
