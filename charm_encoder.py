@@ -16,6 +16,10 @@ unique_charms = set()
 for charm in map(Charm.from_dict, charms):
     unique_charms.add(charm)
 
+
+with open(charm_file, "w") as cf:
+    json.dump(list(map(Charm.to_dict, unique_charms)), cf)
+
 print(len(charms), len(unique_charms))
 
 def convert_list(charms):
