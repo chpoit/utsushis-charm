@@ -27,8 +27,6 @@ logging.basicConfig(filename='app.log', filemode='w',
 logger = logging.getLogger(__name__)
 # logger.setLevel(logging.DEBUG)
 
-frame_dir = "unique_frames"
-charm_json = "charms.json"
 
 spell = SymSpell(max_dictionary_edit_distance=4)
 spell.load_dictionary("skill_dict.freq", 0, 1)
@@ -155,33 +153,51 @@ def extract_charm(frame_loc, slots, skills, skill_text):
     return charm
 
 
-# def add_skill_to_charm(charm, skill, level):
+    # def add_skill_to_charm(charm, skill, level):
 
-charms = []
-s_n = 1
+def extract_charms(frame_dir):
+    charms = []
+    s_n = 1
 
-for frame_loc in tqdm(list(os.scandir(frame_dir)), desc="Parsing skills"):
-    frame_loc = frame_loc.path
-    print(f" Parsing {frame_loc}")
-    frame = cv2.imread(frame_loc)
+    try:
+        for frame_loc in tqdm(list(os.scandir(frame_dir)), desc="Parsing skills"):
+            frame_loc = frame_loc.path
+            print(f" Parsing {frame_loc}")
+            frame = cv2.imread(frame_loc)
 
-    skill_only_im = remove_non_skill_info(frame)
-    slots = get_slots(skill_only_im)
+            skill_only_im = remove_non_skill_info(frame)
+            slots = get_slots(skill_only_im)
+            
+            inverted = cv2.bitwise_not(skill_only_im)
+
+            trunc_tr = silly_trunc_threshold(inverted) # appears to work best
+            # trunc_tr = silly_double_threshold(inverted) 
+
+            skills = get_skills(trunc_tr, True)
+
+
+            skill_text = read_text_from_skill_tuple(skills)
+
+            charm = extract_charm(frame_loc, slots, skills, skill_text)
+            charms.append(charm)
+            s_n +=1
+    except Exception as e:
+        logger.error(f"Crashed with {e}")
     
-    inverted = cv2.bitwise_not(skill_only_im)
+    return set(charms)
 
-    trunc_tr = silly_trunc_threshold(inverted) # appears to work best
-    # trunc_tr = silly_double_threshold(inverted) 
+def save_charms(charms, charm_json):
+    with open(charm_json, "w") as charm_file:
+        charms = list(map(lambda x:x.to_dict(), charms))
+        json.dump(charms, charm_file)
 
-    skills = get_skills(trunc_tr, True)
 
+if __name__ == "__main__":
 
-    skill_text = read_text_from_skill_tuple(skills)
+    frame_dir = "unique_frames"
+    charm_json = "charms.json"
 
-    charm = extract_charm(frame_loc, slots, skills, skill_text)
-    charms.append(charm)
-    s_n +=1
+    charms = extract_charms(frame_dir)
 
-with open(charm_json, "w") as charm_file:
-    charms = list(map(lambda x:x.to_dict(), charms))
-    json.dump(charms, charm_file)
+    save_charms(charms, charm_json)
+

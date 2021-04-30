@@ -66,6 +66,37 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
    - Follow the instructions on screen and correct any invalid skill names.
    - If a skill has to be corrected, a window with the skill should open, you might have to alt-tab to it, windows likes to hide it.
    - Sometimes tesseract is absolutely unable to read text, those charms will be logged in [`app.log`](app.log) and you can add them manually.
+7. Congrats, you now have a json file with all (or almost all) of your charms. You can stop there and do litterally nothing with it until I find a solution to the problem, or you can have fun exploring the Google Chrome debugger with me
+
+8. Congrats, you've decided to soldier on. Open Google Chrome and go to the charms tab of the ["armor search wiki"](https://mhrise.wiki-db.com/sim/?hl=en) You can use the following screenshot for help:
+![Example Clip](./media/sources_tab.png)
+9.  Press `F12` or `CTRL+SHIFT+I` to open the dev console.
+10. Click on the `Sources` tab
+11. Click on the Arrow thing next to the `bzlcompiled` folder
+12. Click on the `sim-compiled-whatever` file
+13. Click on `Prett-print`
+14. In the search bar type `sf` and press enter until you see line `5464`, or what is in the next screenshot
+![Example Clip](./media/sf_search.png)
+15. Click on `5465`. A blue marker should appear on `5465`
+16. On the actual website, click on the "Add" button to add a charm
+17. You should "hit" the breakpoint and content should appear in the `Scope` section of the sources tab
+18. Right click on `>this :vf` and click on `Store object as global variable`
+19. A console should open at the bottom of the sources tab.
+![Example Clip](./media/console.png)
+20. In that console, type `temp2 = sf` and press Enter.
+21. Click on `5465`. The blue marker should disappear.
+22. Press `F8`
+23. Open the `charms.json` file in a text editor  and copy the contents
+    - Notepad works
+24. in the Console opened in step 18/19, type `let c= `, paste the contents of the `charms.json` file and press Enter.
+25. *Optional* Delete all the charms you have on the website
+26. Open the `crappy_js_import.js` file in a text editor  and copy the contents
+27. Paste the contents in the console and press Enter. 
+28. Congrats, you're done, export your charms and save them somewhere
+    
+
+
+
 
 
 
