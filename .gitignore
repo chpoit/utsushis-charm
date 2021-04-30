@@ -3,6 +3,7 @@ masked/*
 unique_frames/*
 color_picker.py
 gray_scale_tester.py
+final_charm_out.txt
 *.pdn
 *.pyc
 *.json
