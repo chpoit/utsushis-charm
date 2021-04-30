@@ -20,5 +20,5 @@ if __name__ == "__main__":
 
     charms = extract_charms(frame_dir)
 
-    save_charms(charms)
+    save_charms(charms,charm_json)
     print(f"Saved {len(charms)} charms")

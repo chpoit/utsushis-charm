@@ -49,19 +49,21 @@ with open('skill_list.txt') as slf:
 def is_skill(skill_dict, skill_name):
     return skill_name.lower().strip() in skill_dict
 
- 
+
 def extract_charm(frame_loc, slots, skills, skill_text):
     logger.debug(f"Starting charm for {frame_loc}")
-    has_errored=False
+    has_errored = False
     charm = Charm(slots)
+    skill_number = 0
     for (img, text) in zip(skills, skill_text):
+        skill_number += 1
         skill_img, _ = img
         skill, level = text
         skill = skill.strip()
 
         if not skill:
             logger.warning(
-                f"Empty skill string for skill {s_n} on {frame_loc}")
+                f"Empty skill string for skill {skill_number} on {frame_loc}")
             continue
 
         if is_skill(all_skills, skill):
@@ -152,13 +154,11 @@ def extract_charm(frame_loc, slots, skills, skill_text):
     logger.debug(f"Finished charm for {frame_loc}")
     return charm
 
-
     # def add_skill_to_charm(charm, skill, level):
+
 
 def extract_charms(frame_dir):
     charms = []
-    s_n = 1
-
     try:
         for frame_loc in tqdm(list(os.scandir(frame_dir)), desc="Parsing skills"):
             frame_loc = frame_loc.path
@@ -167,28 +167,27 @@ def extract_charms(frame_dir):
 
             skill_only_im = remove_non_skill_info(frame)
             slots = get_slots(skill_only_im)
-            
+
             inverted = cv2.bitwise_not(skill_only_im)
 
-            trunc_tr = silly_trunc_threshold(inverted) # appears to work best
-            # trunc_tr = silly_double_threshold(inverted) 
+            trunc_tr = silly_trunc_threshold(inverted)  # appears to work best
+            # trunc_tr = silly_double_threshold(inverted)
 
             skills = get_skills(trunc_tr, True)
-
 
             skill_text = read_text_from_skill_tuple(skills)
 
             charm = extract_charm(frame_loc, slots, skills, skill_text)
             charms.append(charm)
-            s_n +=1
     except Exception as e:
         logger.error(f"Crashed with {e}")
-    
+
     return set(charms)
+
 
 def save_charms(charms, charm_json):
     with open(charm_json, "w") as charm_file:
-        charms = list(map(lambda x:x.to_dict(), charms))
+        charms = list(map(lambda x: x.to_dict(), charms))
         json.dump(charms, charm_file)
 
 
@@ -200,4 +199,3 @@ if __name__ == "__main__":
     charms = extract_charms(frame_dir)
 
     save_charms(charms, charm_json)
-
