@@ -1,6 +1,3 @@
-let c = ;
-
-
 const skill_1 = document.querySelector('[aria-label="第一スキル"]');
 const level_1 = document.querySelector('[aria-label="第一スキルポイント"]');
 const skill_2 = document.querySelector('[aria-label="第二スキル"]');
