@@ -69,13 +69,13 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
    - Sometimes tesseract is absolutely unable to read text, those charms will be logged in [`app.log`](app.log) and you can add them manually.
 7. Congrats, you now have a json file with all (or almost all) of your charms. You can stop there and do litterally nothing with it until I find a solution to the problem, or you can have fun exploring the Google Chrome debugger with me
 
-8. Congrats, you've decided to soldier on. Open Google Chrome and go to the charms tab of the ["armor search wiki"](https://mhrise.wiki-db.com/sim/?hl=en) You can use the following screenshot for help:
-![Example Clip](./media/sources_tab.png)
+8. Congrats, you've decided to soldier on. Open Google Chrome and go to the charms tab of the ["armor search wiki"](https://mhrise.wiki-db.com/sim/?hl=en) 
 9.  Press `F12` or `CTRL+SHIFT+I` to open the dev console.
 10. Click on the `Sources` tab
 11. Click on the Arrow thing next to the `bzlcompiled` folder
 12. Click on the `sim-compiled-whatever` file
-13. Click on `Prett-print`
+13. Click on `Prett-print` You can use the following screenshot for help:
+![Example Clip](./media/sources_tab.png)
 14. In the search bar type `sf` and press enter until you see line `5464`, or what is in the next screenshot
 ![Example Clip](./media/sf_search.png)
 15. Click on `5465`. A blue marker should appear on `5465`
