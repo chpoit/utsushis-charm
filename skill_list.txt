@@ -1,0 +1,109 @@
+Affinity Sliding
+Agitator
+Ammo Up
+Artillery
+Attack Boost
+Ballistics
+Blast Attack
+Blast Resistance
+Blight Resistance
+Bludgeoner
+Bombardier
+Botanist
+Bow Charge Plus
+Bubbly Dance
+Capture Master
+Carving Master
+Carving Pro
+Chameleos Blessing
+Constitution
+Counterstrike
+Critical Boost
+Critical Draw
+Critical Element
+Critical Eye
+Defense Boost
+Diversion
+Divine Blessing
+Dragon Attack
+Dragon Resistance
+Earplugs
+Evade Extender
+Evade Window
+Fire Attack
+Fire Resistance
+Flinch Free
+Focus
+Fortify
+Free Meal
+Geologist
+Good Luck
+Guard
+Guard Up
+Handicraft
+Hellfire Cloak
+Heroics
+Horn Maestro
+Hunger Resistance
+Ice Attack
+Ice Resistance
+Item Prolonger
+Jump Master
+Kushala Blessing
+Latent Power
+Leap of Faith
+Load Shells
+Marathon Runner
+Master Mounter
+Master's Touch
+Maximum Might
+Mind's Eye
+Muck Resistance
+Mushroomancer
+Normal/Rapid Up
+Offensive Guard
+Paralysis Attack
+Paralysis Resistance
+Partbreaker
+Peak Performance
+Pierce Up
+Poison Attack
+Poison Resistance
+Power Prolonger
+Protective Polish
+Punishing Draw
+Quick Sheath
+Rapid Fire Up
+Rapid Morph
+Razor Sharp
+Recoil Down
+Recovery Speed
+Recovery Up
+Reload Speed
+Resentment
+Resuscitate
+Sleep Attack
+Sleep Resistance
+Slugger
+Spare Shot
+Special Ammo Boost
+Speed Eating
+Speed Sharpening
+Spread Up
+Stamina Surge
+Stamina Thief
+Steadiness
+Stun Resistance
+Teostra Blessing
+Thunder Alignment
+Thunder Attack
+Thunder Resistance
+Tremor Resistance
+Wall Runner
+Water Attack
+Water Resistance
+Weakness Exploit
+Wide-Range
+Wind Alignment
+Windproof
+Wirebug Whisperer

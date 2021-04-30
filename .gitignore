@@ -2,8 +2,10 @@ inputs/*
 masked/*
 unique_frames/*
 color_picker.py
+gray_scale_tester.py
 *.pdn
 *.pyc
+*.json
 
 
 

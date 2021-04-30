@@ -3,3 +3,5 @@ ffmpeg-python
 numpy
 scikit-image
 pytesseract
+symspellpy
+tqdm

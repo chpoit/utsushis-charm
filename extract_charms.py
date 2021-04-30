@@ -11,47 +11,177 @@
 # Level 2: 618, 167
 # Level 3: 618, 217 -> Jewels were not removed
 
-# C:\Users\chpoit\AppData\Local\Tesseract-OCR
-
 import os
 import cv2
+import json
+import logging
 import numpy as np
+from symspellpy.symspellpy import SymSpell
+from tqdm import tqdm
 
 from utils import *
+from Charm import Charm
 
-def show_mess(mess):
-    t = []
-    t2 =[]
-    for s, l in mess:
-        t.append([s])
-        t2.append([l])
-    
-    stacked = stackImages(1, t)
-    stacked2 = stackImages(4, t2)
-    cv2.imshow("mess",stacked)
-    cv2.imshow("mess2",stacked2)
-    # cv2.imwrite("mess.png", stacked)
+logging.basicConfig(filename='app.log', filemode='w',
+                    format='%(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+# logger.setLevel(logging.DEBUG)
 
 frame_dir = "unique_frames"
+charm_json = "charms.json"
 
-for frame_loc in os.scandir(frame_dir):
+spell = SymSpell(max_dictionary_edit_distance=4)
+spell.load_dictionary("skill_dict.freq", 0, 1)
+
+known_corrections = {}
+with open('skill_corrections.csv', encoding='utf-8') as scf:
+    for line in scf.readlines():
+        line = line.strip()
+        w, r = line.split(',')
+        known_corrections[w] = r
+
+
+all_skills = {}
+with open('skill_list.txt') as slf:
+    for line in slf.readlines():
+        skill_name = line.strip()
+        all_skills[skill_name.lower()] = skill_name
+
+
+def is_skill(skill_dict, skill_name):
+    return skill_name.lower().strip() in skill_dict
+
+ 
+def extract_charm(frame_loc, slots, skills, skill_text):
+    logger.debug(f"Starting charm for {frame_loc}")
+    has_errored=False
+    charm = Charm(slots)
+    for (img, text) in zip(skills, skill_text):
+        skill_img, _ = img
+        skill, level = text
+        skill = skill.strip()
+
+        if not skill:
+            logger.warning(
+                f"Empty skill string for skill {s_n} on {frame_loc}")
+            continue
+
+        if is_skill(all_skills, skill):
+            logger.debug(f"Added {skill}, {level}")
+            charm.add_skill(skill, level)
+            continue
+
+        logger.info("Parsed skill: ", skill.strip(), "level", level)
+
+        reconstructed_skill = ""
+        while (True):
+            for w in skill.split():
+                if w in known_corrections:
+                    true_w = known_corrections[w]
+                    reconstructed_skill += true_w + " "
+                    if reconstructed_skill.strip() == "<EMPTY_SKILL>":
+                        break
+                    continue
+
+                suggestions = spell.lookup(w, 2)
+                print(f"\nFull skill: '{skill}'")
+                print(f"Current word: '{w}'")
+                if len(suggestions) == 0:
+                    print("Too many errors in the word")
+                elif len(suggestions) > 1:
+                    print("Corrections: ")
+                    for i, s in enumerate(suggestions):
+                        print(f"[{i}] {s.term}")
+                cv2.imshow(f"{skill}", skill_img)
+                cv2.waitKey(1)
+
+                while (True):
+                    if len(suggestions) == 1 and not has_errored:
+                        new_word = ""
+                    else:
+                        new_word = input(
+                            f"Select Correction for word '{w}', or type it in. [0] is default. Type 'empty' for no skill:")
+                    has_errored = False
+
+                    if new_word == "empty":
+                        reconstructed_skill = "<EMPTY_SKILL>"
+                        break
+                    if str.isdigit(new_word) or not new_word:
+                        if not new_word:
+                            new_word = 0
+                        idx = int(new_word)
+                        if idx >= len(suggestions):
+                            continue
+                        reconstructed_skill += suggestions[idx].term + " "
+                    else:
+                        reconstructed_skill += new_word + " "
+                    break
+
+                cv2.destroyWindow(f"{skill}")
+
+            reconstructed_skill = reconstructed_skill.strip()
+            if "<EMPTY_SKILL>" in reconstructed_skill:
+                with open("skill_corrections.csv", "a") as scf:
+                    scf.write(f"{w.strip()},{reconstructed_skill}\n")
+                known_corrections[skill] = reconstructed_skill
+            elif not is_skill(all_skills, reconstructed_skill):
+                if len(suggestions) == 1:
+                    reconstructed_skill = ""
+                    has_errored = True
+                    continue
+                print(f"'{reconstructed_skill}' is not a valid skill.")
+                print(
+                    "Make sure you only correct one word at a time. You can look at the picture to help identify the proper skill.")
+                reconstructed_skill = ""
+            else:
+                logger.info(
+                    f"Corrected skill: {reconstructed_skill} from {skill}")
+                for w, r in zip(skill.split(), reconstructed_skill.split()):
+                    if w not in known_corrections:
+                        with open("skill_corrections.csv", "a", encoding="utf-8") as scf:
+                            scf.write(f"{w.strip()},{r.strip()}\n")
+                        known_corrections[w] = r
+                break
+
+        skill = reconstructed_skill.strip()
+        if "<EMPTY_SKILL>" in skill:
+            logger.warning(f"Empty/invalid skill found on {frame_loc}")
+            continue
+
+        logger.debug(f"Added {skill}, {level}")
+        charm.add_skill(skill, level)
+
+    logger.debug(f"Finished charm for {frame_loc}")
+    return charm
+
+
+# def add_skill_to_charm(charm, skill, level):
+
+charms = []
+s_n = 1
+
+for frame_loc in tqdm(list(os.scandir(frame_dir)), desc="Parsing skills"):
     frame_loc = frame_loc.path
+    print(f" Parsing {frame_loc}")
     frame = cv2.imread(frame_loc)
-    skill_only = remove_non_skill_info(frame)
 
-    skills = get_skills(skill_only)
-
-    slots = get_slots(skill_only)
-
-    print(slots)
-    skill_text = read_text_from_skill_tuple(skills)
-    # skill_text = read_text_from_skill_tuple(mess)
+    skill_only_im = remove_non_skill_info(frame)
+    slots = get_slots(skill_only_im)
     
-    for skill, level in skill_text:
-        print(skill.strip(), level.strip())
+    inverted = cv2.bitwise_not(skill_only_im)
 
-    # cv2.imshow("Stacked",stacked)
-    cv2.imshow("skillz",skill_only)
-    cv2.waitKey(0)
-    exit()
+    # trunc_tr = silly_trunc_threshold(inverted)
+    trunc_tr = silly_double_threshold(inverted)
 
+    skills = get_skills(trunc_tr, True)
+
+
+    skill_text = read_text_from_skill_tuple(skills)
+
+    charm = extract_charm(frame_loc, slots, skills, skill_text)
+    charms.append(charm)
+    s_n +=1
+
+with open(charm_json, "w") as charm_file:
+    charms = list(map(lambda x:x.to_dict(), charms))
+    json.dump(charms, charm_file)
