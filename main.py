@@ -1,7 +1,7 @@
 import os
 from mp4_masking import create_masks
 from mp4_decompress import extract_unique_frames
-from extract_charm import extract_charms, save_charms
+from extract_charms import extract_charms, save_charms
 
 
 if __name__ == "__main__":
