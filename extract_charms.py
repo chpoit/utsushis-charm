@@ -170,8 +170,8 @@ for frame_loc in tqdm(list(os.scandir(frame_dir)), desc="Parsing skills"):
     
     inverted = cv2.bitwise_not(skill_only_im)
 
-    # trunc_tr = silly_trunc_threshold(inverted)
-    trunc_tr = silly_double_threshold(inverted)
+    trunc_tr = silly_trunc_threshold(inverted) # appears to work best
+    # trunc_tr = silly_double_threshold(inverted) 
 
     skills = get_skills(trunc_tr, True)
 

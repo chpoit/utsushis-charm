@@ -21,7 +21,7 @@ print(len(charms), len(unique_charms))
 def convert_list(charms):
     strung_up = ""
     
-a = "Ci0KFAoQQWZmaW5pdHkgU2xpZGluZxADCg0KCUdvb2QgTHVjaxABGgYIAxACGAEKKwoUChBBZmZpbml0eSBTbGlkaW5nEAIKDQoJR29vZCBMdWNrEAEaBAgCEAIKLQoUChBBZmZpbml0eSBTbGlkaW5nEAEKDQoJR29vZCBMdWNrEAEaBggBEAEYAQonChQKEEFmZmluaXR5IFNsaWRpbmcQBAoNCglHb29kIEx1Y2sQARoA"
+a = "Ci4KEAoMQmxhc3QgQXR0YWNrEAEKEgoOSGVsbGZpcmUgQ2xvYWsQAhoGCAIQAhgBCjAKDwoLQ2FydmluZyBQcm8QAQoVChFXaXJlYnVnIFdoaXNwZXJlchABGgYIAxACGAE="
 
 b = base64.b64decode(a)
 
@@ -29,9 +29,38 @@ print(b)
 print()
 # print(b.decode('ascii'))
 
-q = b"""\n-\n\x14\n\x10Affinity Sliding\x10\x03\n\r\n\tGood Luck\x10\x01\x1a\x06\x08\x03\x10\x02\x18\x01\n+\n\x14\n\x10Affinity Sliding\x10\x02\n\r\n\tGood Luck\x10\x01\x1a\x04\x08\x02\x10\x02\n-\n\x14\n\x10Affinity Sliding\x10\x01\n\r\n\tGood Luck\x10\x01\x1a\x06\x08\x01\x10\x01\x18\x01\n'\n\x14\n\x10Affinity Sliding\x10\x04\n\r\n\tGood Luck\x10\x01\x1a\x00"""
+charm_list = [Charm([2,2,1], {"Blast Attack":1, "Hellfire Cloak":2})]
 
-q = b"""-\x14\x10Affinity Sliding\x10\x03Good Luck\x10\x01\x1a\x06\x08\x03\x10\x02\x18\x01+\x14\x10Affinity Sliding\x10\x02Good Luck\x10\x01\x1a\x04\x08\x02\x10\x02-\x14\x10Affinity Sliding\x10\x01Good Luck\x10\x01\x1a\x06\x08\x01\x10\x01\x18\x01'\x14\x10Affinity Sliding\x10\x04Good Luck\x10\x01\x1a\x00"""
+for charm in charm_list:
+    w = charm.to_wonkyb64()
+    print("s", w)
+
+    print()
+
+q1 = b"""\n'\n\x10\n\x0cAffinity Sliding\x10\x03\n\r\n\tHellfire Cloak\x10\x02\x1a\x06\x08\x02\x10\x02\x18\x01\n0\n\x0f\n\x0bCarving Pro\x10\x01\n\x15\n\x11Wirebug Whisperer\x10\x01\x1a\x06\x08\x03\x10\x02\x18\x01"""
+
+# Good Luck\x10\x02\x1a\x04\x08\x02\x10\x02
+# Blast Attack\x10\x01\n\r\n\t\x1a\x06\x08\x02\x10\x02\x18\x01
+
+#\n+\n\x14\n\x10Blast Attack\x10\x01\n\r\n\tHellfire Cloak\x10\x02\x1a\x06\x08\x02\x10\x02\x18\x01
+#\n(\n\x14\n\x10Affinity Sliding\x10\x01\n\x0c\n\x08Botanist\x10\x01\x1a\x02\x08\x03
+
+
+
+print(base64.b64encode(q1))
+
+
+q = b"""
+\n\x1e\n\x14\n\x10
+Affinity Sliding\x10\x01\x1a\x06\x08\x03\x10\x01\x18\x01
+\n-\n\x14\n\x10
+Affinity Sliding\x10\x03\n\r\n\tGood Luck\x10\x01 \x1a\x06\x08\x03\x10\x02\x18\x01
+\n+\n\x14\n\x10
+Affinity Sliding\x10\x02\n\r\n\tGood Luck\x10\x01 \x1a\x04\x08\x02\x10\x01\x18\x01
+\n-\n\x14\n\x10
+Affinity Sliding\x10\x01\n\r\n\tGood Luck\x10\x01 \x1a\x06\x08\x01\x10\x01\x18\x01
+\n'\n\x14\n\x10
+Affinity Sliding\x10\x04\n\r\n\tGood Luck\x10\x01 \x1a\x00"""
 
 z = base64.b64encode(q)
 print(z)
