@@ -4,8 +4,6 @@ import numpy as np
 from skimage.metrics import structural_similarity
 import pytesseract
 
-pytesseract.pytesseract.tesseract_cmd = "C:\\Users\\chpoit\\AppData\\Local\\Tesseract-OCR\\tesseract.exe"
-
 
 def get_charm_borders(img):
     hsv = [0, 179, 0, 255, 1, 255]
