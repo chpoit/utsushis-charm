@@ -14,9 +14,9 @@ if __name__ == "__main__":
     for d in [input_dir, masked_dir,frame_dir]:
         os.makedirs(d, exist_ok=True)
 
-    # create_masks(input_dir, masked_dir)
+    create_masks(input_dir, masked_dir)
 
-    # extract_unique_frames(masked_dir, frame_dir)
+    extract_unique_frames(masked_dir, frame_dir)
 
     charms = extract_charms(frame_dir)
 
