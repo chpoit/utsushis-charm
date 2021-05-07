@@ -3,11 +3,11 @@ masked/*
 unique_frames/*
 color_picker.py
 gray_scale_tester.py
-final_charm_out.txt
+charms.encoded.txt
+converted.js
 *.pdn
 *.pyc
 *.json
-
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,visualstudiocode

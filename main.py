@@ -1,8 +1,8 @@
 import os
+import json
 from mp4_masking import create_masks
 from mp4_decompress import extract_unique_frames
 from extract_charms import extract_charms, save_charms
-
 
 if __name__ == "__main__":
 
@@ -11,7 +11,7 @@ if __name__ == "__main__":
     frame_dir = "unique_frames"
     charm_json = "charms.json"
 
-    for d in [input_dir, masked_dir,frame_dir]:
+    for d in [input_dir, masked_dir, frame_dir]:
         os.makedirs(d, exist_ok=True)
 
     create_masks(input_dir, masked_dir)
@@ -22,3 +22,10 @@ if __name__ == "__main__":
 
     save_charms(charms,charm_json)
     print(f"Saved {len(charms)} charms")
+
+    print("Encoding charms")
+    os.system(f"node js_encoder.js {charm_json}")
+    print("Charms encoded under \"charms.encoded.txt\". Use the contents of that file on the MHR WIki armor set builder")
+
+
+    
