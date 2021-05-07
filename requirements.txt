@@ -5,3 +5,4 @@ scikit-image
 pytesseract
 symspellpy
 tqdm
+js2py
