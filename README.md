@@ -126,3 +126,10 @@ In all seriousness, the work is done in a couple broad steps:
   - The monkey brain approach would probably make it so this can be ran completely unattended, at the cost of some extra storage space.
 - Solution for people that don't want to bother with the hassle
 - Make the code not a mess
+
+# Extra maintenance (Dev)
+
+To rebuild the js2py file with the extracted encoder from mhr-wiki:
+- babel .\js_encoder.js -o converted.js
+- python -c "import js2py; js2py.translate_file('converted.js', 'py_encoder.py')"
+- babel .\js_encoder.js -o converted.js && python -c "import js2py; js2py.translate_file('converted.js', 'py_encoder.py')"
