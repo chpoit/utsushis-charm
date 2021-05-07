@@ -3,7 +3,8 @@ var qb = [];
 var ob = "function" == typeof Uint8Array;
 const btoa_func = (str) => {
     if (typeof module === 'undefined')
-        return btoa(str);
+        // return btoa(str);
+        return str.toString('base64');
     else {
         return Buffer.from(str, 'latin1').toString('base64');
     }
@@ -56,7 +57,9 @@ function L(a, b, c) {
 function wb(a, b, c) {
     a.a || (a.a = {});
     if (!a.a[c]) {
-        for (var d = G(a, c), e = [], f = 0; f < d.length; f++) e[f] = new b(d[f]);
+        var d = G(a, c)
+        var e = [];
+        for (var f = 0; f < d.length; f++) e[f] = new b(d[f]);
         a.a[c] = e;
     }
 }
@@ -125,6 +128,19 @@ function pb(a, b, c, d) {
         }
         a.f = Number.MAX_VALUE;
     }
+    // if ((b = a.F.length)) {
+    //     --b;
+    //     var e = a.F[b];
+    //     if (!(null === e || "object" != typeof e || "array" == fa(e) || (ob && e instanceof Uint8Array))) {
+    //         a.f = b - a.c;
+    //         a.b = e;
+    //     } else {
+    //         a.f = Number.MAX_VALUE;
+
+    //     }
+    // } else {
+    //     a.f = Number.MAX_VALUE;
+    // }
     a.i = {};
     if (c) for (b = 0; b < c.length; b++) (e = c[b]), e < a.f ? ((e += a.c), (a.F[e] = a.F[e] || qb)) : (rb(a), (a.b[e] = a.b[e] || qb));
     if (d && d.length) for (b = 0; b < d.length; b++) sb(a, d[b]);
@@ -140,7 +156,12 @@ function generateNoisyFirstChar(a, b) {
 }
 function kb(a, b) {
     var c = b.pop();
-    for (c = a.b + a.a.length() - c; 127 < c;) b.push((c & 127) | 128), (c >>>= 7), a.b++;
+    c = a.b + a.a.length() - c
+    for (; 127 < c;) {
+        b.push((c & 127) | 128);
+        (c >>>= 7);
+        a.b++;
+    }
     b.push(c);
     a.b++;
 }
@@ -165,10 +186,14 @@ function encodeCharmListIntoFirstVar(encodedCharmListHolder, b, c, d) {
 function ib(a, b) {
     if (0 <= b) generateNoisyFirstChar(a, b);
     else {
-        for (var c = 0; 9 > c; c++) a.a.push((b & 127) | 128), (b >>= 7);
+        for (var c = 0; 9 > c; c++) {
+            a.a.push((b & 127) | 128);
+            (b >>= 7);
+        }
         a.a.push(1);
     }
 }
+
 function lb(a, b, c) {
     null != c && (generateNoisyFirstChar(a.a, 8 * b), ib(a.a, c));
 }
@@ -179,7 +204,6 @@ function compressUintMaybe(a) {
         for (let index in h) {
             let item = h[index] //needed for js2py
             b[e] = item;
-            console.log(e.toString() +" "+ item)
             e++;
         }
     }
@@ -272,7 +296,7 @@ function weirdifyCharms(charms) {
                 [
                 ],
             ],
-            f: 1.7976931348623157e+308,
+            f: Number.MAX_VALUE,
             i: {},
             a: {
                 "1": [
@@ -283,7 +307,7 @@ function weirdifyCharms(charms) {
                     c: -1,
                     F: [
                     ],
-                    f: 1.7976931348623157e+308,
+                    f: Number.MAX_VALUE,
                     i: {
                     },
                 },
@@ -305,7 +329,7 @@ function weirdifyCharms(charms) {
                     skillName,
                     skillLevel,
                 ],
-                f: 1.7976931348623157e+308,
+                f: Number.MAX_VALUE,
                 i: {
                 },
             })
@@ -346,8 +370,7 @@ function loadCharmFromLoadedJsonString(charm_data) {
 function encodeCharms(charmsFromJson) {
     let charmList = weirdifyCharms(charmsFromJson)
     let converted = convertToUint(charmList)
-    console.log(converted)
-    console.log(typeof converted)
+    // console.log(converted)
     let encoded = btoa_func(String.fromCharCode.apply(null, converted))
     return encoded
 }
@@ -360,22 +383,20 @@ function encodeFromPython(charmData) {
     let charms = loadCharmFromLoadedJsonString(charmData);
     let encodedCharms = encodeCharms(charms);
     console.log(encodedCharms);
-    // return encodedCharms;
+    return encodedCharms;
 }
 
 function main() {
     let args = process.argv
-    console.log(args)
+    // console.log(args)
     let charm_file = args.pop()
 
     let charms = loadCharmsFromFile(charm_file)
     let encodedCharms = encodeCharms(charms)
-    console.log(encodedCharms)
+    // console.log(encodedCharms)
     saveEncodedCharms(encodedCharms)
 }
 
 if (typeof module !== 'undefined') {
     main();
 }
-// data = require('fs').readFileSync("charms.single.json")
-// encodeFromPython(data)

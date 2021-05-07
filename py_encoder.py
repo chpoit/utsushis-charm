@@ -8,7 +8,7 @@ var = Scope( JS_BUILTINS )
 set_global_object(var)
 
 # Code follows:
-var.registers(['ob', 'Bb', 'H', 'pb', 'kb', 'ib', 'G', 'fa', 'EncodedCharmHolder', 'weirdifyCharms', '_createClass', 'qb', 'convertToUint', 'Ob', 'btoa_func', 'sb', 'saveEncodedCharms', 'wb', '_classCallCheck', 'loadCharmFromLoadedJsonString', 'encodeFromPython', 'L', 'Tb', 'compressUintMaybe', 'BufferTypeThing', 'mb', 'K', 'E', 'encodeCharmListIntoFirstVar', 'rb', 'lb', 'Cb', 'encodeCharms', 'tb', 'main', '_typeof', 'jb', 'getPadThing', 'generateNoisyFirstChar', 'Qb', 'loadCharmsFromFile'])
+var.registers(['saveEncodedCharms', 'getPadThing', 'weirdifyCharms', 'H', '_typeof', '_createClass', 'Qb', 'loadCharmFromLoadedJsonString', 'kb', 'L', 'EncodedCharmHolder', 'loadCharmsFromFile', 'wb', 'Tb', 'pb', 'tb', 'fa', 'encodeCharms', 'ob', 'G', 'E', 'convertToUint', 'Ob', 'K', 'lb', 'sb', 'encodeFromPython', 'Bb', 'generateNoisyFirstChar', 'rb', '_classCallCheck', 'ib', 'Cb', 'encodeCharmListIntoFirstVar', 'qb', 'jb', 'compressUintMaybe', 'BufferTypeThing', 'mb', 'btoa_func', 'main'])
 @Js
 def PyJsHoisted__classCallCheck_(instance, Constructor, this, arguments, var=var):
     var = Scope({'instance':instance, 'Constructor':Constructor, 'this':this, 'arguments':arguments}, var)
@@ -21,7 +21,7 @@ var.put('_classCallCheck', PyJsHoisted__classCallCheck_)
 @Js
 def PyJsHoisted_L_(a, b, c, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'c':c, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'b'])
+    var.registers(['c', 'b', 'a'])
     var.get('wb')(var.get('a'), var.get('b'), var.get('c'))
     var.put('b', var.get('a').get('a').get(var.get('c')))
     ((var.get('b')==var.get('qb')) and var.put('b', var.get('a').get('a').put(var.get('c'), Js([]))))
@@ -31,12 +31,12 @@ var.put('L', PyJsHoisted_L_)
 @Js
 def PyJsHoisted_wb_(a, b, c, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'c':c, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'e', 'b', 'd', 'f'])
+    var.registers(['b', 'f', 'e', 'd', 'c', 'a'])
     (var.get('a').get('a') or var.get('a').put('a', Js({})))
     if var.get('a').get('a').get(var.get('c')).neg():
-        #for JS loop
         var.put('d', var.get('G')(var.get('a'), var.get('c')))
         var.put('e', Js([]))
+        #for JS loop
         var.put('f', Js(0.0))
         while (var.get('f')<var.get('d').get('length')):
             try:
@@ -49,7 +49,7 @@ var.put('wb', PyJsHoisted_wb_)
 @Js
 def PyJsHoisted_G_(a, b, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'b'])
+    var.registers(['c', 'b', 'a'])
     if (var.get('b')<var.get('a').get('f')):
         var.put('b', var.get('a').get('c'), '+')
         var.put('c', var.get('a').get('F').get(var.get('b')))
@@ -61,7 +61,7 @@ var.put('G', PyJsHoisted_G_)
 @Js
 def PyJsHoisted_H_(a, b, c, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'c':c, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'b'])
+    var.registers(['c', 'b', 'a'])
     var.put('a', var.get('G')(var.get('a'), var.get('b')))
     return (var.get('c') if (var.get(u"null")==var.get('a')) else var.get('a'))
 PyJsHoisted_H_.func_name = 'H'
@@ -69,7 +69,7 @@ var.put('H', PyJsHoisted_H_)
 @Js
 def PyJsHoisted_fa_(a, this, arguments, var=var):
     var = Scope({'a':a, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'b'])
+    var.registers(['c', 'a', 'b'])
     var.put('b', (Js('undefined') if PyJsStrictEq(var.get('a',throw=False).typeof(),Js('undefined')) else var.get('_typeof')(var.get('a'))))
     if (Js('object')==var.get('b')):
         if var.get('a'):
@@ -103,14 +103,14 @@ var.put('rb', PyJsHoisted_rb_)
 @Js
 def PyJsHoisted_tb_(a, b, c, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'c':c, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'b'])
+    var.registers(['c', 'b', 'a'])
     (var.get('a').get('F').put((var.get('b')+var.get('a').get('c')), var.get('c')) if (var.get('b')<var.get('a').get('f')) else PyJsComma(var.get('rb')(var.get('a')),var.get('a').get('b').put(var.get('b'), var.get('c'))))
 PyJsHoisted_tb_.func_name = 'tb'
 var.put('tb', PyJsHoisted_tb_)
 @Js
 def PyJsHoisted_sb_(a, b, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'e', 'b', 'd', 'h', 'f'])
+    var.registers(['b', 'f', 'h', 'e', 'd', 'c', 'a'])
     #for JS loop
     var.put('e', Js(0.0))
     while (var.get('e')<var.get('b').get('length')):
@@ -126,7 +126,7 @@ var.put('sb', PyJsHoisted_sb_)
 @Js
 def PyJsHoisted_pb_(a, b, c, d, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'c':c, 'd':d, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'e', 'b', 'd'])
+    var.registers(['b', 'e', 'd', 'c', 'a'])
     var.get('a').put('a', var.get(u"null"))
     (var.get('b') or var.put('b', Js([])))
     var.get('a').put('j', PyJsComma(Js(0.0), Js(None)))
@@ -175,7 +175,7 @@ var.put('getPadThing', PyJsHoisted_getPadThing_)
 @Js
 def PyJsHoisted_generateNoisyFirstChar_(a, b, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'b'])
+    var.registers(['b', 'a'])
     #for JS loop
     
     while (Js(127.0)<var.get('b')):
@@ -187,12 +187,15 @@ var.put('generateNoisyFirstChar', PyJsHoisted_generateNoisyFirstChar_)
 @Js
 def PyJsHoisted_kb_(a, b, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'b'])
+    var.registers(['c', 'b', 'a'])
     var.put('c', var.get('b').callprop('pop'))
-    #for JS loop
     var.put('c', ((var.get('a').get('b')+var.get('a').get('a').callprop('length'))-var.get('c')))
+    #for JS loop
+    
     while (Js(127.0)<var.get('c')):
-        PyJsComma(PyJsComma(var.get('b').callprop('push', ((var.get('c')&Js(127.0))|Js(128.0))),var.put('c', Js(7.0), '>>>')),(var.get('a').put('b',Js(var.get('a').get('b').to_number())+Js(1))-Js(1)))
+        var.get('b').callprop('push', ((var.get('c')&Js(127.0))|Js(128.0)))
+        var.put('c', Js(7.0), '>>>')
+        (var.get('a').put('b',Js(var.get('a').get('b').to_number())+Js(1))-Js(1))
     
     var.get('b').callprop('push', var.get('c'))
     (var.get('a').put('b',Js(var.get('a').get('b').to_number())+Js(1))-Js(1))
@@ -201,7 +204,7 @@ var.put('kb', PyJsHoisted_kb_)
 @Js
 def PyJsHoisted_jb_(a, b, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'b'])
+    var.registers(['b', 'a'])
     var.get('generateNoisyFirstChar')(var.get('a').get('a'), ((Js(8.0)*var.get('b'))+Js(2.0)))
     var.put('b', var.get('getPadThing')(var.get('a').get('a')))
     var.get('a').get('c').callprop('push', var.get('b'))
@@ -213,7 +216,7 @@ var.put('jb', PyJsHoisted_jb_)
 @Js
 def PyJsHoisted_encodeCharmListIntoFirstVar_(encodedCharmListHolder, b, c, d, this, arguments, var=var):
     var = Scope({'encodedCharmListHolder':encodedCharmListHolder, 'b':b, 'c':c, 'd':d, 'this':this, 'arguments':arguments}, var)
-    var.registers(['c', 'e', 'b', 'encodedCharmListHolder', 'd', 'f'])
+    var.registers(['b', 'f', 'encodedCharmListHolder', 'e', 'd', 'c'])
     if (var.get(u"null")!=var.get('c')):
         #for JS loop
         var.put('e', Js(0.0))
@@ -229,7 +232,7 @@ var.put('encodeCharmListIntoFirstVar', PyJsHoisted_encodeCharmListIntoFirstVar_)
 @Js
 def PyJsHoisted_ib_(a, b, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'b'])
+    var.registers(['c', 'b', 'a'])
     if (Js(0.0)<=var.get('b')):
         var.get('generateNoisyFirstChar')(var.get('a'), var.get('b'))
     else:
@@ -237,7 +240,8 @@ def PyJsHoisted_ib_(a, b, this, arguments, var=var):
         var.put('c', Js(0.0))
         while (Js(9.0)>var.get('c')):
             try:
-                PyJsComma(var.get('a').get('a').callprop('push', ((var.get('b')&Js(127.0))|Js(128.0))),var.put('b', Js(7.0), '>>'))
+                var.get('a').get('a').callprop('push', ((var.get('b')&Js(127.0))|Js(128.0)))
+                var.put('b', Js(7.0), '>>')
             finally:
                     (var.put('c',Js(var.get('c').to_number())+Js(1))-Js(1))
         var.get('a').get('a').callprop('push', Js(1.0))
@@ -246,14 +250,14 @@ var.put('ib', PyJsHoisted_ib_)
 @Js
 def PyJsHoisted_lb_(a, b, c, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'c':c, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'b'])
+    var.registers(['c', 'b', 'a'])
     ((var.get(u"null")!=var.get('c')) and PyJsComma(var.get('generateNoisyFirstChar')(var.get('a').get('a'), (Js(8.0)*var.get('b'))),var.get('ib')(var.get('a').get('a'), var.get('c'))))
 PyJsHoisted_lb_.func_name = 'lb'
 var.put('lb', PyJsHoisted_lb_)
 @Js
 def PyJsHoisted_compressUintMaybe_(a, this, arguments, var=var):
     var = Scope({'a':a, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', '_item', 'e', 'b', 'item', 'd', 'h', 'index', '_index', 'f'])
+    var.registers(['b', 'f', 'h', 'item', 'e', 'd', 'c', 'a', 'index', '_index', '_item'])
     #for JS loop
     var.put('b', var.get('Uint8Array').create((var.get('a').get('b')+var.get('a').get('a').callprop('length'))))
     var.put('c', var.get('a').get('c'))
@@ -284,7 +288,7 @@ var.put('compressUintMaybe', PyJsHoisted_compressUintMaybe_)
 @Js
 def PyJsHoisted_E_(a, b, c, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'c':c, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'e', 'b', 'd', 'h', 'f'])
+    var.registers(['b', 'f', 'h', 'e', 'd', 'c', 'a'])
     if (var.get(u"null")!=var.get('c')):
         var.put('b', var.get('jb')(var.get('a'), var.get('b')))
         #for JS loop
@@ -315,7 +319,7 @@ var.put('E', PyJsHoisted_E_)
 @Js
 def PyJsHoisted_Ob_(a, b, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'b'])
+    var.registers(['c', 'b', 'a'])
     var.put('c', var.get('H')(var.get('a'), Js(1.0), Js('')))
     ((Js(0.0)<var.get('c').get('length')) and var.get('E')(var.get('b'), Js(1.0), var.get('c')))
     var.put('c', var.get('H')(var.get('a'), Js(2.0), Js(0.0)))
@@ -325,7 +329,7 @@ var.put('Ob', PyJsHoisted_Ob_)
 @Js
 def PyJsHoisted_K_(a, b, c, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'c':c, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'b', 'd'])
+    var.registers(['c', 'b', 'a', 'd'])
     (var.get('a').get('a') or var.get('a').put('a', Js({})))
     if var.get('a').get('a').get(var.get('c')).neg():
         var.put('d', var.get('G')(var.get('a'), var.get('c')))
@@ -336,7 +340,7 @@ var.put('K', PyJsHoisted_K_)
 @Js
 def PyJsHoisted_Qb_(a, b, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'b'])
+    var.registers(['c', 'b', 'a'])
     var.put('c', var.get('H')(var.get('a'), Js(1.0), Js(0.0)))
     ((PyJsStrictNeq(Js(0.0),var.get('c')) and (var.get(u"null")!=var.get('c'))) and var.get('lb')(var.get('b'), Js(1.0), var.get('c')))
     var.put('c', var.get('H')(var.get('a'), Js(2.0), Js(0.0)))
@@ -348,14 +352,14 @@ var.put('Qb', PyJsHoisted_Qb_)
 @Js
 def PyJsHoisted_mb_(a, b, c, d, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'c':c, 'd':d, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'b', 'd'])
+    var.registers(['c', 'b', 'a', 'd'])
     ((var.get(u"null")!=var.get('c')) and PyJsComma(PyJsComma(var.put('b', var.get('jb')(var.get('a'), var.get('b'))),var.get('d')(var.get('c'), var.get('a'))),var.get('kb')(var.get('a'), var.get('b'))))
 PyJsHoisted_mb_.func_name = 'mb'
 var.put('mb', PyJsHoisted_mb_)
 @Js
 def PyJsHoisted_Tb_(a, b, this, arguments, var=var):
     var = Scope({'a':a, 'b':b, 'this':this, 'arguments':arguments}, var)
-    var.registers(['a', 'c', 'b'])
+    var.registers(['c', 'b', 'a'])
     var.put('c', var.get('L')(var.get('a'), var.get('Bb'), Js(1.0)))
     ((Js(0.0)<var.get('c').get('length')) and var.get('encodeCharmListIntoFirstVar')(var.get('b'), Js(1.0), var.get('c'), var.get('Ob')))
     var.put('c', var.get('H')(var.get('a'), Js(2.0), Js(0.0)))
@@ -376,7 +380,7 @@ var.put('convertToUint', PyJsHoisted_convertToUint_)
 @Js
 def PyJsHoisted_weirdifyCharms_(charms, this, arguments, var=var):
     var = Scope({'charms':charms, 'this':this, 'arguments':arguments}, var)
-    var.registers(['convSlots', 'final', 'skillLevel', 'charms', 'i', 'convd', 'wonky', 'charm', 'skillName'])
+    var.registers(['convSlots', 'i', 'wonky', 'skillLevel', 'final', 'charms', 'skillName', 'charm', 'convd'])
     @Js
     def PyJs_convSlots_13_(slots, this, arguments, var=var):
         var = Scope({'slots':slots, 'this':this, 'arguments':arguments, 'convSlots':PyJs_convSlots_13_}, var)
@@ -396,7 +400,7 @@ def PyJsHoisted_weirdifyCharms_(charms, this, arguments, var=var):
     while (var.get('i')<var.get('charms').get('length')):
         try:
             var.put('charm', var.get('charms').get(var.get('i')))
-            var.put('wonky', Js({'j':var.get(u"null"),'c':(-Js(1.0)),'F':Js([Js([]), Js([])]),'f':Js(1.7976931348623157e+308),'i':Js({}),'a':Js({'1':Js([]),'3':Js({'a':var.get(u"null"),'j':var.get(u"null"),'c':(-Js(1.0)),'F':Js([]),'f':Js(1.7976931348623157e+308),'i':Js({})})})}))
+            var.put('wonky', Js({'j':var.get(u"null"),'c':(-Js(1.0)),'F':Js([Js([]), Js([])]),'f':var.get('Number').get('MAX_VALUE'),'i':Js({}),'a':Js({'1':Js([]),'3':Js({'a':var.get(u"null"),'j':var.get(u"null"),'c':(-Js(1.0)),'F':Js([]),'f':var.get('Number').get('MAX_VALUE'),'i':Js({})})})}))
             @Js
             def PyJs_anonymous_15_(x, this, arguments, var=var):
                 var = Scope({'x':x, 'this':this, 'arguments':arguments}, var)
@@ -411,7 +415,7 @@ def PyJsHoisted_weirdifyCharms_(charms, this, arguments, var=var):
                 var.put('skillName', PyJsTemp)
                 var.put('skillLevel', var.get('charm').get('skills').get(var.get('skillName')))
                 var.get('wonky').get('F').get('0').callprop('push', Js([var.get('skillName'), var.get('skillLevel')]))
-                var.get('wonky').get('a').get('1').callprop('push', Js({'a':var.get(u"null"),'j':var.get(u"null"),'c':(-Js(1.0)),'F':Js([var.get('skillName'), var.get('skillLevel')]),'f':Js(1.7976931348623157e+308),'i':Js({})}))
+                var.get('wonky').get('a').get('1').callprop('push', Js({'a':var.get(u"null"),'j':var.get(u"null"),'c':(-Js(1.0)),'F':Js([var.get('skillName'), var.get('skillLevel')]),'f':var.get('Number').get('MAX_VALUE'),'i':Js({})}))
             var.get('final').callprop('push', var.get('wonky'))
         finally:
                 (var.put('i',Js(var.get('i').to_number())+Js(1))-Js(1))
@@ -421,7 +425,7 @@ var.put('weirdifyCharms', PyJsHoisted_weirdifyCharms_)
 @Js
 def PyJsHoisted_loadCharmsFromFile_(charmFile, this, arguments, var=var):
     var = Scope({'charmFile':charmFile, 'this':this, 'arguments':arguments}, var)
-    var.registers(['charms', 'charm_data', 'charmFile'])
+    var.registers(['charmFile', 'charms', 'charm_data'])
     if var.get('charmFile').callprop('endsWith', Js('.json')).neg():
         var.get('console').callprop('error', Js('Invalid charm file, pass one json charm file'))
         PyJsTempException = JsToPyException(var.get('Error')(Js('Invalid charm file, pass one json charm file')))
@@ -431,18 +435,18 @@ def PyJsHoisted_loadCharmsFromFile_(charmFile, this, arguments, var=var):
     try:
         var.put('charms', var.get('JSON').callprop('parse', var.get('charm_data')))
     except PyJsException as PyJsTempException:
-        PyJsHolder_65_81837740 = var.own.get('e')
+        PyJsHolder_65_41018628 = var.own.get('e')
         var.force_own_put('e', PyExceptionToJs(PyJsTempException))
         try:
             var.get('console').callprop('error', Js('Invalid charm file, Could not parse'))
             PyJsTempException = JsToPyException(var.get('e'))
             raise PyJsTempException
         finally:
-            if PyJsHolder_65_81837740 is not None:
-                var.own['e'] = PyJsHolder_65_81837740
+            if PyJsHolder_65_41018628 is not None:
+                var.own['e'] = PyJsHolder_65_41018628
             else:
                 del var.own['e']
-            del PyJsHolder_65_81837740
+            del PyJsHolder_65_41018628
     return var.get('charms')
 PyJsHoisted_loadCharmsFromFile_.func_name = 'loadCharmsFromFile'
 var.put('loadCharmsFromFile', PyJsHoisted_loadCharmsFromFile_)
@@ -454,27 +458,26 @@ def PyJsHoisted_loadCharmFromLoadedJsonString_(charm_data, this, arguments, var=
     try:
         var.put('charms', var.get('JSON').callprop('parse', var.get('charm_data')))
     except PyJsException as PyJsTempException:
-        PyJsHolder_65_62778639 = var.own.get('e')
+        PyJsHolder_65_88682884 = var.own.get('e')
         var.force_own_put('e', PyExceptionToJs(PyJsTempException))
         try:
             var.get('console').callprop('error', Js('Invalid charm data, Could not parse'))
         finally:
-            if PyJsHolder_65_62778639 is not None:
-                var.own['e'] = PyJsHolder_65_62778639
+            if PyJsHolder_65_88682884 is not None:
+                var.own['e'] = PyJsHolder_65_88682884
             else:
                 del var.own['e']
-            del PyJsHolder_65_62778639
+            del PyJsHolder_65_88682884
     return var.get('charms')
 PyJsHoisted_loadCharmFromLoadedJsonString_.func_name = 'loadCharmFromLoadedJsonString'
 var.put('loadCharmFromLoadedJsonString', PyJsHoisted_loadCharmFromLoadedJsonString_)
 @Js
 def PyJsHoisted_encodeCharms_(charmsFromJson, this, arguments, var=var):
     var = Scope({'charmsFromJson':charmsFromJson, 'this':this, 'arguments':arguments}, var)
-    var.registers(['charmsFromJson', 'converted', 'charmList'])
+    var.registers(['encoded', 'charmsFromJson', 'charmList', 'converted'])
     var.put('charmList', var.get('weirdifyCharms')(var.get('charmsFromJson')))
     var.put('converted', var.get('convertToUint')(var.get('charmList')))
     var.get('console').callprop('log', var.get('converted'))
-    var.get('console').callprop('log', (Js('undefined') if PyJsStrictEq(var.get('converted',throw=False).typeof(),Js('undefined')) else var.get('_typeof')(var.get('converted'))))
     var.put('encoded', var.get('btoa_func')(var.get('String').get('fromCharCode').callprop('apply', var.get(u"null"), var.get('converted'))))
     return var.get('encoded')
 PyJsHoisted_encodeCharms_.func_name = 'encodeCharms'
@@ -482,7 +485,7 @@ var.put('encodeCharms', PyJsHoisted_encodeCharms_)
 @Js
 def PyJsHoisted_saveEncodedCharms_(encodedCharms, this, arguments, var=var):
     var = Scope({'encodedCharms':encodedCharms, 'this':this, 'arguments':arguments}, var)
-    var.registers(['encodedCharms', 'encodedCharmsFile'])
+    var.registers(['encodedCharmsFile', 'encodedCharms'])
     var.put('encodedCharmsFile', (var.get('arguments').get('1') if ((var.get('arguments').get('length')>Js(1.0)) and PyJsStrictNeq(var.get('arguments').get('1'),var.get('undefined'))) else Js('charms.encoded.txt')))
     var.get('require')(Js('fs')).callprop('writeFileSync', var.get('encodedCharmsFile'), var.get('encodedCharms'))
 PyJsHoisted_saveEncodedCharms_.func_name = 'saveEncodedCharms'
@@ -490,7 +493,7 @@ var.put('saveEncodedCharms', PyJsHoisted_saveEncodedCharms_)
 @Js
 def PyJsHoisted_encodeFromPython_(charmData, this, arguments, var=var):
     var = Scope({'charmData':charmData, 'this':this, 'arguments':arguments}, var)
-    var.registers(['charms', 'encodedCharms', 'charmData'])
+    var.registers(['encodedCharms', 'charms', 'charmData'])
     var.put('charms', var.get('loadCharmFromLoadedJsonString')(var.get('charmData')))
     var.put('encodedCharms', var.get('encodeCharms')(var.get('charms')))
     var.get('console').callprop('log', var.get('encodedCharms'))
@@ -499,7 +502,7 @@ var.put('encodeFromPython', PyJsHoisted_encodeFromPython_)
 @Js
 def PyJsHoisted_main_(this, arguments, var=var):
     var = Scope({'this':this, 'arguments':arguments}, var)
-    var.registers(['charms', 'encodedCharms', 'charm_file', 'args'])
+    var.registers(['charm_file', 'encodedCharms', 'args', 'charms'])
     var.put('args', var.get('process').get('argv'))
     var.get('console').callprop('log', var.get('args'))
     var.put('charm_file', var.get('args').callprop('pop'))
@@ -530,7 +533,7 @@ def PyJs_anonymous_2_(this, arguments, var=var):
     @Js
     def PyJsHoisted_defineProperties_(target, props, this, arguments, var=var):
         var = Scope({'target':target, 'props':props, 'this':this, 'arguments':arguments}, var)
-        var.registers(['i', 'props', 'descriptor', 'target'])
+        var.registers(['target', 'i', 'descriptor', 'props'])
         #for JS loop
         var.put('i', Js(0.0))
         while (var.get('i')<var.get('props').get('length')):
@@ -549,7 +552,7 @@ def PyJs_anonymous_2_(this, arguments, var=var):
     @Js
     def PyJs_anonymous_3_(Constructor, protoProps, staticProps, this, arguments, var=var):
         var = Scope({'Constructor':Constructor, 'protoProps':protoProps, 'staticProps':staticProps, 'this':this, 'arguments':arguments}, var)
-        var.registers(['protoProps', 'Constructor', 'staticProps'])
+        var.registers(['protoProps', 'staticProps', 'Constructor'])
         if var.get('protoProps'):
             var.get('defineProperties')(var.get('Constructor').get('prototype'), var.get('protoProps'))
         if var.get('staticProps'):
@@ -567,7 +570,7 @@ def PyJs_btoa_func_4_(str, this, arguments, var=var):
     var = Scope({'str':str, 'this':this, 'arguments':arguments, 'btoa_func':PyJs_btoa_func_4_}, var)
     var.registers(['str'])
     if PyJsStrictEq(var.get('module',throw=False).typeof(),Js('undefined')):
-        return var.get('btoa')(var.get('str'))
+        return var.get('str').callprop('toString', Js('base64'))
     else:
         return var.get('Buffer').callprop('from', var.get('str'), Js('latin1')).callprop('toString', Js('base64'))
 PyJs_btoa_func_4_._set_name('btoa_func')
