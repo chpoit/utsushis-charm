@@ -23,6 +23,9 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
   - I used 3.9, but most above 3 should word
   - [Here](https://www.python.org/downloads/)
   - Check the box to add to path
+- **NodeJS**
+  - Any of the recent version will work
+  - Make sure it's in the path
 - This repository downloaded to your computer
   - Installing everything in the requirements.txt with `pip install -r requirements.txt`. You might have to use `pip3` instead of `pip`
 - Some knowledge of how to type things in the terminal
@@ -67,33 +70,10 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
    - Follow the instructions on screen and correct any invalid skill names.
    - If a skill has to be corrected, a window with the skill should open, you might have to alt-tab to it, windows likes to hide it.
    - Sometimes tesseract is absolutely unable to read text, those charms will be logged in [`app.log`](app.log) and you can add them manually.
-7. Congrats, you now have a json file with all (or almost all) of your charms. You can stop there and do litterally nothing with it until I find a solution to the problem, or you can have fun exploring the Google Chrome debugger with me
-
-8. Congrats, you've decided to soldier on. Open Google Chrome and go to the charms tab of the ["armor search wiki"](https://mhrise.wiki-db.com/sim/?hl=en) 
-9.  Press `F12` or `CTRL+SHIFT+I` to open the dev console.
-10. Click on the `Sources` tab
-11. Click on the Arrow thing next to the `bzlcompiled` folder
-12. Click on the `sim-compiled-whatever` file
-13. Click on `Prett-print` You can use the following screenshot for help:
-![Example Clip](./media/sources_tab.png)
-14. In the search bar type `sf` and press enter until you see line `5464`, or what is in the next screenshot
-![Example Clip](./media/sf_search.png)
-15. Click on `5465`. A blue marker should appear on `5465`
-16. On the actual website, click on the "Add" button to add a charm
-17. You should "hit" the breakpoint and content should appear in the `Scope` section of the sources tab
-18. Right click on `>this :vf` and click on `Store object as global variable`
-19. A console should open at the bottom of the sources tab.
-![Example Clip](./media/console.png)
-20. In that console, type `temp2 = sf` and press Enter.
-21. Click on `5465`. The blue marker should disappear.
-22. Press `F8`
-23. Open the `charms.json` file in a text editor  and copy the contents
-    - Notepad works
-24. in the Console opened in step 18/19, type `let c= `, paste the contents of the `charms.json` file and press Enter.
-25. *Optional* Delete all the charms you have on the website
-26. Open the `crappy_js_import.js` file in a text editor  and copy the contents
-27. Paste the contents in the console and press Enter. 
-28. Congrats, you're done, export your charms and save them somewhere
+7. Congrats, you now have your charms under two different forms, 
+   - `charms.json`: JSON (You probably don't care about that)
+   - `charms.encoded.txt`: You want this oneHellish Form I hate with all my heart
+8. Open the `charms.encoded.txt` file and copy the contents in the import box of 
     
 
 
@@ -115,9 +95,11 @@ In all seriousness, the work is done in a couple broad steps:
 
 
 # TODOS: 
-- Figure out what kind of demonic ritual I have to do to encode charms in the same way as the website.
-  - The JS solution works, but it's a pain in the ass for people that don't know how the debugger works.
+- ~~Figure out what kind of demonic ritual I have to do to encode charms in the same way as the website.~~ Kinda that, but now actually port it.
+  - Js2Py has different behavior "somewhere"
   - I really don't want to reverse engineer what appers to be a minified react app.
+  - Current solution adds NodeJS as a dep, but it saves a lot of "advanced" manipulation
+
 - Throw out FFMPEG if OpenCV can do the masking/cropping faster, it would allow for one fewer dependency
 - Throw out Google Tesseract/Try newer version
   - Version 3 has trouble with quite a few words (Slugger, Recovery, Earplugs, Counterstrike, Maestro, etc)
@@ -126,3 +108,11 @@ In all seriousness, the work is done in a couple broad steps:
   - The monkey brain approach would probably make it so this can be ran completely unattended, at the cost of some extra storage space.
 - Solution for people that don't want to bother with the hassle
 - Make the code not a mess
+- Use the page number in the "Is the last frame the same" check. (Low priority, charms still seem to get detected on page swap)
+- Docker image for deployment?
+# Extra maintenance (Dev)
+
+To rebuild the js2py file with the extracted encoder from mhr-wiki:
+- babel .\js_encoder.js -o converted.js
+- python -c "import js2py; js2py.translate_file('converted.js', 'py_encoder.py')"
+- babel .\js_encoder.js -o converted.js && python -c "import js2py; js2py.translate_file('converted.js', 'py_encoder.py')"
