@@ -5,6 +5,26 @@ from skimage.metrics import structural_similarity
 import pytesseract
 
 
+def _load_potentially_transparent(filename):
+    pot_transparent = cv2.imread(filename, cv2.IMREAD_UNCHANGED)
+    trans_mask = pot_transparent[:, :, 3] == 0
+    pot_transparent[trans_mask] = [255, 255, 255, 255]
+    return cv2.cvtColor(pot_transparent, cv2.COLOR_BGRA2BGR)
+
+
+def apply_black_white_mask(img, mask_img):
+    lower = np.array([1]*3)
+    upper = np.array([255]*3)
+    mask = cv2.inRange(mask_img, lower, upper)
+
+    return cv2.bitwise_and(img, img, mask=mask)
+
+
+def pre_crop_mask(img, mask_location):
+    pre_crop_filter = _load_potentially_transparent(mask_location)
+    return apply_black_white_mask(img, pre_crop_filter)
+
+
 def get_charm_borders(img):
     hsv = [0, 179, 0, 255, 1, 255]
     charm_only_filter_path = os.path.join("images", "charm_only.png")
@@ -212,7 +232,7 @@ def _get_levels(img, inverted=False):
         try:
             gs = cv2.cvtColor(level, cv2.COLOR_BGR2GRAY)
         except:
-            gs =level
+            gs = level
         score1 = structural_similarity(gs, lv1)
         score2 = structural_similarity(gs, lv2)
         score3 = structural_similarity(gs, lv3)

@@ -1,5 +1,4 @@
 opencv-python
-ffmpeg-python
 numpy
 scikit-image
 pytesseract

@@ -10,10 +10,6 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 - A computer (Windows) 
   - Linux and Mac might work too
 - A usb cable to connect your switch to transfer files
-- **ffmpeg** installed and in path
-  - Use the latest version you can find
-  - [I got this version](https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-full.7z)
-  - You will also need 7zip to unpack it. You should already be using 7zip, it's better than winrar
 - **Google Tesseract** installed and in path
   - I used version 3 because I didn't feel like rebooting under Linux.
   - [I got it here](https://sourceforge.net/projects/tesseract-ocr-alt/files/tesseract-ocr-setup-3.02.02.exe/download)
@@ -34,8 +30,8 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 
 ### Adding something to the path (Windows)
 
-1. Copy the path to the executable, for example **ffmpeg** would likely be `C:\Users\"YOU"\Downloads\ffmpeg-4.4-full_build\bin`
-   - Don't put the exe file in the path 
+1. Copy the path to the executable (Where the program was installed)
+   - Don't put the executable file in the path, only where it is
 2. type `env` in the windows serch bar
    - Alternatively type `Edit environment variables for your account`
 3. Press Enter
@@ -99,13 +95,13 @@ In all seriousness, the work is done in a couple broad steps:
   - Js2Py has different behavior "somewhere"
   - I really don't want to reverse engineer what appers to be a minified react app.
   - Current solution adds NodeJS as a dep, but it saves a lot of "advanced" manipulation
-
-- Throw out FFMPEG if OpenCV can do the masking/cropping faster, it would allow for one fewer dependency
+  - Use Selenium to call website so that I dont "distribute" the code I don't own
 - Throw out Google Tesseract/Try newer version
   - Version 3 has trouble with quite a few words (Slugger, Recovery, Earplugs, Counterstrike, Maestro, etc)
   - Newer versions might not
   - I'm seriously considering going full monkey brain and having one "mask" per skill like I'm doing for the slots and skill levels.
   - The monkey brain approach would probably make it so this can be ran completely unattended, at the cost of some extra storage space.
+  - Monkey brain is less accurate, might need to train an image classifier/custom OCR 
 - Solution for people that don't want to bother with the hassle
 - Make the code not a mess
 - Use the page number in the "Is the last frame the same" check. (Low priority, charms still seem to get detected on page swap)
