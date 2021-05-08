@@ -84,7 +84,7 @@ def extract_charm(frame_loc, slots, skills, skill_text):
                     continue
 
                 suggestions = spell.lookup(w, 2)
-                print(f"\nFull skill: '{skill}'")
+                print(f"\nFull skill: '{skill}' Level {level}")
                 print(f"Current word: '{w}'")
                 if len(suggestions) == 0:
                     print("Too many errors in the word")
