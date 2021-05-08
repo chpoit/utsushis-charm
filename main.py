@@ -1,7 +1,7 @@
 import os
 import json
 from frame_extraction import extract_unique_frames
-from extract_charms import extract_charms, save_charms
+from charm_extraction import extract_charms, save_charms
 
 if __name__ == "__main__":
 
