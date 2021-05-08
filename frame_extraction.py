@@ -9,15 +9,15 @@ from skimage.metrics import structural_similarity
 def extract_unique_frames(input_dir, frame_dir):
     overlay_file_name = os.path.join('images', 'mask.png')
     charm_count = 0
+    currentFrame = 0
+
     input_files = list(
         filter(lambda x: x.name.endswith(".mp4"), os.scandir(input_dir)))
     print(f"Total input files to scan: {len(input_files)}")
     for f_loc in input_files:
         f_name = f_loc.name
         f_loc = f_loc.path
-
-        currentFrame = 0
-
+        
         cap = cv2.VideoCapture(f_loc)
         # 620, 175, 630, 440
         x = 620
