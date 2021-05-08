@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
     {
         "name": "Node encoder",
         "program": "${workspaceFolder}/js_encoder.js",
@@ -33,6 +34,13 @@
             "type": "python",
             "request": "launch",
             "program":"extract_charms.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "masking",
+            "type": "python",
+            "request": "launch",
+            "program":"mp4_masking.py",
             "console": "integratedTerminal"
         }
     ]
