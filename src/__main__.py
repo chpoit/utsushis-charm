@@ -1,5 +1,5 @@
 import os
-import json
+import sys
 from .frame_extraction import extract_unique_frames
 from .charm_extraction import extract_charms, save_charms
 from .charm_encoding import encode_charms
@@ -16,21 +16,26 @@ logger = logging.getLogger(__name__)
 def main(args):
     if args.license:
         print_licenses()
-        exit()
+        sys.exit(0)
 
-    input_dir = "inputs"
-    frame_dir = "frames"
+
+    input_dir = args.input_dir
+    frame_dir = args.frame_dir
     charm_json = "charms.json"
 
-    for d in [input_dir, frame_dir]:
-        os.makedirs(d, exist_ok=True)
+    if input_dir=="inputs":
+        os.makedirs(input_dir, exist_ok=True)
+    if frame_dir=="frames":
+        os.makedirs(frame_dir, exist_ok=True)
 
-    # extract_unique_frames(input_dir, frame_dir)
+    if not args.skip_frames:
+        extract_unique_frames(input_dir, frame_dir)
 
-    charms = extract_charms(frame_dir)
+    if not args.skip_charms:
+        charms = extract_charms(frame_dir)
 
-    save_charms(charms, charm_json)
-    print(f"Saved {len(charms)} charms")
+        save_charms(charms, charm_json)
+        print(f"Saved {len(charms)} charms")
 
     print("Encoding charms")
     encode_charms(charm_json)
