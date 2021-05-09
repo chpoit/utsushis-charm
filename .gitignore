@@ -8,6 +8,9 @@ converted.js
 *.pdn
 *.pyc
 *.json
+!utsushis-charm*
+*.exe
+*.zip
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,visualstudiocode

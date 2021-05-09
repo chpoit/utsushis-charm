@@ -166,24 +166,26 @@ def extract_charm(frame_loc, slots, skills, skill_text):
 def extract_charms(frame_dir):
     charms = []
     try:
-        for frame_loc in tqdm(list(os.scandir(frame_dir)), desc="Parsing skills"):
-            frame_loc = frame_loc.path
-            print(f" Parsing {frame_loc}")
-            frame = cv2.imread(frame_loc)
+        with tqdm(list(os.scandir(frame_dir)), desc="Parsing skills")as tqdm_iter:
+            for frame_loc in tqdm_iter:
+                frame_loc = frame_loc.path
+                tqdm_iter.set_description(f"Parsing {frame_loc}")
+                frame = cv2.imread(frame_loc)
 
-            skill_only_im = remove_non_skill_info(frame)
-            slots = get_slots(skill_only_im)
+                skill_only_im = remove_non_skill_info(frame)
+                slots = get_slots(skill_only_im)
 
-            inverted = cv2.bitwise_not(skill_only_im)
+                inverted = cv2.bitwise_not(skill_only_im)
 
-            trunc_tr = apply_trunc_threshold(inverted)  # appears to work best
+                trunc_tr = apply_trunc_threshold(inverted)  # appears to work best
 
-            skills = get_skills(trunc_tr, True)
+                skills = get_skills(trunc_tr, True)
 
-            skill_text = read_text_from_skill_tuple(skills)
+                skill_text = read_text_from_skill_tuple(skills)
 
-            charm = extract_charm(frame_loc, slots, skills, skill_text)
-            charms.append(charm)
+                charm = extract_charm(frame_loc, slots, skills, skill_text)
+                charms.append(charm)
+                
     except Exception as e:
         logger.error(f"Crashed with {e}")
 

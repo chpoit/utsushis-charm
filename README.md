@@ -14,32 +14,74 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 
 ## Requirements
 - A computer (Windows) 
-  - Linux and Mac might work too
+  - Linux and Mac might work too, you wont be able to run the EXE and will have to run from source in a terminal window.
 - A USB cable to connect your switch to transfer files
-- **Google Tesseract** installed and in path
-  - Version 3 and Version 4 are confirmed working
-    - Version 4 works much better
-  - [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.1.0.20190314.exe) 
-    - Just run the installer, no extra packages needed
+- This latest version of this downloaded to your computer
+  - You can find it [here](https://github.com/chpoit/utsushis-charm/releases/latest)
+- **Google Tesseract** installed and in path (Utsushis-Charm_**vx_x**.zip)
+  - A copy of the version 4 is bundled with the release. Just run it, no extra packages needed
+    - Built by UB-Mannheim [License (Apache 2.0)](https://github.com/tesseract-ocr/tesseract/blob/master/LICENSE) 
+    - Alternatively, download the same version here: [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.1.0.20190314.exe) 
     - Other Versions available on the [UB-Mannheim Github](https://github.com/UB-Mannheim/tesseract/wiki) page
-    - [License (Apache 2.0)](https://github.com/tesseract-ocr/tesseract/blob/master/LICENSE)
-  - Should add itself to path, you might have to reboot.
-    - Potential Locations:
-      -  `C:\Users\<USERNAME>\AppData\Local\Tesseract-OCR` (Version 3)
-      -  `C:\Program Files\Tesseract-OCR` (Version 4)
-      -  `C:\Program Files (x86)\Tesseract-OCR` (Version 4, less likely)
-- **Python 3** (in path)
-  - I used 3.9, but most above 3 should work
-  - [Here](https://www.python.org/downloads/)
-  - Check the box to add to path
-- This repository downloaded to your computer
-  - Installing everything in the requirements.txt with `pip install -r requirements.txt`. You might have to use `pip3` instead of `pip`
-  - The [Source code (zip)](https://github.com/chpoit/utsushis-charm/releases/latest) you can find here
 - Some knowledge of how to type things in the terminal
+  - AKA: Knowing how to type in a hacker box
 - Being able to read
 
 
-#### Adding something to the path (Windows)
+## Steps
+
+0. Unequip all jewels. You will create "fake" charms otherwise.
+   - Don't ask, this is way out of scope for something that takes you 30 seconds to do.
+1. Download the release bundle and follow the Requirements section  (Utsushis-Charm_**vx_x**.zip)
+   - Make sure you unzip everythin and you leave the files where they are.
+   - You can delete the `tesseract-installer.exe` once it's installed  
+2. Record clips similar to the following of you going through your charms. Try placing the UI in front of something that is very "flat" in color and doesn't have NPCs walking in front. 
+   - I can easily go through 2-3 pages of charms in 30 seconds. 
+   - Use a stopwatch on your phone if you have trouble timing the 30 seconds. I saved a clip every ~25 seconds.
+   - Don't worry about passing over a charm multiple times. Duplicates will be removed at the end.
+
+![Example Clip](./media/example_clip.gif)
+
+3. Transfer the clips to your computer.
+4. Put the files in the "inputs" directory. If it does not exist, create it at the same place you can find `utsushis-charm.exe` and `tesseract-installer.exe`
+   - It does not matter how many you have 
+   - I haven't tried to see what would happen if there are clips that are not of the charm UI
+5. Run the `utsushis-charm.exe` (Double-click)
+6. A Terminal should pop up
+   - Wait a little bit, it need to some stuff (~5-15s) 
+7. The first step of the program should take roughly 1 minute per clip you have in the inputs folder
+8. Once that step is done, the second phase starts, normally, it should be done without needing your attention
+   - Follow the instructions on screen and correct any invalid skill names.
+   - If a skill has to be corrected, a window with the skill should open, you might have to alt-tab to it, Windows likes to hide it.
+9. The program is done running. Press Enter and exit.
+   - Sometimes tesseract is absolutely unable to read text, those charms will be logged in `app.log` and you can add them manually.
+10. If no charm errored, or you don't care about those charms, you should be able to open the `charms.encoded.txt` file and copy the contents into the import box of [MHR-Wiki](https://mhrise.wiki-db.com/sim/?hl=en)
+
+
+
+
+# Troubleshooting
+
+If the program starts and closes without anything happening, open the `app.log` file and use this section to try and fix your issues
+
+## Simple issues:
+- O charms found
+  - Make sure your clips are in the inputs folder
+- I had to enter skill by hand but it wont accept it
+  - You need to enter them one word at a time, it might only not know what one of the words is.
+  - Make sure you are writing it exactly how it is shown on the picture that pops up
+- I get through the First phase, but it stops when checking the first frame of
+  - This is an issue with Tesseract not being installed. Check the next bullet point.
+- Google Tesseract is not installed/not found
+  - Make sure you installed it. You might have to reboot
+  - Try adding it manually to the path
+    - Potential Locations:
+      -  `C:\Program Files\Tesseract-OCR` (Version 4, Most likely)
+      -  `C:\Users\<USERNAME>\AppData\Local\Tesseract-OCR` (Version 3)
+      -  `C:\Program Files (x86)\Tesseract-OCR` (Version 4, less likely)
+
+
+## Adding something to the path (Windows)
 
 1. Copy the path to the executable (Where the program was installed)
    - Don't put the executable file in the path, only where it is located
@@ -53,35 +95,6 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 8. Paste the path you copied previously in the new spot.
 9. Click `Ok/Apply` for every window you opened.
 10. Restart every terminal/command line, or reboot to make sure you'll have access to the new commands
-
-## Steps
-
-0. Unequip all jewels. You will create "fake" charms otherwise.
-   - Don't ask, this is way out of scope for something that takes you 30 seconds to do.
-1. Record clips similar to the following of you going through your charms. Try placing the UI in front of something that is very "flat" in color and doesn't have NPCs walking in front. 
-   - I can easily go through 2-3 pages of charms in 30 seconds. 
-   - Use a stopwatch on your phone if you have trouble timing the 30 seconds. I saved a clip every ~25 seconds.
-   - Don't worry about passing over a charm multiple times. Duplicates will be removed at the end.
-
-![Example Clip](./media/example_clip.gif)
-
-2. Transfer the clips to your computer.
-3. Put the files in the "inputs" directory in this repository.
-   - It does not matter how many you have 
-   - I haven't tried to see what would happen if there are clips that are not of the charm UI
-3. Open a terminal/command line in the same directory as the "main.py" file.
-4. type `python main.py` and press Enter. You might have to run `python3 main.py`
-5. The first 2 steps of the program do no require any attention
-   - They can take a while
-6. The third step might ask for your input, depending on how well the image recognition works.
-   - Follow the instructions on screen and correct any invalid skill names.
-   - If a skill has to be corrected, a window with the skill should open, you might have to alt-tab to it, Windows likes to hide it.
-   - Sometimes tesseract is absolutely unable to read text, those charms will be logged in [`app.log`](app.log) and you can add them manually.
-7. Congrats, you now have your charms under two different forms, 
-   - `charms.json`: JSON (You probably don't care about that)
-   - `charms.encoded.txt`: This is the one you want
-8. Open the `charms.encoded.txt` file and copy the contents in the import box of [MHR-Wiki](https://mhrise.wiki-db.com/sim/?hl=en)
-    
 
 
 # How does this work
@@ -119,4 +132,14 @@ In all seriousness, the work is done in a few broad steps:
 - [ ] Multithreading for some of that SPEEEEED
 
 # Building the executable
-- `python -m PyInstaller .\main.py --onefile --name utsushis-charm`
+Run the `scripts\build_release.bat` file. You will need to have 7zip in path.
+
+# Extra command line options
+If you run from source, or call the executable from the terminal you can make use of the following flags/arguments to achieve different functionality
+
+- `-h` or ` --help`: Shows arguments
+- `--thirdparty `: Shows 3rd party licenses
+- `--skip-frames`: Skips the first frame extraction step. Useful if the second step crashed.
+-` --skip-charms`:`Skips the Tesseract-OCR step. Not sure why you would want that.
+- `-i <INPUT_DIR>` or `--input <INPUT_DIR>`: Changes the Input directory for videos
+- `-f <FRAME_DIR>` or `--frames <FRAME_DIR>`: Changes the Directory used to store temporary frames
