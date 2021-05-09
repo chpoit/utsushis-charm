@@ -39,50 +39,9 @@ def get_charm_borders(img):
     return cv2.bitwise_or(img, img, mask=mask)
 
 
-def get_charms_only(img):
-    hsv = [0, 179, 0, 255, 1, 255]
-    charm_only_filter_path = os.path.join("images", "charm_only.png")
-    charm_only_filter = cv2.imread(charm_only_filter_path)
-
-    lower = np.array([hsv[0], hsv[2], hsv[4]])
-    upper = np.array([hsv[1], hsv[3], hsv[5]])
-
-    mask = cv2.inRange(img, lower, upper)
-
-    return cv2.bitwise_and(img, charm_only_filter, mask=mask)
-
-
 def only_keep_shiny_border(img):
     imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     hsv = [0, 39, 0, 255, 109, 255]
-
-    lower = np.array([hsv[0], hsv[2], hsv[4]])
-    upper = np.array([hsv[1], hsv[3], hsv[5]])
-
-    mask = cv2.inRange(imgHSV, lower, upper)
-    imgResult = cv2.bitwise_and(img, img, mask=mask)
-
-    ret, imgResult = cv2.threshold(imgResult, 50, 255, cv2.THRESH_BINARY)
-    return imgResult
-
-
-def filter_text_skill(img):
-    imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    hsv = [0, 179, 0, 16, 85, 255]
-
-    lower = np.array([hsv[0], hsv[2], hsv[4]])
-    upper = np.array([hsv[1], hsv[3], hsv[5]])
-
-    mask = cv2.inRange(imgHSV, lower, upper)
-    imgResult = cv2.bitwise_and(img, img, mask=mask)
-
-    ret, imgResult = cv2.threshold(imgResult, 50, 255, cv2.THRESH_BINARY)
-    return imgResult
-
-
-def filter_text_skill_v2(img):
-    imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    hsv = [0, 179, 0, 16, 142, 255]
 
     lower = np.array([hsv[0], hsv[2], hsv[4]])
     upper = np.array([hsv[1], hsv[3], hsv[5]])
@@ -110,48 +69,12 @@ def remove_non_skill_info(img):
     return imgResult
 
 
-def extract_grayscale_threshold(img, bottom_thresh=85, top_thresh=255):
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    ret, th3 = cv2.threshold(
-        gray, bottom_thresh, top_thresh, cv2.THRESH_BINARY)
-
-    # th3 = cv2.adaptiveThreshold(gray,200,cv2.ADAPTIVE_THRESH_MEAN_C,\
-    #         cv2.THRESH_BINARY,11,2)
-
-    # th3 = cv2.adaptiveThreshold(gray,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
-    #         cv2.THRESH_BINARY,11,2)
-
-    return th3
+def apply_trunc_threshold(img):
+    ret, thresholded = cv2.threshold(img, 203, 255, cv2.THRESH_TRUNC)
+    return thresholded
 
 
-def silly_double_threshold(img):
-    # 203 255 135 255
-    ret, thresh3 = cv2.threshold(img, 203, 255, cv2.THRESH_TRUNC)
-    ret, thresh35 = cv2.threshold(thresh3, 135, 255, cv2.THRESH_BINARY)
-    return cv2.cvtColor(thresh35, cv2.COLOR_BGR2GRAY)
-
-
-def silly_trunc_threshold(img):
-    ret, thresh3 = cv2.threshold(img, 203, 255, cv2.THRESH_TRUNC)
-    return thresh3
-
-
-def _remove_all_203(img):
-    shape = img.shape
-    res = img.copy()
-    for i in range(shape[0]):
-        for j in range(shape[1]):
-            if len(shape) == 3:
-                for k in range(shape[2]):
-                    pixel = img[i][j][k]
-                    res[i][j][k] = pixel if pixel < 203 else 255
-            else:
-                pixel = img[i][j]
-                res[i][j] = pixel if pixel < 203 else 255
-    return res
-
-
-def _shorten_skill(img, background_color=203):
+def _trim_image_past_skill_name(img, background_color=203):
     shape = img.shape
     empty_col = 0
     i = floor(shape[0]/2)
@@ -176,8 +99,7 @@ def read_text_from_skill_tuple(skills):
     skill_text = []
     for skill_img, level in skills:
         skill_img = cv2.cvtColor(skill_img, cv2.COLOR_BGR2GRAY)
-        # skill_img = _remove_all_203(skill_img)
-        skill_img = _shorten_skill(skill_img)
+        skill_img = _trim_image_past_skill_name(skill_img)
         skill = pytesseract.image_to_string(skill_img)
         skill_text.append((skill, level))
 
@@ -193,10 +115,10 @@ def get_slots(img):
     x2 = x1 + w+1
     x3 = x1 + w*2+1
 
-    slot0 = cv2.imread(os.path.join("images", "slot0.png"))
-    slot1 = cv2.imread(os.path.join("images", "slot1.png"))
-    slot2 = cv2.imread(os.path.join("images", "slot2.png"))
-    slot3 = cv2.imread(os.path.join("images", "slot3.png"))
+    slot0 = cv2.imread(os.path.join("images", "slots", "slot0.png"))
+    slot1 = cv2.imread(os.path.join("images", "slots", "slot1.png"))
+    slot2 = cv2.imread(os.path.join("images", "slots", "slot2.png"))
+    slot3 = cv2.imread(os.path.join("images", "slots", "slot3.png"))
 
     spot1 = img[y:y + h, x1:x1 + w]
     spot2 = img[y:y + h, x2:x2 + w]
@@ -256,9 +178,9 @@ def _get_levels(img, inverted=False):
     y1 = 117
     y2 = 167
 
-    lv1 = cv2.imread(os.path.join("images", "lv1.png"), 0)
-    lv2 = cv2.imread(os.path.join("images", "lv2.png"), 0)
-    lv3 = cv2.imread(os.path.join("images", "lv3.png"), 0)
+    lv1 = cv2.imread(os.path.join("images", "levels", "lv1.png"), 0)
+    lv2 = cv2.imread(os.path.join("images", "levels", "lv2.png"), 0)
+    lv3 = cv2.imread(os.path.join("images", "levels", "lv3.png"), 0)
 
     level1 = img[y1:y1 + h, x:x + w]
     level2 = img[y2:y2 + h, x:x + w]
