@@ -31,10 +31,11 @@ if DEBUG:
 
 
 spell = SymSpell(max_dictionary_edit_distance=4)
-spell.load_dictionary("skill_dict.freq", 0, 1)
+spell.load_dictionary(get_resource_path("skill_dict"), 0, 1)
+
 
 known_corrections = {}
-with open('skill_corrections.csv', encoding='utf-8') as scf:
+with open(get_resource_path('skill_corrections'), encoding='utf-8') as scf:
     for line in scf.readlines():
         line = line.strip()
         w, r = line.split(',')
@@ -42,7 +43,7 @@ with open('skill_corrections.csv', encoding='utf-8') as scf:
 
 
 all_skills = {}
-with open('skill_list.txt') as slf:
+with open(get_resource_path('skill_list.txt')) as slf:
     for line in slf.readlines():
         skill_name = line.strip()
         all_skills[skill_name.lower()] = skill_name
@@ -127,7 +128,7 @@ def extract_charm(frame_loc, slots, skills, skill_text):
 
             reconstructed_skill = reconstructed_skill.strip()
             if "<EMPTY_SKILL>" in reconstructed_skill:
-                with open("skill_corrections.csv", "a") as scf:
+                with open(get_resource_path("skill_corrections"), "a") as scf:
                     scf.write(f"{w.strip()},{reconstructed_skill}\n")
                 known_corrections[skill] = reconstructed_skill
             elif not is_skill(all_skills, reconstructed_skill):
@@ -144,7 +145,7 @@ def extract_charm(frame_loc, slots, skills, skill_text):
                     f"Corrected skill: {reconstructed_skill} from {skill}")
                 for w, r in zip(skill.split(), reconstructed_skill.split()):
                     if w not in known_corrections:
-                        with open("skill_corrections.csv", "a", encoding="utf-8") as scf:
+                        with open(get_resource_path("skill_corrections"), "a", encoding="utf-8") as scf:
                             scf.write(f"{w.strip()},{r.strip()}\n")
                         known_corrections[w] = r
                 break
@@ -155,9 +156,7 @@ def extract_charm(frame_loc, slots, skills, skill_text):
             continue
 
         logger.debug(f"Added {skill}, {level}")
-        charm.add_skill(fix_skill_name(skill), level)
-
-    logger.debug(f"Finished charm for {frame_loc}")
+        charm.add_skill(fix_skill_name(skill), leresourceger.debug(f"Finished charm for {frame_loc}")
     logger.debug(f"{frame_loc}: {charm.to_dict()}")
 
     return charm

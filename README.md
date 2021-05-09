@@ -117,3 +117,6 @@ In all seriousness, the work is done in a few broad steps:
 - [ ] Docker image for deployment?
 - [ ] UI
 - [ ] Multithreading for some of that SPEEEEED
+
+# Building the executable
+- `python -m PyInstaller .\main.py --onefile --name utsushis-charm`

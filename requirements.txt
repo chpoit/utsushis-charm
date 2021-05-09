@@ -5,5 +5,3 @@ pytesseract
 symspellpy
 tqdm
 pyinstaller
-
-"opencv-python","numpy","scikit-image","pytesseract","symspellpy","tqdm"

@@ -1,13 +1,14 @@
 import os
 from setuptools import setup
 
-HERE = os.path.abspath(os.path.dirname(__file__))
-
-with open(os.path.join(HERE, "README.md")) as fid:
+with open("README.md") as fid:
     README = fid.read()
 
-with open(os.path.join(HERE,"requirements.txt")) as reqf:
-    reqs = list(map(lambda x: x.strip(), reqf.readlines()))
+with open("requirements.txt") as reqf:
+    reqs = map(lambda x: x.strip(), reqf.readlines())
+    reqs = filter(lambda x: x != "pyinstaller", reqs)
+    reqs = filter(lambda x: x, reqs)
+    reqs = list(reqs)
 
 setup(
     name="utsushis-charm",

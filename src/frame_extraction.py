@@ -1,13 +1,13 @@
 import os
 import cv2
-from .utils import pre_crop_mask, get_charm_borders, only_keep_shiny_border
+from .utils import pre_crop_mask, get_charm_borders, only_keep_shiny_border, get_resource_path
 from tqdm import tqdm
 from math import floor
 from skimage.metrics import structural_similarity
 
 
 def extract_unique_frames(input_dir, frame_dir):
-    overlay_file_name = os.path.join('images', 'mask.png')
+    overlay_file_name = get_resource_path("mask")
     charm_count = 0
     currentFrame = 0
 
