@@ -38,7 +38,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 - Being able to read
 - The understanding that this might take you longer to setup than it would have taken you to enter the dozen charms you like.
 
-### Adding something to the path (Windows)
+#### Adding something to the path (Windows)
 
 1. Copy the path to the executable (Where the program was installed)
    - Don't put the executable file in the path, only where it is located
