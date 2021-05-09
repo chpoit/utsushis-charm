@@ -2,6 +2,7 @@ import os
 import json
 from frame_extraction import extract_unique_frames
 from charm_extraction import extract_charms, save_charms
+from charm_encoding import encode_charms
 
 if __name__ == "__main__":
 
@@ -20,8 +21,8 @@ if __name__ == "__main__":
     print(f"Saved {len(charms)} charms")
 
     print("Encoding charms")
-    os.system(f"node js_encoder.js {charm_json}")
-    print("Charms encoded under \"charms.encoded.txt\". Use the contents of that file on the MHR WIki armor set builder")
+    encode_charms(charm_json)
+    print("Charms encoded under \"charms.encoded.txt\". Use the contents of that file on the MHR Wiki armor set builder")
 
 
     
