@@ -13,12 +13,12 @@ if __name__ == "__main__":
     for d in [input_dir, frame_dir]:
         os.makedirs(d, exist_ok=True)
 
-    # extract_unique_frames(input_dir, frame_dir)
+    extract_unique_frames(input_dir, frame_dir)
 
-    # charms = extract_charms(frame_dir)
+    charms = extract_charms(frame_dir)
 
-    # save_charms(charms,charm_json)
-    # print(f"Saved {len(charms)} charms")
+    save_charms(charms,charm_json)
+    print(f"Saved {len(charms)} charms")
 
     print("Encoding charms")
     encode_charms(charm_json)
