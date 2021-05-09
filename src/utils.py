@@ -225,8 +225,10 @@ def get_resource_path(resource):
         'mask': os.path.join("images", "mask.png"),
         'charm_only': os.path.join("images", "charm_only.png"),
         'skill_mask': os.path.join("images", "skill_mask.png"),
+        'licences': "LICENSES",
     }
-    return _alter_resource_path(resources[resource] if resource in resources else resources[resource])
+    tmp_path = resources[resource] if resource in resources else resources[resource]
+    return _alter_resource_path(tmp_path)
 
 
 def _alter_resource_path(relative_path):
@@ -239,3 +241,13 @@ def _alter_resource_path(relative_path):
         base_path = os.path.abspath(".")
 
     return os.path.join(base_path, relative_path)
+
+
+def print_licenses():
+    print("Third party licenses")
+    for f in os.scandir(get_resource_path("licences")):
+        print(f"License for {f.name}")
+        with open(f.path,"r") as l_f:
+            print(l_f.read())
+
+        print("\n\n")

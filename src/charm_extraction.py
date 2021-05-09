@@ -23,8 +23,7 @@ import os
 DEBUG = False
 
 
-logging.basicConfig(filename='app.log', filemode='w',
-                    format='%(name)s - %(levelname)s - %(message)s')
+
 logger = logging.getLogger(__name__)
 if DEBUG:
     logger.setLevel(logging.DEBUG)
@@ -43,7 +42,7 @@ with open(get_resource_path('skill_corrections'), encoding='utf-8') as scf:
 
 
 all_skills = {}
-with open(get_resource_path('skill_list.txt')) as slf:
+with open(get_resource_path('skill_list')) as slf:
     for line in slf.readlines():
         skill_name = line.strip()
         all_skills[skill_name.lower()] = skill_name
@@ -156,7 +155,9 @@ def extract_charm(frame_loc, slots, skills, skill_text):
             continue
 
         logger.debug(f"Added {skill}, {level}")
-        charm.add_skill(fix_skill_name(skill), leresourceger.debug(f"Finished charm for {frame_loc}")
+        charm.add_skill(fix_skill_name(skill), level)
+
+    logger.debug(f"Finished charm for {frame_loc}")
     logger.debug(f"{frame_loc}: {charm.to_dict()}")
 
     return charm
