@@ -11,8 +11,8 @@
 # Level 2: 618, 167
 # Level 3: 618, 217 -> Jewels were not removed
 
-from Charm import Charm
-from utils import *
+from .Charm import Charm
+from .utils import *
 from tqdm import tqdm
 from symspellpy.symspellpy import SymSpell
 import numpy as np
@@ -161,6 +161,7 @@ def extract_charm(frame_loc, slots, skills, skill_text):
     logger.debug(f"{frame_loc}: {charm.to_dict()}")
 
     return charm
+
 
 def extract_charms(frame_dir):
     charms = []

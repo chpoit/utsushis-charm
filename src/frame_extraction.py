@@ -1,6 +1,6 @@
 import os
 import cv2
-from utils import pre_crop_mask, get_charm_borders, only_keep_shiny_border
+from .utils import pre_crop_mask, get_charm_borders, only_keep_shiny_border
 from tqdm import tqdm
 from math import floor
 from skimage.metrics import structural_similarity
