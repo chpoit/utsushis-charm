@@ -28,8 +28,8 @@ def pre_crop_mask(img, mask_location):
 
 def get_charm_borders(img):
     hsv = [0, 179, 0, 255, 1, 255]
-    charm_only_filter_path = os.path.join("images", "charm_only.png")
-    charm_only_filter = cv2.imread(charm_only_filter_path)
+    charm_only_filter = _load_potentially_transparent(
+        os.path.join("images", "charm_only.png"))
 
     lower = np.array([hsv[0], hsv[2], hsv[4]])
     upper = np.array([hsv[1], hsv[3], hsv[5]])
@@ -39,50 +39,9 @@ def get_charm_borders(img):
     return cv2.bitwise_or(img, img, mask=mask)
 
 
-def get_charms_only(img):
-    hsv = [0, 179, 0, 255, 1, 255]
-    charm_only_filter_path = os.path.join("images", "charm_only.png")
-    charm_only_filter = cv2.imread(charm_only_filter_path)
-
-    lower = np.array([hsv[0], hsv[2], hsv[4]])
-    upper = np.array([hsv[1], hsv[3], hsv[5]])
-
-    mask = cv2.inRange(img, lower, upper)
-
-    return cv2.bitwise_and(img, charm_only_filter, mask=mask)
-
-
 def only_keep_shiny_border(img):
     imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     hsv = [0, 39, 0, 255, 109, 255]
-
-    lower = np.array([hsv[0], hsv[2], hsv[4]])
-    upper = np.array([hsv[1], hsv[3], hsv[5]])
-
-    mask = cv2.inRange(imgHSV, lower, upper)
-    imgResult = cv2.bitwise_and(img, img, mask=mask)
-
-    ret, imgResult = cv2.threshold(imgResult, 50, 255, cv2.THRESH_BINARY)
-    return imgResult
-
-
-def filter_text_skill(img):
-    imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    hsv = [0, 179, 0, 16, 85, 255]
-
-    lower = np.array([hsv[0], hsv[2], hsv[4]])
-    upper = np.array([hsv[1], hsv[3], hsv[5]])
-
-    mask = cv2.inRange(imgHSV, lower, upper)
-    imgResult = cv2.bitwise_and(img, img, mask=mask)
-
-    ret, imgResult = cv2.threshold(imgResult, 50, 255, cv2.THRESH_BINARY)
-    return imgResult
-
-
-def filter_text_skill_v2(img):
-    imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    hsv = [0, 179, 0, 16, 142, 255]
 
     lower = np.array([hsv[0], hsv[2], hsv[4]])
     upper = np.array([hsv[1], hsv[3], hsv[5]])
@@ -110,45 +69,9 @@ def remove_non_skill_info(img):
     return imgResult
 
 
-def extract_grayscale_threshold(img, bottom_thresh=85, top_thresh=255):
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    ret, th3 = cv2.threshold(
-        gray, bottom_thresh, top_thresh, cv2.THRESH_BINARY)
-
-    # th3 = cv2.adaptiveThreshold(gray,200,cv2.ADAPTIVE_THRESH_MEAN_C,\
-    #         cv2.THRESH_BINARY,11,2)
-
-    # th3 = cv2.adaptiveThreshold(gray,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
-    #         cv2.THRESH_BINARY,11,2)
-
-    return th3
-
-
-def silly_double_threshold(img):
-    # 203 255 135 255
-    ret, thresh3 = cv2.threshold(img, 203, 255, cv2.THRESH_TRUNC)
-    ret, thresh35 = cv2.threshold(thresh3, 135, 255, cv2.THRESH_BINARY)
-    return cv2.cvtColor(thresh35, cv2.COLOR_BGR2GRAY)
-
-
 def silly_trunc_threshold(img):
     ret, thresh3 = cv2.threshold(img, 203, 255, cv2.THRESH_TRUNC)
     return thresh3
-
-
-def _remove_all_203(img):
-    shape = img.shape
-    res = img.copy()
-    for i in range(shape[0]):
-        for j in range(shape[1]):
-            if len(shape) == 3:
-                for k in range(shape[2]):
-                    pixel = img[i][j][k]
-                    res[i][j][k] = pixel if pixel < 203 else 255
-            else:
-                pixel = img[i][j]
-                res[i][j] = pixel if pixel < 203 else 255
-    return res
 
 
 def _shorten_skill(img, background_color=203):
@@ -176,7 +99,6 @@ def read_text_from_skill_tuple(skills):
     skill_text = []
     for skill_img, level in skills:
         skill_img = cv2.cvtColor(skill_img, cv2.COLOR_BGR2GRAY)
-        # skill_img = _remove_all_203(skill_img)
         skill_img = _shorten_skill(skill_img)
         skill = pytesseract.image_to_string(skill_img)
         skill_text.append((skill, level))

@@ -162,9 +162,6 @@ def extract_charm(frame_loc, slots, skills, skill_text):
 
     return charm
 
-    # def add_skill_to_charm(charm, skill, level):
-
-
 def extract_charms(frame_dir):
     charms = []
     try:
@@ -179,9 +176,7 @@ def extract_charms(frame_dir):
             inverted = cv2.bitwise_not(skill_only_im)
 
             trunc_tr = silly_trunc_threshold(inverted)  # appears to work best
-            # trunc_tr = silly_double_threshold(inverted)
 
-            # skills = get_skills(inverted, True)
             skills = get_skills(trunc_tr, True)
 
             skill_text = read_text_from_skill_tuple(skills)
