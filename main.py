@@ -13,8 +13,8 @@ if __name__ == "__main__":
         print("Third party licenses")
         for f in os.scandir(os.path.join("LICENSES")):
             print(f"License for {f.name}")
-            with open(f.path, "w"):
-                print(f.read())
+            with open(f.path,"r") as l_f:
+                print(l_f.read())
 
             print("\n\n")
     else:
