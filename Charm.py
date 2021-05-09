@@ -50,43 +50,10 @@ class Charm:
 
         return True
 
-    def to_wonkyb64(self):
-        # MONKEY BRAIN GOES BRRRRRRRRRRRRRR
-        # Appears to be some weird b64 encoding and reversing minified code is not something I want to spend a weekend on
-        # \x1a\x06\x08\x03\x10\x01\x18\x01 3-1-1
-        # \x1a\x06\x08\x03\x10\x01\x18\x01 3-2-1
-        # \x1a\x04\x08\x02\x10\x02 2-2-0
-        # \x1a\x06\x08\x01\x10\x01\x18\x01 1-1-1
-        # \x1a\x00 0-0-0
-        def encode_slots(slots):
-            slot_count = sum(x != 0 for x in slots)
-            slot_codes = [
-                "\\x00",
-                "\\x02",
-                "\\x04",
-                "\\x06"]
-
-            slot_position = ["\\x08", "\\x10", "\\x18"]
-
-            pos = 0
-            s = f"\\x1a{slot_codes[slot_count]}"
-            for slot in slots:
-                s += f"{slot_position[pos]}\\x0{slot}"
-                pos += 1
-            return s
-
-        def encode_skills(skills):
-            acc = ""
-            skill_no = 0
-            for skill in skills:
-                if skill_no>0:
-                    acc += "\\n\\r\\n\\t"
-                level= self.skills[skill]
-                acc+=f"{skill}\\x10\\x0{level}"
-                skill_no+=1
-            return acc
-
-        k = "\\n+\\n\\x14\\n\\x10"    
-        k += encode_skills(self.skills)
-        k += encode_slots(self.slots)
-        return k
+    def to_simple_encode(self):
+        acc = ""
+        for skill in self.skills:
+            acc += f"{skill},{self.skills[skill]},"
+        for level in self.slots:
+            acc += f"{level},"
+        return acc[:-1]

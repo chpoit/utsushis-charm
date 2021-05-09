@@ -25,10 +25,6 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
   - I used 3.9, but most above 3 should word
   - [Here](https://www.python.org/downloads/)
   - Check the box to add to path
-- **NodeJS**
-  - Any of the recent version will work
-  - [Here](https://nodejs.org/en/)
-  - Make sure it's in the path
 - This repository downloaded to your computer
   - Installing everything in the requirements.txt with `pip install -r requirements.txt`. You might have to use `pip3` instead of `pip`
 - Some knowledge of how to type things in the terminal
@@ -75,7 +71,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
    - Sometimes tesseract is absolutely unable to read text, those charms will be logged in [`app.log`](app.log) and you can add them manually.
 7. Congrats, you now have your charms under two different forms, 
    - `charms.json`: JSON (You probably don't care about that)
-   - `charms.encoded.txt`: You want this oneHellish Form I hate with all my heart
+   - `charms.encoded.txt`: This is the one you want
 8. Open the `charms.encoded.txt` file and copy the contents in the import box of 
     
 
@@ -96,13 +92,7 @@ In all seriousness, the work is done in a couple broad steps:
 - If you ran everything and got new corrections in the [`skill_corrections.csv`](skill_corrections.csv) file, consider creating a pull request to add them for others.
 - If you feel like contributing anything, go ahead and submit a pull request I'll be happy to take a look and decide if it's something worth adding. 
 
-
 # TODOS: 
-- ~~Figure out what kind of demonic ritual I have to do to encode charms in the same way as the website.~~ Kinda that, but now actually port it.
-  - Js2Py has different behavior "somewhere"
-  - I really don't want to reverse engineer what appers to be a minified react app.
-  - Current solution adds NodeJS as a dep, but it saves a lot of "advanced" manipulation
-  - Use Selenium to call website so that I dont "distribute" the code I don't own
 - Throw out Google Tesseract/Try newer version
   - Version 4 works great, this is going on the backburner for a while
   - Version 3 has trouble with quite a few words (Slugger, Recovery, Earplugs, Counterstrike, Maestro, etc)
@@ -116,9 +106,3 @@ In all seriousness, the work is done in a couple broad steps:
 - Make the code not a mess
 - Use the page number in the "Is the last frame the same" check. (Low priority, charms still seem to get detected on page swap)
 - Docker image for deployment?
-# Extra maintenance (Dev)
-
-To rebuild the js2py file with the extracted encoder from mhr-wiki:
-- babel .\js_encoder.js -o converted.js
-- python -c "import js2py; js2py.translate_file('converted.js', 'py_encoder.py')"
-- babel .\js_encoder.js -o converted.js && python -c "import js2py; js2py.translate_file('converted.js', 'py_encoder.py')"
