@@ -113,7 +113,7 @@ In all seriousness, the work is done in a few broad steps:
     - Need to do some "pixel poking" to make sure everything is lined up the same
 - [ ] Solution for people that don't want to bother with the hassle
 - [ ] Make the code not a mess
-- Use the page number in the "Is the last frame the same" check. (Low priority, charms still seem to get detected on page swap)
+- [ ] Use the page number in the "Is the last frame the same" check. (Low priority, charms still seem to get detected on page swap)
 - [ ] Docker image for deployment?
 - [ ] UI
 - [ ] Multithreading for some of that SPEEEEED
