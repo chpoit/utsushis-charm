@@ -13,7 +13,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 - **Google Tesseract** installed and in path
   - Version 3 and Version 4 are confirmed working
     - Version 4 works much better
-  - [I got it here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.1.0.20190314.exe)
+  - [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.1.0.20190314.exe) [License (Apache 2.0)](https://github.com/tesseract-ocr/tesseract/blob/master/LICENSE)
     - Just run the installer, no extra packages needed
     - Other Versions available on the [UB-Mannheim Github](https://github.com/UB-Mannheim/tesseract/wiki) page
   - Should add itself to path, you might have to reboot.
@@ -27,6 +27,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
   - Check the box to add to path
 - **NodeJS**
   - Any of the recent version will work
+  - [Here](https://nodejs.org/en/)
   - Make sure it's in the path
 - This repository downloaded to your computer
   - Installing everything in the requirements.txt with `pip install -r requirements.txt`. You might have to use `pip3` instead of `pip`
