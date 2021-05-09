@@ -52,6 +52,7 @@ def only_keep_shiny_border(img):
     ret, imgResult = cv2.threshold(imgResult, 50, 255, cv2.THRESH_BINARY)
     return imgResult
 
+
 def remove_non_skill_info(img):
     hsv = [0, 179, 0, 255, 142, 255]
     skill_only_path = os.path.join("images", "skill_mask.png")
@@ -66,6 +67,7 @@ def remove_non_skill_info(img):
     imgResult = cv2.bitwise_and(img, img, mask=mask)
 
     return imgResult
+
 
 def apply_trunc_threshold(img):
     ret, thresholded = cv2.threshold(img, 203, 255, cv2.THRESH_TRUNC)
@@ -113,10 +115,10 @@ def get_slots(img):
     x2 = x1 + w+1
     x3 = x1 + w*2+1
 
-    slot0 = cv2.imread(os.path.join("images", "slot0.png"))
-    slot1 = cv2.imread(os.path.join("images", "slot1.png"))
-    slot2 = cv2.imread(os.path.join("images", "slot2.png"))
-    slot3 = cv2.imread(os.path.join("images", "slot3.png"))
+    slot0 = cv2.imread(os.path.join("images", "slots", "slot0.png"))
+    slot1 = cv2.imread(os.path.join("images", "slots", "slot1.png"))
+    slot2 = cv2.imread(os.path.join("images", "slots", "slot2.png"))
+    slot3 = cv2.imread(os.path.join("images", "slots", "slot3.png"))
 
     spot1 = img[y:y + h, x1:x1 + w]
     spot2 = img[y:y + h, x2:x2 + w]
@@ -176,9 +178,9 @@ def _get_levels(img, inverted=False):
     y1 = 117
     y2 = 167
 
-    lv1 = cv2.imread(os.path.join("images", "lv1.png"), 0)
-    lv2 = cv2.imread(os.path.join("images", "lv2.png"), 0)
-    lv3 = cv2.imread(os.path.join("images", "lv3.png"), 0)
+    lv1 = cv2.imread(os.path.join("images", "levels", "lv1.png"), 0)
+    lv2 = cv2.imread(os.path.join("images", "levels", "lv2.png"), 0)
+    lv3 = cv2.imread(os.path.join("images", "levels", "lv3.png"), 0)
 
     level1 = img[y1:y1 + h, x:x + w]
     level2 = img[y2:y2 + h, x:x + w]
