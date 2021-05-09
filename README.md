@@ -80,7 +80,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 7. Congrats, you now have your charms under two different forms, 
    - `charms.json`: JSON (You probably don't care about that)
    - `charms.encoded.txt`: This is the one you want
-8. Open the `charms.encoded.txt` file and copy the contents in the import box of 
+8. Open the `charms.encoded.txt` file and copy the contents in the import box of [MHR-Wiki](https://mhrise.wiki-db.com/sim/?hl=en)
     
 
 
