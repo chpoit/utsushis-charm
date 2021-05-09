@@ -17,7 +17,7 @@ def extract_unique_frames(input_dir, frame_dir):
     for f_loc in input_files:
         f_name = f_loc.name
         f_loc = f_loc.path
-        
+
         cap = cv2.VideoCapture(f_loc)
         # 620, 175, 630, 440
         x = 620
@@ -45,12 +45,11 @@ def extract_unique_frames(input_dir, frame_dir):
                         previous_frame, shiny_grayscale)
                     if score < 0.996:
                         charm_count += 1
-                        
+
                         cv2.imwrite(name, cropped)
                 else:
                     charm_count = 1
                     cv2.imwrite(name, cropped)
-                
 
                 previous_frame = cv2.cvtColor(shiny, cv2.COLOR_BGR2GRAY)
 

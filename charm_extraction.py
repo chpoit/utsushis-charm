@@ -1,7 +1,7 @@
 # 547,26 - 628,51
 # 27*26
 
-# Skill name size 216*21
+# Skill name size 216*21 # it appears those dimensions cause some slight shifting
 # Skill 1: 413, 94
 # Skill 2: 413, 144
 # Skill 3: 413, 194 -> Jewels were not removed
@@ -175,7 +175,7 @@ def extract_charms(frame_dir):
 
             inverted = cv2.bitwise_not(skill_only_im)
 
-            trunc_tr = silly_trunc_threshold(inverted)  # appears to work best
+            trunc_tr = apply_trunc_threshold(inverted)  # appears to work best
 
             skills = get_skills(trunc_tr, True)
 

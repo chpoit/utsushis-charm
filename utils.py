@@ -28,8 +28,8 @@ def pre_crop_mask(img, mask_location):
 
 def get_charm_borders(img):
     hsv = [0, 179, 0, 255, 1, 255]
-    charm_only_filter = _load_potentially_transparent(
-        os.path.join("images", "charm_only.png"))
+    charm_only_filter_path = os.path.join("images", "charm_only.png")
+    charm_only_filter = cv2.imread(charm_only_filter_path)
 
     lower = np.array([hsv[0], hsv[2], hsv[4]])
     upper = np.array([hsv[1], hsv[3], hsv[5]])
@@ -52,7 +52,6 @@ def only_keep_shiny_border(img):
     ret, imgResult = cv2.threshold(imgResult, 50, 255, cv2.THRESH_BINARY)
     return imgResult
 
-
 def remove_non_skill_info(img):
     hsv = [0, 179, 0, 255, 142, 255]
     skill_only_path = os.path.join("images", "skill_mask.png")
@@ -68,13 +67,12 @@ def remove_non_skill_info(img):
 
     return imgResult
 
+def apply_trunc_threshold(img):
+    ret, thresholded = cv2.threshold(img, 203, 255, cv2.THRESH_TRUNC)
+    return thresholded
 
-def silly_trunc_threshold(img):
-    ret, thresh3 = cv2.threshold(img, 203, 255, cv2.THRESH_TRUNC)
-    return thresh3
 
-
-def _shorten_skill(img, background_color=203):
+def _trim_image_past_skill_name(img, background_color=203):
     shape = img.shape
     empty_col = 0
     i = floor(shape[0]/2)
@@ -99,7 +97,7 @@ def read_text_from_skill_tuple(skills):
     skill_text = []
     for skill_img, level in skills:
         skill_img = cv2.cvtColor(skill_img, cv2.COLOR_BGR2GRAY)
-        skill_img = _shorten_skill(skill_img)
+        skill_img = _trim_image_past_skill_name(skill_img)
         skill = pytesseract.image_to_string(skill_img)
         skill_text.append((skill, level))
 
