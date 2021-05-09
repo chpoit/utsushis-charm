@@ -19,9 +19,10 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 - **Google Tesseract** installed and in path
   - Version 3 and Version 4 are confirmed working
     - Version 4 works much better
-  - [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.1.0.20190314.exe) [License (Apache 2.0)](https://github.com/tesseract-ocr/tesseract/blob/master/LICENSE)
+  - [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.1.0.20190314.exe) 
     - Just run the installer, no extra packages needed
     - Other Versions available on the [UB-Mannheim Github](https://github.com/UB-Mannheim/tesseract/wiki) page
+    - [License (Apache 2.0)](https://github.com/tesseract-ocr/tesseract/blob/master/LICENSE)
   - Should add itself to path, you might have to reboot.
     - Potential Locations:
       -  `C:\Users\<USERNAME>\AppData\Local\Tesseract-OCR` (Version 3)
