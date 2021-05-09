@@ -34,6 +34,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
   - Check the box to add to path
 - This repository downloaded to your computer
   - Installing everything in the requirements.txt with `pip install -r requirements.txt`. You might have to use `pip3` instead of `pip`
+  - The [Source code (zip)](https://github.com/chpoit/utsushis-charm/releases/latest) you can find here
 - Some knowledge of how to type things in the terminal
 - Being able to read
 
