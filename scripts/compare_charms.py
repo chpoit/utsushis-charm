@@ -7,7 +7,7 @@ sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
 from Charm import Charm
 
 f1 = "charms tesseract.json"
-f2 = "charms extreme.json"
+f2 = "charms.json"
 
 with open(f1) as f:
     c1 = set(map(Charm.from_dict,json.load(f)))
@@ -25,13 +25,15 @@ dif = c1.symmetric_difference(c2)
 print("Diffs",  len(dif))
 
 a =b=0
-for i in dif:
-    if i not in c1:
-        a+=1
-        # print(f"Missing from {f1}:\t {i.to_dict()}")
-    else:
-        b+=1
-        # print(f"Missing from {f2}:\t {i.to_dict()}")
+with open("missing_charms.json", "w", encoding="utf-8") as missing,\
+    open("made_up_charms.json", "w", encoding="utf-8") as made_up:
+    for i in dif:
+        if i not in c1:
+            a+=1
+            made_up.write(f"{i.to_dict()}\n")
+        else:
+            b+=1
+            missing.write(f"{i.to_dict()}\n")
 
 print(f"Missing: {a}")
 print(f"Made up: {b}")
