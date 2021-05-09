@@ -1,5 +1,11 @@
 # Utsushi's charm
 
+> Whenever I look at Utsushi I feel like I can do anything. Unfortunately, when I need to register my charms, I can't lose myself in Utsushi's charm.
+> Fortunately, now, with Utsushi's charm, I can lose myself in Utsushi's charm for longer.
+> 
+> \- Utsushi Fan Girl, probably
+
+
 This repo contains code that will allow you to extract all of your charms in Monster Hunter Rise from recordings taking with the switch's "save clip" feature.
 
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but ["this armor set searcher exists"](https://mhrise.wiki-db.com/sim/?hl=en). I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
