@@ -5,23 +5,6 @@ from skimage.metrics import structural_similarity
 import pytesseract
 from math import floor
 
-_resources = {
-    'skill_dict': _alter_resource_path(os.path.join("data", "skill_dict.freq")),
-    'skill_list': _alter_resource_path(os.path.join("data", "skill_list.txt")),
-    'skill_corrections': "skill_corrections.csv",
-    'lv1': _alter_resource_path(os.path.join("images", "levels", "lv1.png")),
-    'lv2': _alter_resource_path(os.path.join("images", "levels", "lv2.png")),
-    'lv3': _alter_resource_path(os.path.join("images", "levels", "lv3.png")),
-    'slot0': _alter_resource_path(os.path.join("images", "slots", "slot0.png")),
-    'slot1': _alter_resource_path(os.path.join("images", "slots", "slot1.png")),
-    'slot2': _alter_resource_path(os.path.join("images", "slots", "slot2.png")),
-    'slot3': _alter_resource_path(os.path.join("images", "slots", "slot3.png")),
-    'mask': _alter_resource_path(os.path.join("images", "mask.png")),
-    'charm_only': _alter_resource_path(os.path.join("images", "charm_only.png")),
-    'skill_mask': _alter_resource_path(os.path.join("images", "skill_mask.png")),
-    'licences': _alter_resource_path("LICENSES"),
-}
-
 
 def _load_potentially_transparent(filename):
     pot_transparent = cv2.imread(filename, cv2.IMREAD_UNCHANGED)
@@ -252,3 +235,21 @@ def print_licenses():
             print(l_f.read())
 
         print("\n\n")
+
+
+_resources = {
+    'skill_dict': _alter_resource_path(os.path.join("data", "skill_dict.freq")),
+    'skill_list': _alter_resource_path(os.path.join("data", "skill_list.txt")),
+    'skill_corrections': "skill_corrections.csv",
+    'lv1': _alter_resource_path(os.path.join("images", "levels", "lv1.png")),
+    'lv2': _alter_resource_path(os.path.join("images", "levels", "lv2.png")),
+    'lv3': _alter_resource_path(os.path.join("images", "levels", "lv3.png")),
+    'slot0': _alter_resource_path(os.path.join("images", "slots", "slot0.png")),
+    'slot1': _alter_resource_path(os.path.join("images", "slots", "slot1.png")),
+    'slot2': _alter_resource_path(os.path.join("images", "slots", "slot2.png")),
+    'slot3': _alter_resource_path(os.path.join("images", "slots", "slot3.png")),
+    'mask': _alter_resource_path(os.path.join("images", "mask.png")),
+    'charm_only': _alter_resource_path(os.path.join("images", "charm_only.png")),
+    'skill_mask': _alter_resource_path(os.path.join("images", "skill_mask.png")),
+    'licences': _alter_resource_path("LICENSES"),
+}

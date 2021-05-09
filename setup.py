@@ -23,8 +23,5 @@ setup(
     packages=["src"],
     include_package_data=True,
     install_requires=reqs,
-    entry_points={"console_scripts": ["utsushis-charm=main:main"]},
-    # console=["main.py"]
 )
 
-# setup(console=["main.py"])
