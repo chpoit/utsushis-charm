@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 from skimage.metrics import structural_similarity
 import pytesseract
+from math import floor
 
 
 def _load_potentially_transparent(filename):
@@ -135,11 +136,49 @@ def silly_trunc_threshold(img):
     return thresh3
 
 
+def _remove_all_203(img):
+    shape = img.shape
+    res = img.copy()
+    for i in range(shape[0]):
+        for j in range(shape[1]):
+            if len(shape) == 3:
+                for k in range(shape[2]):
+                    pixel = img[i][j][k]
+                    res[i][j][k] = pixel if pixel < 203 else 255
+            else:
+                pixel = img[i][j]
+                res[i][j] = pixel if pixel < 203 else 255
+    return res
+
+
+def _shorten_skill(img, background_color=203):
+    shape = img.shape
+    empty_col = 0
+    i = floor(shape[0]/2)
+    for j in range(shape[1]):
+        if len(shape) == 3:
+            pixel = img[i][j][0]
+        else:
+            pixel = img[i][j]
+
+        if pixel != background_color:
+            empty_col = -1
+
+        empty_col += 1
+        if empty_col >= 15:
+            break
+
+    trimmed = img[:, :j-10] if len(shape) != 3 else img[:, :j-10, :]
+    return trimmed
+
+
 def read_text_from_skill_tuple(skills):
     skill_text = []
     for skill_img, level in skills:
-        skill = pytesseract.image_to_string(skill_img,
-                                            config="-c tessedit_char_whitelist=-/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+        skill_img = cv2.cvtColor(skill_img, cv2.COLOR_BGR2GRAY)
+        # skill_img = _remove_all_203(skill_img)
+        skill_img = _shorten_skill(skill_img)
+        skill = pytesseract.image_to_string(skill_img)
         skill_text.append((skill, level))
 
     return skill_text

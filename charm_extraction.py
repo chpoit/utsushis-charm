@@ -11,21 +11,23 @@
 # Level 2: 618, 167
 # Level 3: 618, 217 -> Jewels were not removed
 
-import os
-import cv2
-import json
-import logging
-import numpy as np
-from symspellpy.symspellpy import SymSpell
-from tqdm import tqdm
-
-from utils import *
 from Charm import Charm
+from utils import *
+from tqdm import tqdm
+from symspellpy.symspellpy import SymSpell
+import numpy as np
+import logging
+import json
+import cv2
+import os
+DEBUG = False
+
 
 logging.basicConfig(filename='app.log', filemode='w',
                     format='%(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
-# logger.setLevel(logging.DEBUG)
+if DEBUG:
+    logger.setLevel(logging.DEBUG)
 
 
 spell = SymSpell(max_dictionary_edit_distance=4)
@@ -48,6 +50,10 @@ with open('skill_list.txt') as slf:
 
 def is_skill(skill_dict, skill_name):
     return skill_name.lower().strip() in skill_dict
+
+
+def fix_skill_name(skill_dict, skill_name):
+    return skill_dict[skill_name.lower()]
 
 
 def extract_charm(frame_loc, slots, skills, skill_text):
@@ -88,7 +94,7 @@ def extract_charm(frame_loc, slots, skills, skill_text):
                 print(f"Current word: '{w}'")
                 if len(suggestions) == 0:
                     print("Too many errors in the word")
-                elif len(suggestions) > 1:
+                if len(suggestions) > 1:
                     print("Corrections: ")
                     for i, s in enumerate(suggestions):
                         print(f"[{i}] {s.term}")
@@ -149,9 +155,11 @@ def extract_charm(frame_loc, slots, skills, skill_text):
             continue
 
         logger.debug(f"Added {skill}, {level}")
-        charm.add_skill(skill, level)
+        charm.add_skill(fix_skill_name(skill), level)
 
     logger.debug(f"Finished charm for {frame_loc}")
+    logger.debug(f"{frame_loc}: {charm.to_dict()}")
+
     return charm
 
     # def add_skill_to_charm(charm, skill, level):
@@ -173,6 +181,7 @@ def extract_charms(frame_dir):
             trunc_tr = silly_trunc_threshold(inverted)  # appears to work best
             # trunc_tr = silly_double_threshold(inverted)
 
+            # skills = get_skills(inverted, True)
             skills = get_skills(trunc_tr, True)
 
             skill_text = read_text_from_skill_tuple(skills)
@@ -192,8 +201,7 @@ def save_charms(charms, charm_json):
 
 
 if __name__ == "__main__":
-
-    frame_dir = "unique_frames"
+    frame_dir = "frames"
     charm_json = "charms.json"
 
     charms = extract_charms(frame_dir)
