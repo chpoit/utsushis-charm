@@ -33,7 +33,7 @@
             "name": "get_charms",
             "type": "python",
             "request": "launch",
-            "program":"extract_charms.py",
+            "program":"charm_extraction.py",
             "console": "integratedTerminal"
         },
         {

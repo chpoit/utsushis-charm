@@ -88,7 +88,7 @@ def extract_charm(frame_loc, slots, skills, skill_text):
                 print(f"Current word: '{w}'")
                 if len(suggestions) == 0:
                     print("Too many errors in the word")
-                elif len(suggestions) > 1:
+                if len(suggestions) > 1:
                     print("Corrections: ")
                     for i, s in enumerate(suggestions):
                         print(f"[{i}] {s.term}")
@@ -173,6 +173,7 @@ def extract_charms(frame_dir):
             trunc_tr = silly_trunc_threshold(inverted)  # appears to work best
             # trunc_tr = silly_double_threshold(inverted)
 
+            # skills = get_skills(inverted, True)
             skills = get_skills(trunc_tr, True)
 
             skill_text = read_text_from_skill_tuple(skills)
@@ -193,7 +194,7 @@ def save_charms(charms, charm_json):
 
 if __name__ == "__main__":
 
-    frame_dir = "unique_frames"
+    frame_dir = "frames"
     charm_json = "charms.json"
 
     charms = extract_charms(frame_dir)

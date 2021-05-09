@@ -12,7 +12,7 @@ if __name__ == "__main__":
     for d in [input_dir, frame_dir]:
         os.makedirs(d, exist_ok=True)
 
-    extract_unique_frames(input_dir, frame_dir)
+    # extract_unique_frames(input_dir, frame_dir)
 
     charms = extract_charms(frame_dir)
 
