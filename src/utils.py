@@ -28,7 +28,7 @@ def pre_crop_mask(img, mask_location):
 
 def get_charm_borders(img):
     hsv = [0, 179, 0, 255, 1, 255]
-    charm_only_filter_path = os.path.join("images", "charm_only.png")
+    charm_only_filter_path = get_resource_path("charm_only")
     charm_only_filter = cv2.imread(charm_only_filter_path)
 
     lower = np.array([hsv[0], hsv[2], hsv[4]])
@@ -55,7 +55,7 @@ def only_keep_shiny_border(img):
 
 def remove_non_skill_info(img):
     hsv = [0, 179, 0, 255, 142, 255]
-    skill_only_path = os.path.join("images", "skill_mask.png")
+    skill_only_path = get_resource_path("skill_mask")
     skill_filter = cv2.imread(skill_only_path)
 
     lower = np.array([hsv[0], hsv[2], hsv[4]])
@@ -115,10 +115,10 @@ def get_slots(img):
     x2 = x1 + w+1
     x3 = x1 + w*2+1
 
-    slot0 = cv2.imread(os.path.join("images", "slots", "slot0.png"))
-    slot1 = cv2.imread(os.path.join("images", "slots", "slot1.png"))
-    slot2 = cv2.imread(os.path.join("images", "slots", "slot2.png"))
-    slot3 = cv2.imread(os.path.join("images", "slots", "slot3.png"))
+    slot0 = cv2.imread(get_resource_path('slot0'))
+    slot1 = cv2.imread(get_resource_path('slot1'))
+    slot2 = cv2.imread(get_resource_path('slot2'))
+    slot3 = cv2.imread(get_resource_path('slot3'))
 
     spot1 = img[y:y + h, x1:x1 + w]
     spot2 = img[y:y + h, x2:x2 + w]
@@ -178,9 +178,9 @@ def _get_levels(img, inverted=False):
     y1 = 117
     y2 = 167
 
-    lv1 = cv2.imread(os.path.join("images", "levels", "lv1.png"), 0)
-    lv2 = cv2.imread(os.path.join("images", "levels", "lv2.png"), 0)
-    lv3 = cv2.imread(os.path.join("images", "levels", "lv3.png"), 0)
+    lv1 = cv2.imread(get_resource_path('lv1'), 0)
+    lv2 = cv2.imread(get_resource_path('lv2'), 0)
+    lv3 = cv2.imread(get_resource_path('lv3'), 0)
 
     level1 = img[y1:y1 + h, x:x + w]
     level2 = img[y2:y2 + h, x:x + w]
@@ -208,3 +208,48 @@ def _get_levels(img, inverted=False):
                 levels.append(i+1)
 
     return levels
+
+
+def get_resource_path(resource):
+
+    return _resources[resource] if resource in _resources else resource
+
+
+def _alter_resource_path(relative_path):
+    import sys
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+
+def print_licenses():
+    print("Third party licenses")
+    for f in os.scandir(get_resource_path("licences")):
+        print(f"License for {f.name}")
+        with open(f.path, "r") as l_f:
+            print(l_f.read())
+
+        print("\n\n")
+
+
+_resources = {
+    'skill_dict': _alter_resource_path(os.path.join("data", "skill_dict.freq")),
+    'skill_list': _alter_resource_path(os.path.join("data", "skill_list.txt")),
+    'skill_corrections': "skill_corrections.csv",
+    'lv1': _alter_resource_path(os.path.join("images", "levels", "lv1.png")),
+    'lv2': _alter_resource_path(os.path.join("images", "levels", "lv2.png")),
+    'lv3': _alter_resource_path(os.path.join("images", "levels", "lv3.png")),
+    'slot0': _alter_resource_path(os.path.join("images", "slots", "slot0.png")),
+    'slot1': _alter_resource_path(os.path.join("images", "slots", "slot1.png")),
+    'slot2': _alter_resource_path(os.path.join("images", "slots", "slot2.png")),
+    'slot3': _alter_resource_path(os.path.join("images", "slots", "slot3.png")),
+    'mask': _alter_resource_path(os.path.join("images", "mask.png")),
+    'charm_only': _alter_resource_path(os.path.join("images", "charm_only.png")),
+    'skill_mask': _alter_resource_path(os.path.join("images", "skill_mask.png")),
+    'licences': _alter_resource_path("LICENSES"),
+}

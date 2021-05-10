@@ -11,8 +11,8 @@
 # Level 2: 618, 167
 # Level 3: 618, 217 -> Jewels were not removed
 
-from Charm import Charm
-from utils import *
+from .Charm import Charm
+from .utils import *
 from tqdm import tqdm
 from symspellpy.symspellpy import SymSpell
 import numpy as np
@@ -23,18 +23,18 @@ import os
 DEBUG = False
 
 
-logging.basicConfig(filename='app.log', filemode='w',
-                    format='%(name)s - %(levelname)s - %(message)s')
+
 logger = logging.getLogger(__name__)
 if DEBUG:
     logger.setLevel(logging.DEBUG)
 
 
 spell = SymSpell(max_dictionary_edit_distance=4)
-spell.load_dictionary("skill_dict.freq", 0, 1)
+spell.load_dictionary(get_resource_path("skill_dict"), 0, 1)
+
 
 known_corrections = {}
-with open('skill_corrections.csv', encoding='utf-8') as scf:
+with open(get_resource_path('skill_corrections'), encoding='utf-8') as scf:
     for line in scf.readlines():
         line = line.strip()
         w, r = line.split(',')
@@ -42,7 +42,7 @@ with open('skill_corrections.csv', encoding='utf-8') as scf:
 
 
 all_skills = {}
-with open('skill_list.txt') as slf:
+with open(get_resource_path('skill_list')) as slf:
     for line in slf.readlines():
         skill_name = line.strip()
         all_skills[skill_name.lower()] = skill_name
@@ -127,7 +127,7 @@ def extract_charm(frame_loc, slots, skills, skill_text):
 
             reconstructed_skill = reconstructed_skill.strip()
             if "<EMPTY_SKILL>" in reconstructed_skill:
-                with open("skill_corrections.csv", "a") as scf:
+                with open(get_resource_path("skill_corrections"), "a") as scf:
                     scf.write(f"{w.strip()},{reconstructed_skill}\n")
                 known_corrections[skill] = reconstructed_skill
             elif not is_skill(all_skills, reconstructed_skill):
@@ -144,7 +144,7 @@ def extract_charm(frame_loc, slots, skills, skill_text):
                     f"Corrected skill: {reconstructed_skill} from {skill}")
                 for w, r in zip(skill.split(), reconstructed_skill.split()):
                     if w not in known_corrections:
-                        with open("skill_corrections.csv", "a", encoding="utf-8") as scf:
+                        with open(get_resource_path("skill_corrections"), "a", encoding="utf-8") as scf:
                             scf.write(f"{w.strip()},{r.strip()}\n")
                         known_corrections[w] = r
                 break
@@ -162,27 +162,30 @@ def extract_charm(frame_loc, slots, skills, skill_text):
 
     return charm
 
+
 def extract_charms(frame_dir):
     charms = []
     try:
-        for frame_loc in tqdm(list(os.scandir(frame_dir)), desc="Parsing skills"):
-            frame_loc = frame_loc.path
-            print(f" Parsing {frame_loc}")
-            frame = cv2.imread(frame_loc)
+        with tqdm(list(os.scandir(frame_dir)), desc="Parsing skills")as tqdm_iter:
+            for frame_loc in tqdm_iter:
+                frame_loc = frame_loc.path
+                tqdm_iter.set_description(f"Parsing {frame_loc}")
+                frame = cv2.imread(frame_loc)
 
-            skill_only_im = remove_non_skill_info(frame)
-            slots = get_slots(skill_only_im)
+                skill_only_im = remove_non_skill_info(frame)
+                slots = get_slots(skill_only_im)
 
-            inverted = cv2.bitwise_not(skill_only_im)
+                inverted = cv2.bitwise_not(skill_only_im)
 
-            trunc_tr = apply_trunc_threshold(inverted)  # appears to work best
+                trunc_tr = apply_trunc_threshold(inverted)  # appears to work best
 
-            skills = get_skills(trunc_tr, True)
+                skills = get_skills(trunc_tr, True)
 
-            skill_text = read_text_from_skill_tuple(skills)
+                skill_text = read_text_from_skill_tuple(skills)
 
-            charm = extract_charm(frame_loc, slots, skills, skill_text)
-            charms.append(charm)
+                charm = extract_charm(frame_loc, slots, skills, skill_text)
+                charms.append(charm)
+                
     except Exception as e:
         logger.error(f"Crashed with {e}")
 

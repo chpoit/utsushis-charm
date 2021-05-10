@@ -4,3 +4,4 @@ scikit-image
 pytesseract
 symspellpy
 tqdm
+pyinstaller

@@ -1,5 +1,5 @@
 import json
-from Charm import Charm 
+from .Charm import Charm 
 
 
 def encode_charms(charm_file):
