@@ -16,9 +16,9 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 - A computer (Windows) 
   - Linux and Mac might work too, you wont be able to run the EXE and will have to run from source in a terminal window.
 - A USB cable to connect your switch to transfer files
-- This latest version of this downloaded to your computer
+- This latest version of this downloaded to your computer (Utsushis-Charm_**vx_x**.zip)
   - You can find it [here](https://github.com/chpoit/utsushis-charm/releases/latest)
-- **Google Tesseract** installed and in path (Utsushis-Charm_**vx_x**.zip)
+- **Google Tesseract** installed and in path 
   - A copy of the version 4 is bundled with the release. Just run it, no extra packages needed
     - Built by UB-Mannheim [License (Apache 2.0)](https://github.com/tesseract-ocr/tesseract/blob/master/LICENSE) 
     - Alternatively, download the same version here: [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.1.0.20190314.exe) 
