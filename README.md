@@ -76,9 +76,10 @@ If the program starts and closes without anything happening, open the `app.log` 
   - Make sure you installed it. You might have to reboot
   - Try adding it manually to the path
     - Potential Locations:
-      -  `C:\Program Files\Tesseract-OCR` (Version 4, Most likely)
-      -  `C:\Users\<USERNAME>\AppData\Local\Tesseract-OCR` (Version 3)
+      -  `C:\Program Files\Tesseract-OCR` (Most likely, if you chose "Install for anyone")
+      -  `C:\Users\<USERNAME>\AppData\Local\Tesseract-OCR` (If you chose "Install only for me")
       -  `C:\Program Files (x86)\Tesseract-OCR` (Version 4, less likely)
+  -  It seems really random wether it'll add it to path. If there is a request for it, I might add a "bruteforce" method to find the exe so people don't have to worry about this.
 
 
 ## Adding something to the path (Windows)
