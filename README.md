@@ -65,7 +65,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 If the program starts and closes without anything happening, open the `app.log` file and use this section to try and fix your issues
 
 ## Simple issues:
-- O charms found
+- 0 charms found
   - Make sure your clips are in the inputs folder
 - I had to enter skill by hand but it wont accept it
   - You need to enter them one word at a time, it might only not know what one of the words is.
@@ -78,7 +78,7 @@ If the program starts and closes without anything happening, open the `app.log` 
     - Potential Locations:
       -  `C:\Program Files\Tesseract-OCR` (Most likely, if you chose "Install for anyone")
       -  `C:\Users\<USERNAME>\AppData\Local\Tesseract-OCR` (If you chose "Install only for me")
-      -  `C:\Program Files (x86)\Tesseract-OCR` (Version 4, less likely)
+      -  `C:\Program Files (x86)\Tesseract-OCR` (Version 4, less likely, would happen if you manually downloaded a 32bit installer)
   -  It seems really random wether it'll add it to path. If there is a request for it, I might add a "bruteforce" method to find the exe so people don't have to worry about this.
 
 
