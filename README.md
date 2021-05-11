@@ -31,6 +31,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 ## Steps
 
 0. Unequip all jewels. You will create "fake" charms otherwise.
+   - Item Box -> Manage Equipment -> Set Decorations -> Equipment Box -> Remove all (Press '-' on controller)
    - Don't ask, this is way out of scope for something that takes you 30 seconds to do.
 1. Download the release bundle and follow the Requirements section  (Utsushis-Charm_**vx_x**.zip)
    - Make sure you unzip everythin and you leave the files where they are.
