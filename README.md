@@ -142,6 +142,6 @@ If you run from source, or call the executable from the terminal you can make us
 - `-h` or ` --help`: Shows arguments
 - `--thirdparty `: Shows 3rd party licenses
 - `--skip-frames`: Skips the first frame extraction step. Useful if the second step crashed.
--` --skip-charms`:`Skips the Tesseract-OCR step. Not sure why you would want that.
+- ` --skip-charms`:`Skips the Tesseract-OCR step. Not sure why you would want that.
 - `-i <INPUT_DIR>` or `--input <INPUT_DIR>`: Changes the Input directory for videos
 - `-f <FRAME_DIR>` or `--frames <FRAME_DIR>`: Changes the Directory used to store temporary frames
