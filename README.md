@@ -81,7 +81,8 @@ If the program starts and closes without anything happening, open the `app.log` 
       -  `C:\Users\<USERNAME>\AppData\Local\Tesseract-OCR` (If you chose "Install only for me")
       -  `C:\Program Files (x86)\Tesseract-OCR` (Version 4, less likely, would happen if you manually downloaded a 32bit installer)
   -  It seems really random wether it'll add it to path. If there is a request for it, I might add a "bruteforce" method to find the exe so people don't have to worry about this.
-
+- Any other issue:
+  - Consider creating a bug report [here](https://github.com/chpoit/utsushis-charm/issues/new)
 
 ## Adding something to the path (Windows)
 
