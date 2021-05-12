@@ -42,6 +42,19 @@
             "args": [
                 "--skip-frames"
             ]
+        },
+        {
+            "name": "Debug Charm Extraction",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--skip-frames",
+                "--frames",
+                "debug-frames"
+
+            ]
         }
     ]
 }

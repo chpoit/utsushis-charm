@@ -155,7 +155,7 @@ def extract_charm(frame_loc, slots, skills, skill_text):
             continue
 
         logger.debug(f"Added {skill}, {level}")
-        charm.add_skill(fix_skill_name(skill), level)
+        charm.add_skill(fix_skill_name(all_skills, skill), level)
 
     logger.debug(f"Finished charm for {frame_loc}")
     logger.debug(f"{frame_loc}: {charm.to_dict()}")
@@ -183,8 +183,11 @@ def extract_charms(frame_dir):
 
                 skill_text = read_text_from_skill_tuple(skills)
 
-                charm = extract_charm(frame_loc, slots, skills, skill_text)
-                charms.append(charm)
+                try:
+                    charm = extract_charm(frame_loc, slots, skills, skill_text)
+                    charms.append(charm)
+                except Exception as e:
+                    logger.error(f"An error occured when extracting charm on {frame_loc}. Error: {e}")
                 
     except Exception as e:
         logger.error(f"Crashed with {e}")
