@@ -21,8 +21,8 @@ def apply_black_white_mask(img, mask_img):
     return cv2.bitwise_and(img, img, mask=mask)
 
 
-def pre_crop_mask(img, mask_location):
-    pre_crop_filter = _load_potentially_transparent(mask_location)
+def apply_pre_crop_mask(img):
+    pre_crop_filter = _load_potentially_transparent(get_resource_path("mask"))
     return apply_black_white_mask(img, pre_crop_filter)
 
 
