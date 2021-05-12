@@ -1,5 +1,4 @@
-inputs/*
-masked/*
+*inputs*/*
 *frames*/*
 color_picker.py
 gray_scale_tester.py
