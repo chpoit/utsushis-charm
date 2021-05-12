@@ -17,11 +17,16 @@
             ]
         },
         {
-            "name": "Python: Current File",
-            "type": "python",
+            "name": "Node encoder",
+            "program": "${workspaceFolder}/js_encoder.js",
             "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal"
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node",
+            "args": [
+                "charms.single.json"
+            ]
         },
         {
             "name": "Frame Extraction",
