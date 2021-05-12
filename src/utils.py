@@ -26,31 +26,12 @@ def pre_crop_mask(img, mask_location):
     return apply_black_white_mask(img, pre_crop_filter)
 
 
-def get_charm_borders(img):
-    hsv = [0, 179, 0, 255, 1, 255]
+def get_frame_change_observation_section(img):
     charm_only_filter_path = get_resource_path("charm_only")
     charm_only_filter = cv2.imread(charm_only_filter_path)
-
-    lower = np.array([hsv[0], hsv[2], hsv[4]])
-    upper = np.array([hsv[1], hsv[3], hsv[5]])
-
-    mask = cv2.inRange(charm_only_filter, lower, upper)
-
-    return cv2.bitwise_or(img, img, mask=mask)
-
-
-def only_keep_shiny_border(img):
-    imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    hsv = [0, 39, 0, 255, 109, 255]
-
-    lower = np.array([hsv[0], hsv[2], hsv[4]])
-    upper = np.array([hsv[1], hsv[3], hsv[5]])
-
-    mask = cv2.inRange(imgHSV, lower, upper)
-    imgResult = cv2.bitwise_and(img, img, mask=mask)
-
-    ret, imgResult = cv2.threshold(imgResult, 50, 255, cv2.THRESH_BINARY)
-    return imgResult
+    
+    charm_only = apply_black_white_mask(img, charm_only_filter)
+    return cv2.cvtColor(charm_only, cv2.COLOR_BGR2GRAY)
 
 
 def remove_non_skill_info(img):
