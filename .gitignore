@@ -1,6 +1,6 @@
 inputs/*
 masked/*
-*frames/*
+*frames*/*
 color_picker.py
 gray_scale_tester.py
 charms.encoded.txt

@@ -1,4 +1,5 @@
 opencv-python
+opencv-contrib-python
 numpy
 scikit-image
 pytesseract
