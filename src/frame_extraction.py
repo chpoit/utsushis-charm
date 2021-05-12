@@ -17,6 +17,22 @@ def crop_frame(frame):
     return cropped, charm_only
 
 
+def crop_frames(capture_device):
+    results = []
+    for i, f in read_frames(capture_device):
+        yield i, crop_frame(f)
+
+
+def read_frames(capture_device):
+    i = 0
+    while(True):
+        ret, frame = capture_device.read()
+        if not ret:
+            break
+        yield i, frame
+        i += 1
+
+
 def is_new_frame(previous_charm_marker, charm_only):
     score = structural_similarity(
         previous_charm_marker, charm_only)
@@ -30,23 +46,19 @@ def extract_unique_frames(input_dir, frame_dir):
     input_files = list(
         filter(lambda x: x.name.endswith(".mp4"), os.scandir(input_dir)))
     print(f"Total input files to scan: {len(input_files)}")
-    
+
     for f_loc in input_files:
         f_name = f_loc.name
         f_loc = f_loc.path
 
         cap = cv2.VideoCapture(f_loc)
+        frame_count = floor(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
         previous_charm_marker = None
-        with tqdm(total=floor(cap.get(cv2.CAP_PROP_FRAME_COUNT)), desc=f"{f_name},  Total Estimated charms found: {charm_count}") as tqdm_iter:
-            while(True):
-                ret, frame = cap.read()
-                if not ret:
-                    break
-                currentFrame += 1
+        with tqdm(crop_frames(cap), total=frame_count, desc=f"{f_name},  Total Estimated charms found: {charm_count}") as frame_pbar:
+            for i, cropped_tuple in frame_pbar:
+                cropped, charm_only = cropped_tuple
                 name = os.path.join(frame_dir, f"frame{currentFrame}.png")
-
-                cropped, charm_only = crop_frame(frame)
                 if previous_charm_marker is not None:
 
                     if is_new_frame(previous_charm_marker, charm_only):
@@ -59,9 +71,9 @@ def extract_unique_frames(input_dir, frame_dir):
 
                 previous_charm_marker = charm_only
 
-                tqdm_iter.set_description(
+                frame_pbar.set_description(
                     f"{f_name},  Total Estimated charms found: {charm_count}")
-                tqdm_iter.update(1)
+                currentFrame += 1
 
         cap.release()
         cv2.destroyAllWindows()
