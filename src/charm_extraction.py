@@ -20,6 +20,7 @@ import logging
 import json
 import cv2
 import os
+from joblib import Parallel, delayed
 DEBUG = False
 
 

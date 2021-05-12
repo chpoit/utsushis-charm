@@ -6,3 +6,4 @@ pytesseract
 symspellpy
 tqdm
 pyinstaller
+joblib
