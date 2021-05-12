@@ -88,17 +88,16 @@ def extract_unique_frames(input_dir, frame_dir):
         is_new = True
         sourceNo, sourceCrop, sourceCharmOnly = all_unique_frames[i]
         for j in range(i+1, len(all_unique_frames)):
-            _, cropped, charm_only = all_unique_frames[j]            
+            _, cropped, charm_only = all_unique_frames[j]
             is_new = is_new_frame(sourceCharmOnly, charm_only)
             if not is_new:
                 break
         if is_new:
-            non_seq+=1
+            non_seq += 1
             name = os.path.join(frame_dir, f"frame{sourceNo}.png")
             cv2.imwrite(name, sourceCrop)
-    
-    print(f"Reduced frames from {charm_count} to {non_seq}")
 
+    print(f"Reduced frames from {charm_count} to {non_seq}")
 
 
 if __name__ == "__main__":
