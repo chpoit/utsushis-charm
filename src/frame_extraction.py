@@ -4,6 +4,7 @@ from .utils import apply_pre_crop_mask, get_frame_change_observation_section, ge
 from tqdm import tqdm
 from math import floor
 from skimage.metrics import structural_similarity
+import numpy as np
 
 
 def crop_frame(frame):
@@ -34,9 +35,10 @@ def read_frames(capture_device):
 
 
 def is_new_frame(previous_charm_marker, charm_only):
-    score = structural_similarity(
-        previous_charm_marker, charm_only)
-    return score < 0.996
+    diff = cv2.absdiff(previous_charm_marker, charm_only)
+    ret, threshold = cv2.threshold(diff, 30,255, cv2.THRESH_BINARY_INV)
+
+    return 0 in threshold[:, ]
 
 
 def extract_unique_frames(input_dir, frame_dir):
