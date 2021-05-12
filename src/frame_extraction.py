@@ -83,15 +83,6 @@ def extract_unique_frames(input_dir, frame_dir):
         cap.release()
         cv2.destroyAllWindows()
 
-    #299-300
-    #583-585
-    #847-855
-    #890-913
-    #1394-1400
-    #1580-1644
-    #1685-1689-1763-1764
-    #1792-1794
-    #no-charms:2
     non_seq = 0
     for i in tqdm(range(len(all_unique_frames)), desc="Detecting non-sequential duplicate frames"):
         is_new = True
@@ -108,9 +99,6 @@ def extract_unique_frames(input_dir, frame_dir):
     
     print(f"Reduced frames from {charm_count} to {non_seq}")
 
-    # for currentFrame, cropped, charm_only in tqdm(all_unique_frames, desc="Writing frames"):
-    #     name = os.path.join(frame_dir, f"frame{currentFrame}.png")
-    #     cv2.imwrite(name, cropped)
 
 
 if __name__ == "__main__":
