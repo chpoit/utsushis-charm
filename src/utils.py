@@ -31,7 +31,7 @@ def get_frame_change_observation_section(img):
     charm_only_filter = cv2.imread(charm_only_filter_path)
 
     charm_only = apply_black_white_mask(img, charm_only_filter)
-    return cv2.cvtColor(charm_only, cv2.COLOR_BGR2GRAY)
+    return cv2.cvtColor(charm_only[185:424, 15:370], cv2.COLOR_BGR2GRAY)
 
 
 def remove_non_skill_info(img):
