@@ -57,7 +57,7 @@ def extract_unique_frames(input_dir, frame_dir):
         frame_count = floor(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
         previous_charm_marker = None
-        with tqdm(crop_frames(cap), total=frame_count, desc=f"{f_name},  Total Estimated charms found: {charm_count}") as frame_pbar:
+        with tqdm(crop_frames(cap), total=frame_count, desc=f"{f_name},  Total Estimated charms/frames found: {charm_count}") as frame_pbar:
             for i, cropped_tuple in frame_pbar:
                 cropped, charm_only = cropped_tuple
                 name = os.path.join(frame_dir, f"frame{currentFrame}.png")
@@ -74,7 +74,7 @@ def extract_unique_frames(input_dir, frame_dir):
                 previous_charm_marker = charm_only
 
                 frame_pbar.set_description(
-                    f"{f_name},  Total Estimated charms found: {charm_count}")
+                    f"{f_name},  Total Estimated charms/frames found: {charm_count}")
                 currentFrame += 1
 
         cap.release()

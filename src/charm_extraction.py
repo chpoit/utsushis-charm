@@ -169,19 +169,23 @@ def extract_charms(frame_dir):
         with tqdm(list(os.scandir(frame_dir)), desc="Parsing skills")as tqdm_iter:
             for frame_loc in tqdm_iter:
                 frame_loc = frame_loc.path
-                tqdm_iter.set_description(f"Parsing {frame_loc}")
-                frame = cv2.imread(frame_loc)
+                try:
+                    tqdm_iter.set_description(f"Parsing {frame_loc}")
+                    frame = cv2.imread(frame_loc)
 
-                skill_only_im = remove_non_skill_info(frame)
-                slots = get_slots(skill_only_im)
+                    skill_only_im = remove_non_skill_info(frame)
+                    slots = get_slots(skill_only_im)
 
-                inverted = cv2.bitwise_not(skill_only_im)
+                    inverted = cv2.bitwise_not(skill_only_im)
 
-                trunc_tr = apply_trunc_threshold(inverted)  # appears to work best
+                    trunc_tr = apply_trunc_threshold(inverted)  # appears to work best
 
-                skills = get_skills(trunc_tr, True)
+                    skills = get_skills(trunc_tr, True)
 
-                skill_text = read_text_from_skill_tuple(skills)
+                    skill_text = read_text_from_skill_tuple(skills)
+
+                except Exception as e:
+                    logger.error(f"An error occured when analysing frame {frame_loc}. Error: {e}")
 
                 try:
                     charm = extract_charm(frame_loc, slots, skills, skill_text)
