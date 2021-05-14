@@ -21,12 +21,11 @@ def main(args):
 
     input_dir = args.input_dir
     frame_dir = args.frame_dir
-    charm_json = "charms.json"
+    charm_json = args.charm_json
+    charm_encoded = args.charm_encoded
 
-    if input_dir=="inputs":
-        os.makedirs(input_dir, exist_ok=True)
-    if frame_dir=="frames":
-        os.makedirs(frame_dir, exist_ok=True)
+    os.makedirs(input_dir, exist_ok=True)
+    os.makedirs(frame_dir, exist_ok=True)
 
     if not args.skip_frames:
         extract_unique_frames(input_dir, frame_dir)
@@ -38,7 +37,7 @@ def main(args):
         print(f"Saved {len(charms)} charms")
 
     print("Encoding charms")
-    encode_charms(charm_json)
+    encode_charms(charm_json, charm_encoded)
     print("Charms encoded under \"charms.encoded.txt\". Use the contents of that file on the MHR Wiki armor set builder")
 
 

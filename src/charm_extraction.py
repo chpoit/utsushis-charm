@@ -20,8 +20,8 @@ import logging
 import json
 import cv2
 import os
+from joblib import Parallel, delayed
 DEBUG = False
-
 
 
 logger = logging.getLogger(__name__)
@@ -163,40 +163,82 @@ def extract_charm(frame_loc, slots, skills, skill_text):
     return charm
 
 
-def extract_charms(frame_dir):
+def extract_charms(frame_dir, max_cpu=os.cpu_count()-1):
     charms = []
+    charm_loc = []
+    jobs = max(1, max_cpu)
+    print(f"Using {jobs} thread(s)")
     try:
-        with tqdm(list(os.scandir(frame_dir)), desc="Parsing skills")as tqdm_iter:
-            for frame_loc in tqdm_iter:
-                frame_loc = frame_loc.path
-                try:
-                    tqdm_iter.set_description(f"Parsing {frame_loc}")
-                    frame = cv2.imread(frame_loc)
+        frames = list(
+            map(lambda frame_loc: (frame_loc.path, cv2.imread(
+                frame_loc.path)), os.scandir(frame_dir))
+        )
 
-                    skill_only_im = remove_non_skill_info(frame)
-                    slots = get_slots(skill_only_im)
+        with tqdm(frames, desc="Parsing skill and slots") as tqdm_iter:
+            combined_data = Parallel(n_jobs=jobs)(
+                delayed(extract_basic_info)(frame_loc, frame) for frame_loc, frame in tqdm_iter)
+            combined_data = list(filter(lambda x: x, combined_data))
 
-                    inverted = cv2.bitwise_not(skill_only_im)
-
-                    trunc_tr = apply_trunc_threshold(inverted)  # appears to work best
-
-                    skills = get_skills(trunc_tr, True)
-
-                    skill_text = read_text_from_skill_tuple(skills)
-
-                except Exception as e:
-                    logger.error(f"An error occured when analysing frame {frame_loc}. Error: {e}")
-
-                try:
-                    charm = extract_charm(frame_loc, slots, skills, skill_text)
+        for frame_loc, slots, skills, skill_text in tqdm(combined_data, desc="Validating and fixing charms"):
+            try:
+                charm = extract_charm(frame_loc, slots, skills, skill_text)
+                if charm.has_skills():
                     charms.append(charm)
-                except Exception as e:
-                    logger.error(f"An error occured when extracting charm on {frame_loc}. Error: {e}")
-                
+                    charm_loc.append(frame_loc)
+                else:
+                    logger.warn(f"Skill-less charm found in {frame_loc}")
+            except Exception as e:
+                logger.error(
+                    f"An error occured when extracting charm on {frame_loc}. Error: {e}")
+
     except Exception as e:
         logger.error(f"Crashed with {e}")
 
-    return set(charms)
+    unique_charms = set(charms)
+    if len(charms) != len(unique_charms):
+        print("Pre-duplicate", len(charms))
+        print("Post-duplicate:", len(unique_charms))
+        save_duplicates(charm_loc, charms)
+
+    return unique_charms
+
+
+def save_duplicates(charm_loc, charms):
+    dupe_file_name = "charm.duplicates.txt"
+    charm_dupes = {}
+    for frame_loc, charm in zip(charm_loc, charms):
+        if charm not in charm_dupes:
+            charm_dupes[charm] = []
+        charm_dupes[charm].append(frame_loc)
+
+    with open(dupe_file_name, "w") as dupe_file:
+        for charm in filter(lambda x: len(charm_dupes[x]) > 1, charm_dupes):
+            locations = charm_dupes[charm]
+            dupe_file.write(f"{charm.to_dict()}\n")
+            for frame_loc in locations:
+                dupe_file.write(f"{frame_loc}\n")
+            dupe_file.write("\n")
+
+    print(f"Duplicate charms can be found in {dupe_file_name}")
+
+
+def extract_basic_info(frame_loc, frame):
+    try:
+        skill_only_im = remove_non_skill_info(frame)
+        slots = get_slots(skill_only_im)
+
+        inverted = cv2.bitwise_not(skill_only_im)
+
+        trunc_tr = apply_trunc_threshold(inverted)  # appears to work best
+
+        skills = get_skills(trunc_tr, True)
+
+        skill_text = read_text_from_skill_tuple(skills)
+        return frame_loc, slots, skills, skill_text
+    except Exception as e:
+        logger.error(
+            f"An error occured when analysing frame {frame_loc}. Error: {e}")
+        return None
 
 
 def save_charms(charms, charm_json):

@@ -59,7 +59,13 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 10. If no charm errored, or you don't care about those charms, you should be able to open the `charms.encoded.txt` file and copy the contents into the import box of [MHR-Wiki](https://mhrise.wiki-db.com/sim/?hl=en)
 
 
-
+# FAQ
+- Q: Can I use a capture card instead?
+  - I tested recording in 720p and 1080p with OBS using a Genki Shadowcast and everything worked. (MKV, others should work too)
+  - I recommend recording in 30fps to avoid doubling the frames to process
+  - I see no reason other capture cards should not work
+  - 1080p adds extra processing due to a downscaling step to 720p (20-30% slower)
+  - I also tested using an Mclassic without any issues.
 
 # Troubleshooting
 
@@ -146,3 +152,5 @@ If you run from source, or call the executable from the terminal you can make us
 - ` --skip-charms`:`Skips the Tesseract-OCR step. Not sure why you would want that.
 - `-i <INPUT_DIR>` or `--input <INPUT_DIR>`: Changes the Input directory for videos
 - `-f <FRAME_DIR>` or `--frames <FRAME_DIR>`: Changes the Directory used to store temporary frames
+- `-c <FILE_NAME>` or `--charm-json <FILE_NAME>`: Changes the name of the json formatted charms
+- `-e <FILE_NAME>` or `--charm-encoded <FILE_NAME>`: Changes the name of the MHR-Wiki formatted charms

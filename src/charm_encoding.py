@@ -2,10 +2,10 @@ import json
 from .Charm import Charm 
 
 
-def encode_charms(charm_file):
+def encode_charms(charm_file, charm_encoded):
     with open(charm_file) as cjsf:  
         charms = json.load(cjsf)
-    with open("charms.encoded.txt", "w") as encoded:
+    with open(charm_encoded, "w") as encoded:
         for charm in map(Charm.from_dict, charms):
             encoded.write(f"{charm.to_simple_encode()}\n")
 

@@ -2,8 +2,9 @@ import os
 import cv2
 import numpy as np
 from skimage.metrics import structural_similarity
-import pytesseract
 from math import floor
+from .manual_tesseract_bindings import Tesseract, process_image_with_tesseract
+tess = Tesseract()
 
 
 def _load_potentially_transparent(filename):
@@ -29,25 +30,15 @@ def apply_pre_crop_mask(img):
 def get_frame_change_observation_section(img):
     charm_only_filter_path = get_resource_path("charm_only")
     charm_only_filter = cv2.imread(charm_only_filter_path)
-
     charm_only = apply_black_white_mask(img, charm_only_filter)
-    return cv2.cvtColor(charm_only, cv2.COLOR_BGR2GRAY)
+    return cv2.cvtColor(charm_only[185:424, 15:370], cv2.COLOR_BGR2GRAY)
 
 
 def remove_non_skill_info(img):
-    hsv = [0, 179, 0, 255, 142, 255]
     skill_only_path = get_resource_path("skill_mask")
     skill_filter = cv2.imread(skill_only_path)
-
-    lower = np.array([hsv[0], hsv[2], hsv[4]])
-    upper = np.array([hsv[1], hsv[3], hsv[5]])
-
-    imgHSV = cv2.cvtColor(skill_filter, cv2.COLOR_BGR2HSV)
-    mask = cv2.inRange(imgHSV, lower, upper)
-
-    imgResult = cv2.bitwise_and(img, img, mask=mask)
-
-    return imgResult
+    skill_only = apply_black_white_mask(img, skill_filter)
+    return skill_only
 
 
 def apply_trunc_threshold(img):
@@ -79,9 +70,8 @@ def _trim_image_past_skill_name(img, background_color=203):
 def read_text_from_skill_tuple(skills):
     skill_text = []
     for skill_img, level in skills:
-        skill_img = cv2.cvtColor(skill_img, cv2.COLOR_BGR2GRAY)
         skill_img = _trim_image_past_skill_name(skill_img)
-        skill = pytesseract.image_to_string(skill_img)
+        skill = process_image_with_tesseract(tess, skill_img)
         skill_text.append((skill, level))
 
     return skill_text

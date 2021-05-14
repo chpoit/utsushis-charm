@@ -5,18 +5,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Node encoder",
-            "program": "${workspaceFolder}/js_encoder.js",
-            "request": "launch",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "type": "pwa-node",
-            "args": [
-                "charms.single.json"
-            ]
-        },
-        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
@@ -53,7 +41,6 @@
                 "--skip-frames",
                 "--frames",
                 "debug-frames"
-
             ]
         }
     ]
