@@ -142,7 +142,12 @@ In all seriousness, the work is done in a few broad steps:
   - Unfortunately, the joblib 'loky' backend wont work with frozen executables, and the other backends offer no noticeable gain in performance. This is getting shelved until a potential rewrite under a "faster" rewrite. Current execution time is 4-8 minutes so it's really not too bad.
 
 # Building the executable
-Run the `scripts\build_release.bat` file. You will need to have 7zip in path.
+- Requirements: 
+  - 7zip in path
+  - A virtual env called "env" in this project (I used the `virtualenv` module)
+  - Have all the contents of `requirements.txt` installed in said env
+- Make sure you are not "currently" in the env (otherwise files do weird things)
+- Run the `scripts\build_release.bat` file.
 
 Sometimes windows will lock some files for a while and there is nothing you can do about it other than wait.
 

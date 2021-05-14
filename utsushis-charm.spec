@@ -5,14 +5,12 @@ block_cipher = None
 
 
 a = Analysis(['main.py'],
-             pathex=['C:\\Users\\chpoit\\Documents\\utsushis-charm'],
+             pathex=['.'],
              binaries=[],
              datas=[
-                 ("images/*", 'images' ), 
-                 ("images/levels/*", 'images/levels' ), 
-                 ("images/slots/*", 'images/slots' ), 
-                 ("data/*", 'data' ),
-                 ("LICENSES/*", 'LICENSES' ),
+                 ("images", 'images' ), 
+                 ("data", 'data' ),
+                 ("LICENSES", 'LICENSES' ),
                  ],
              hiddenimports=[],
              hookspath=[],
@@ -22,8 +20,10 @@ a = Analysis(['main.py'],
              win_private_assemblies=False,
              cipher=block_cipher,
              noarchive=False)
+
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
+
 exe = EXE(pyz,
           a.scripts,
           a.binaries,
@@ -37,4 +37,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True )
+          console=True)
