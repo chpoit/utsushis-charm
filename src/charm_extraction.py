@@ -24,7 +24,6 @@ from joblib import Parallel, delayed
 DEBUG = False
 
 
-
 logger = logging.getLogger(__name__)
 if DEBUG:
     logger.setLevel(logging.DEBUG)
@@ -164,40 +163,54 @@ def extract_charm(frame_loc, slots, skills, skill_text):
     return charm
 
 
-def extract_charms(frame_dir):
+def extract_charms(frame_dir, max_cpu=os.cpu_count()-1):
     charms = []
+    jobs = max(1, max_cpu)
     try:
-        with tqdm(list(os.scandir(frame_dir)), desc="Parsing skills")as tqdm_iter:
-            for frame_loc in tqdm_iter:
-                frame_loc = frame_loc.path
-                try:
-                    tqdm_iter.set_description(f"Parsing {frame_loc}")
-                    frame = cv2.imread(frame_loc)
+        frames = list(
+            map(lambda frame_loc: frame_loc.path, os.scandir(frame_dir)))
 
-                    skill_only_im = remove_non_skill_info(frame)
-                    slots = get_slots(skill_only_im)
+        with tqdm(frames, desc="Parsing skill and slots") as tqdm_iter:
+            combined_data = Parallel(n_jobs=jobs)(
+                delayed(extract_basic_info)(frame_loc) for frame_loc in tqdm_iter)
+            combined_data = list(filter(lambda x: x, combined_data))
 
-                    inverted = cv2.bitwise_not(skill_only_im)
+        for frame_loc, slots, skills, skill_text in tqdm(combined_data, desc="Validating and fixing charms"):
+            try:
+                charm = extract_charm(frame_loc, slots, skills, skill_text)
+                charms.append(charm)
+            except Exception as e:
+                logger.error(
+                    f"An error occured when extracting charm on {frame_loc}. Error: {e}")
 
-                    trunc_tr = apply_trunc_threshold(inverted)  # appears to work best
-
-                    skills = get_skills(trunc_tr, True)
-
-                    skill_text = read_text_from_skill_tuple(skills)
-
-                except Exception as e:
-                    logger.error(f"An error occured when analysing frame {frame_loc}. Error: {e}")
-
-                try:
-                    charm = extract_charm(frame_loc, slots, skills, skill_text)
-                    charms.append(charm)
-                except Exception as e:
-                    logger.error(f"An error occured when extracting charm on {frame_loc}. Error: {e}")
-                
     except Exception as e:
         logger.error(f"Crashed with {e}")
 
-    return set(charms)
+    print("Pre-duplicate", len(charms))
+    charms = set(charms)
+    print("Post-duplicate:", len(charms))
+    return charms
+
+
+def extract_basic_info(frame_loc):
+    try:
+        frame = cv2.imread(frame_loc)
+
+        skill_only_im = remove_non_skill_info(frame)
+        slots = get_slots(skill_only_im)
+
+        inverted = cv2.bitwise_not(skill_only_im)
+
+        trunc_tr = apply_trunc_threshold(inverted)  # appears to work best
+
+        skills = get_skills(trunc_tr, True)
+
+        skill_text = read_text_from_skill_tuple(skills)
+        return frame_loc, slots, skills, skill_text
+    except Exception as e:
+        logger.error(
+            f"An error occured when analysing frame {frame_loc}. Error: {e}")
+        return None
 
 
 def save_charms(charms, charm_json):
