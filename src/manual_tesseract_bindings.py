@@ -136,6 +136,8 @@ def process_image_with_tesseract(tesseract, image):
     else:
         depth = image.shape[2]
 
+    print("Shape:", image.shape)
+
     tesseract.set_image(image.ctypes, width, height, depth)
     tesseract.set_resolution(width)
     text = tesseract.get_text()
