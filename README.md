@@ -138,10 +138,13 @@ In all seriousness, the work is done in a few broad steps:
 - [ ] Use the page number in the "Is the last frame the same" check. (Low priority, charms still seem to get detected on page swap)
 - [ ] Docker image for deployment?
 - [ ] UI
-- [ ] Multithreading for some of that SPEEEEED
+- [ ] ~~Multithreading for some of that SPEEEEED~~
+  - Unfortunately, the joblib 'loky' backend wont work with frozen executables, and the other backends offer no noticeable gain in performance. This is getting shelved until a potential rewrite under a "faster" rewrite. Current execution time is 4-8 minutes so it's really not too bad.
 
 # Building the executable
 Run the `scripts\build_release.bat` file. You will need to have 7zip in path.
+
+Sometimes windows will lock some files for a while and there is nothing you can do about it other than wait.
 
 # Extra command line options
 If you run from source, or call the executable from the terminal you can make use of the following flags/arguments to achieve different functionality
