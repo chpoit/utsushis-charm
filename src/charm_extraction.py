@@ -20,6 +20,7 @@ import logging
 import json
 import cv2
 import os
+from multiprocessing import Pool
 from joblib import Parallel, delayed
 DEBUG = False
 
@@ -175,7 +176,7 @@ def extract_charms(frame_dir, max_cpu=os.cpu_count()-1):
         )
 
         with tqdm(frames, desc="Parsing skill and slots") as tqdm_iter:
-            combined_data = Parallel(n_jobs=jobs)(
+            combined_data = Parallel(n_jobs=jobs, backend='multiprocessing')(
                 delayed(extract_basic_info)(frame_loc, frame) for frame_loc, frame in tqdm_iter)
             combined_data = list(filter(lambda x: x, combined_data))
 

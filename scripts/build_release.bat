@@ -8,12 +8,12 @@ set archive_name="Utsushis-Charm_v%version%.zip"
 echo "Building version %version%"
 
 del %archive_name%
-rd /s /q "build"
 rd /s /q "dist"
 md dist
 md "dist\inputs"
 
-python -m PyInstaller .\utsushis-charm.spec --onefile
+@REM python -m PyInstaller .\utsushis-charm.spec --onefile
+python -m PyInstaller .\utsushis-charm.spec
 
 copy %skill_corrections% "dist\%skill_corrections%"
 

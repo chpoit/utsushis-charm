@@ -18,9 +18,9 @@ class TesseractError(Exception):
 def find_tesseract():
     # TODO: Make this resilient to "change" (tesseract version), probably not necessary
     locations = [
-        ctypes.util.find_library("libtesseract-4"), #win32
-        ctypes.util.find_library("libtesseract302"), #win32 version 3.2
-        ctypes.util.find_library("tesseract"), #others
+        ctypes.util.find_library("libtesseract-4"),  # win32
+        ctypes.util.find_library("libtesseract302"),  # win32 version 3.2
+        ctypes.util.find_library("tesseract"),  # others
         os.path.join(os.getenv("ProgramW6432"),
                      "Tesseract-OCR", "libtesseract-4.dll"),
         os.path.join(os.getenv('LOCALAPPDATA'),
@@ -38,6 +38,22 @@ def find_tesseract():
 
     raise TesseractError(
         'Tesseract library was not found on your system. Please install it')
+
+
+def set_tessdata():
+    if 'TESSDATA_PREFIX' in os.environ:
+        return
+    path = find_tesseract()
+    path = os.path.basename(path)
+    TESSDATA_PREFIX = os.path.join(path, 'tessdata')
+    os.environ['TESSDATA_PREFIX'] = TESSDATA_PREFIX
+    logger.debug(f"Set 'TESSDATA_PREFIX' to {TESSDATA_PREFIX}")
+
+
+def get_datapath():
+    if 'TESSDATA_PREFIX' not in os.environ:
+        set_tessdata()
+    return os.environ['TESSDATA_PREFIX']
 
 
 class Tesseract(object):
@@ -99,6 +115,7 @@ class Tesseract(object):
 
         # required windows nonsense
         encoded_lang = language.encode("utf-8")
+        datapath = get_datapath() if datapath is None else datapath
         encoded_datapath = None if datapath is None else datapath.encode(
             "utf-8")
 
@@ -172,6 +189,7 @@ def process_image_with_tesseract(tesseract, image):
 
 
 if __name__ == '__main__':
+    set_tessdata()
     PACKAGE_PARENT = '..'
     SCRIPT_DIR = os.path.dirname(os.path.realpath(
         os.path.join(os.getcwd(), os.path.expanduser(__file__))))
