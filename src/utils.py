@@ -39,15 +39,6 @@ def remove_non_skill_info(img):
     skill_filter = cv2.imread(skill_only_path)
     skill_only = apply_black_white_mask(img, skill_filter)
     return skill_only
-    # lower = np.array([hsv[0], hsv[2], hsv[4]])
-    # upper = np.array([hsv[1], hsv[3], hsv[5]])
-
-    # imgHSV = cv2.cvtColor(skill_filter, cv2.COLOR_BGR2HSV)
-    # mask = cv2.inRange(imgHSV, lower, upper)
-
-    # imgResult = cv2.bitwise_and(img, img, mask=mask)
-
-    # return imgResult
 
 
 def apply_trunc_threshold(img):

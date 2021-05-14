@@ -6,17 +6,38 @@ import sys
 import cv2
 import ctypes
 import ctypes.util
-
-
-# TODO: Make this resilient to "change" (version)
-if sys.platform == 'win32':
-    LIBNAME = 'libtesseract-4'
-else:
-    LIBNAME = 'tesseract'
+import shutil
+import logging
+logger = logging.getLogger(__name__)
 
 
 class TesseractError(Exception):
     pass
+
+
+def find_tesseract():
+    # TODO: Make this resilient to "change" (tesseract version), probably not necessary
+    locations = [
+        ctypes.util.find_library("libtesseract-4"), #win32
+        ctypes.util.find_library("libtesseract302"), #win32 version 3.2
+        ctypes.util.find_library("tesseract"), #others
+        os.path.join(os.getenv("ProgramW6432"),
+                     "Tesseract-OCR", "libtesseract-4.dll"),
+        os.path.join(os.getenv('LOCALAPPDATA'),
+                     "Tesseract-OCR", "libtesseract-4.dll"),
+        os.path.join(os.getenv("ProgramFiles"),
+                     "Tesseract-OCR", "libtesseract-4.dll"),
+        os.path.join(os.getenv("programfiles(x86)"),
+                     "Tesseract-OCR", "libtesseract-4.dll"),
+    ]
+
+    for potential in filter(lambda x: x, locations):
+        if os.path.isfile(potential):
+            logger.debug(f"Using tesseract at {potential}")
+            return potential
+
+    raise TesseractError(
+        'Tesseract library was not found on your system. Please install it')
 
 
 class Tesseract(object):
@@ -31,14 +52,14 @@ class Tesseract(object):
         if cls._lib is not None:
             return
         if lib_path is None:
-            lib_path = ctypes.util.find_library(LIBNAME)
+            lib_path = find_tesseract()
             if lib_path is None:
-                raise TesseractError('tesseract library not found')
+                raise TesseractError(
+                    'Tesseract library was not found on your system. Please install it')
         cls._lib = lib = ctypes.CDLL(lib_path)
 
         # source:
-        # https://github.com/tesseract-ocr/tesseract/
-        #         blob/3.02.02/api/capi.h
+        # https://github.com/tesseract-ocr/tesseract/blob/3.02.02/api/capi.h
 
         lib.TessBaseAPICreate.restype = cls.TessBaseAPI
 
@@ -76,9 +97,11 @@ class Tesseract(object):
             self.setup_lib(lib_path)
         self._api = self._lib.TessBaseAPICreate()
 
+        # required windows nonsense
         encoded_lang = language.encode("utf-8")
         encoded_datapath = None if datapath is None else datapath.encode(
             "utf-8")
+
         init = self._lib.TessBaseAPIInit3(
             self._api, encoded_datapath, encoded_lang)
 
@@ -145,8 +168,6 @@ def process_image_with_tesseract(tesseract, image):
     tesseract.set_variable("whitelist", whitelist)
     tesseract.set_resolution()
     text = tesseract.get_text()
-    # print(text)
-    # print(tesseract.get_utf8_text())
     return text.strip()
 
 
@@ -159,9 +180,8 @@ if __name__ == '__main__':
 
     test_img = [
         "frames/frame0.png",
-        "frames/frame192.png",
+        "frames/frame52.png",
         "frames/frame200.png",
-        # './Untitled.png',
     ]
     test_img2 = [
         # './Untitled.png',
@@ -174,7 +194,6 @@ if __name__ == '__main__':
         for t in test_img:
             print(t)
             img = cv2.imread(t)
-            # img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             skill_only_im = remove_non_skill_info(img)
 
             inverted = cv2.bitwise_not(skill_only_im)
@@ -182,8 +201,6 @@ if __name__ == '__main__':
 
             skills = get_skills(trunc_tr, True)
             for skill_img, level in skills:
-                # cv2.imshow("azsdf",skill_img)
-                # cv2.waitKey(0)
                 skill_img = cv2.cvtColor(skill_img, cv2.COLOR_BGR2GRAY)
                 skill_img = _trim_image_past_skill_name(skill_img)
                 res = process_image_with_tesseract(tess, skill_img)
@@ -192,7 +209,7 @@ if __name__ == '__main__':
     except Exception as e:
         print(e)
         pass
-    
+
     for t in test_img2:
         tess = Tesseract()
         img = cv2.imread(t, 0)

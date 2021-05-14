@@ -166,7 +166,6 @@ def extract_charm(frame_loc, slots, skills, skill_text):
 def extract_charms(frame_dir, max_cpu=os.cpu_count()-1):
     charms = []
     jobs = max(1, max_cpu)
-    # jobs = 3
     print(f"Using {jobs} thread(s)")
     try:
         frames = list(
@@ -177,7 +176,6 @@ def extract_charms(frame_dir, max_cpu=os.cpu_count()-1):
         with tqdm(frames, desc="Parsing skill and slots") as tqdm_iter:
             combined_data = Parallel(n_jobs=jobs)(
                 delayed(extract_basic_info)(frame_loc, frame) for frame_loc, frame in tqdm_iter)
-            # combined_data = [extract_basic_info(frame_loc, frame) for frame_loc, frame in tqdm_iter]
             combined_data = list(filter(lambda x: x, combined_data))
 
         for frame_loc, slots, skills, skill_text in tqdm(combined_data, desc="Validating and fixing charms"):
@@ -210,7 +208,6 @@ def extract_basic_info(frame_loc, frame):
         trunc_tr = apply_trunc_threshold(inverted)  # appears to work best
 
         skills = get_skills(trunc_tr, True)
-        # skills = get_skills(skill_only_im)
 
         skill_text = read_text_from_skill_tuple(skills)
         return frame_loc, slots, skills, skill_text
