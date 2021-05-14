@@ -165,6 +165,7 @@ def extract_charm(frame_loc, slots, skills, skill_text):
 
 def extract_charms(frame_dir, max_cpu=os.cpu_count()-1):
     charms = []
+    charm_loc = []
     jobs = max(1, max_cpu)
     print(f"Using {jobs} thread(s)")
     try:
@@ -183,6 +184,7 @@ def extract_charms(frame_dir, max_cpu=os.cpu_count()-1):
                 charm = extract_charm(frame_loc, slots, skills, skill_text)
                 if charm.has_skills():
                     charms.append(charm)
+                    charm_loc.append(frame_loc)
                 else:
                     logger.warn(f"Skill-less charm found in {frame_loc}")
             except Exception as e:
@@ -192,10 +194,32 @@ def extract_charms(frame_dir, max_cpu=os.cpu_count()-1):
     except Exception as e:
         logger.error(f"Crashed with {e}")
 
-    print("Pre-duplicate", len(charms))
-    charms = set(charms)
-    print("Post-duplicate:", len(charms))
-    return charms
+    unique_charms = set(charms)
+    if len(charms) != len(unique_charms):
+        print("Pre-duplicate", len(charms))
+        print("Post-duplicate:", len(unique_charms))
+        save_duplicates(charm_loc, charms)
+
+    return unique_charms
+
+
+def save_duplicates(charm_loc, charms):
+    dupe_file_name = "charm.duplicates.txt"
+    charm_dupes = {}
+    for frame_loc, charm in zip(charm_loc, charms):
+        if charm not in charm_dupes:
+            charm_dupes[charm] = []
+        charm_dupes[charm].append(frame_loc)
+
+    with open(dupe_file_name, "w") as dupe_file:
+        for charm in filter(lambda x: len(charm_dupes[x]) > 1, charm_dupes):
+            locations = charm_dupes[charm]
+            dupe_file.write(f"{charm.to_dict()}\n")
+            for frame_loc in locations:
+                dupe_file.write(f"{frame_loc}\n")
+            dupe_file.write("\n")
+
+    print(f"Duplicate charms can be found in {dupe_file_name}")
 
 
 def extract_basic_info(frame_loc, frame):

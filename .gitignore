@@ -3,6 +3,7 @@
 color_picker.py
 gray_scale_tester.py
 charms.encoded.txt
+charm.duplicates.txt
 converted.js
 *.pdn
 *.pyc
