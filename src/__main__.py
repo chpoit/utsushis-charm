@@ -23,10 +23,8 @@ def main(args):
     frame_dir = args.frame_dir
     charm_json = "charms.json"
 
-    if input_dir=="inputs":
-        os.makedirs(input_dir, exist_ok=True)
-    if frame_dir=="frames":
-        os.makedirs(frame_dir, exist_ok=True)
+    os.makedirs(input_dir, exist_ok=True)
+    os.makedirs(frame_dir, exist_ok=True)
 
     if not args.skip_frames:
         extract_unique_frames(input_dir, frame_dir)

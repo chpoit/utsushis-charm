@@ -18,6 +18,13 @@ def crop_frame(frame):
     return cropped, charm_only
 
 
+def resize_frame(frame):
+    height, width = frame.shape[:2]
+    if height != 720 or width != 1280:
+        frame = cv2.resize(frame, (1280, 720))
+    return frame
+
+
 def crop_frames(capture_device):
     results = []
     for i, f in read_frames(capture_device):
@@ -30,7 +37,7 @@ def read_frames(capture_device):
         ret, frame = capture_device.read()
         if not ret:
             break
-        yield i, frame
+        yield i, resize_frame(frame)
         i += 1
 
 
@@ -41,12 +48,16 @@ def is_new_frame(previous_charm_marker, charm_only):
     return 0 in threshold[:, ]
 
 
+def is_validated_video_format(video_name):
+    return os.path.splitext(video_name)[-1] in [".mp4", ".mkv"]
+
+
 def extract_unique_frames(input_dir, frame_dir):
     charm_count = 0
     currentFrame = 0
 
     input_files = list(
-        filter(lambda x: x.name.endswith(".mp4"), os.scandir(input_dir)))
+        filter(lambda x: is_validated_video_format(x.name), os.scandir(input_dir)))
     print(f"Total input files to scan: {len(input_files)}")
 
     all_unique_frames = []
