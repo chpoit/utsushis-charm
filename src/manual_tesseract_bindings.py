@@ -44,7 +44,7 @@ def set_tessdata():
     if 'TESSDATA_PREFIX' in os.environ:
         return
     path = find_tesseract()
-    path = os.path.basename(path)
+    path = os.path.dirname(path)
     TESSDATA_PREFIX = os.path.join(path, 'tessdata')
     os.environ['TESSDATA_PREFIX'] = TESSDATA_PREFIX
     logger.debug(f"Set 'TESSDATA_PREFIX' to {TESSDATA_PREFIX}")

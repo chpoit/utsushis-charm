@@ -20,8 +20,6 @@ import logging
 import json
 import cv2
 import os
-from multiprocessing import Pool
-from joblib import Parallel, delayed
 DEBUG = False
 
 
@@ -164,21 +162,24 @@ def extract_charm(frame_loc, slots, skills, skill_text):
     return charm
 
 
-def extract_charms(frame_dir, max_cpu=os.cpu_count()-1):
+def extract_charms(frame_dir):
     charms = []
     charm_loc = []
-    jobs = max(1, max_cpu)
-    print(f"Using {jobs} thread(s)")
     try:
         frames = list(
-            map(lambda frame_loc: (frame_loc.path, cv2.imread(
-                frame_loc.path)), os.scandir(frame_dir))
-        )
+            map(lambda frame_loc: frame_loc.path, os.scandir(frame_dir)))
 
         with tqdm(frames, desc="Parsing skill and slots") as tqdm_iter:
-            combined_data = Parallel(n_jobs=jobs, backend='multiprocessing')(
-                delayed(extract_basic_info)(frame_loc, frame) for frame_loc, frame in tqdm_iter)
-            combined_data = list(filter(lambda x: x, combined_data))
+            combined_data = list(filter(
+                lambda x: x,
+                map(
+                    lambda frame_loc: extract_basic_info(
+                        frame_loc, cv2.imread(frame_loc)
+                    ),
+                    tqdm_iter
+                )
+            )
+            )
 
         for frame_loc, slots, skills, skill_text in tqdm(combined_data, desc="Validating and fixing charms"):
             try:
