@@ -54,9 +54,12 @@ class Charm:
         acc = ""
         for skill in self.skills:
             acc += f"{skill},{self.skills[skill]},"
-        if len(self.skills)==1:
+        if len(self.skills) == 1:
             acc += f",0,"
 
         for level in self.slots:
             acc += f"{level},"
         return acc[:-1]
+
+    def has_skills(self):
+        return len(self.skills)

@@ -170,9 +170,9 @@ def extract_charms(frame_dir, max_cpu=os.cpu_count()-1):
     print(f"Using {jobs} thread(s)")
     try:
         frames = list(
-            map(lambda frame_loc: (frame_loc.path, cv2.imread(frame_loc.path)), os.scandir(frame_dir))
-            )
-            
+            map(lambda frame_loc: (frame_loc.path, cv2.imread(
+                frame_loc.path)), os.scandir(frame_dir))
+        )
 
         with tqdm(frames, desc="Parsing skill and slots") as tqdm_iter:
             combined_data = Parallel(n_jobs=jobs)(
@@ -183,7 +183,10 @@ def extract_charms(frame_dir, max_cpu=os.cpu_count()-1):
         for frame_loc, slots, skills, skill_text in tqdm(combined_data, desc="Validating and fixing charms"):
             try:
                 charm = extract_charm(frame_loc, slots, skills, skill_text)
-                charms.append(charm)
+                if charm.has_skills():
+                    charms.append(charm)
+                else:
+                    logger.warn(f"Skill-less charm found in {frame_loc}")
             except Exception as e:
                 logger.error(
                     f"An error occured when extracting charm on {frame_loc}. Error: {e}")
