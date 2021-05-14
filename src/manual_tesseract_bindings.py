@@ -128,7 +128,7 @@ def convert_to_grayscale(image_data):
 
 def process_image_with_tesseract(tesseract, image):
     whitelist = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890\'/-"
-    # tesseract.set_variable("whitelist", whitelist)
+    tesseract.set_variable("whitelist", whitelist)
 
     height, width = image.shape[:2]
     if len(image.shape)==2:
@@ -139,7 +139,7 @@ def process_image_with_tesseract(tesseract, image):
     print("Shape:", image.shape)
 
     tesseract.set_image(image.ctypes, width, height, depth)
-    tesseract.set_resolution(width)
+    tesseract.set_resolution()
     text = tesseract.get_text()
     print(text)
     print(tesseract.get_utf8_text())
