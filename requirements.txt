@@ -5,4 +5,3 @@ scikit-image
 symspellpy
 tqdm
 pyinstaller
-joblib
