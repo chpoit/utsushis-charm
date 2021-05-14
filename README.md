@@ -49,14 +49,18 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
    - I haven't tried to see what would happen if there are clips that are not of the charm UI
 5. Run the `utsushis-charm.exe` (Double-click)
 6. A Terminal should pop up
-   - Wait a little bit, it need to some stuff (~5-15s) 
-7. The first step of the program should take roughly 1 minute per clip you have in the inputs folder
+   - Wait a little bit, it need to do extract some data (~5-15s) 
+7. The first step of the program should take roughly 30 seconds to 1 minute per clip you have in the inputs folder
 8. Once that step is done, the second phase starts, normally, it should be done without needing your attention
    - Follow the instructions on screen and correct any invalid skill names.
    - If a skill has to be corrected, a window with the skill should open, you might have to alt-tab to it, Windows likes to hide it.
 9. The program is done running. Press Enter and exit.
+   
+   - You might see some warnings about memory leaks, you don't have to worry about that, it's cleared upon closing the program.
+10. Extra:
    - Sometimes tesseract is absolutely unable to read text, those charms will be logged in `app.log` and you can add them manually.
-10. If no charm errored, or you don't care about those charms, you should be able to open the `charms.encoded.txt` file and copy the contents into the import box of [MHR-Wiki](https://mhrise.wiki-db.com/sim/?hl=en)
+   - You can see a list of duplicate charms (if they exist) in the `charms.duplicate.txt`
+   - If no charm errored, or you don't care about those charms, you should be able to open the `charms.encoded.txt` file and copy the contents into the import box of [MHR-Wiki](https://mhrise.wiki-db.com/sim/?hl=en)
 
 
 # FAQ
