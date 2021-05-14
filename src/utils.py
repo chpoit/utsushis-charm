@@ -2,8 +2,9 @@ import os
 import cv2
 import numpy as np
 from skimage.metrics import structural_similarity
-import pytesseract
+# import pytesseract
 from math import floor
+from .manual_tesseract_bindings import Tesseract, process_image_with_tesseract
 
 
 def _load_potentially_transparent(filename):
@@ -76,11 +77,13 @@ def _trim_image_past_skill_name(img, background_color=203):
 
 
 def read_text_from_skill_tuple(skills):
+    tess = Tesseract()
     skill_text = []
     for skill_img, level in skills:
         skill_img = cv2.cvtColor(skill_img, cv2.COLOR_BGR2GRAY)
         skill_img = _trim_image_past_skill_name(skill_img)
-        skill = pytesseract.image_to_string(skill_img)
+        skill = process_image_with_tesseract(tess, skill_img)
+        # skill = pytesseract.image_to_string(skill_img)
         skill_text.append((skill, level))
 
     return skill_text
@@ -138,11 +141,11 @@ def get_skills(img, inverted=False):
 
 def _get_skills(img):
     w = 216
-    h = 23
+    h = 25
     x = 413
 
-    y1 = 92
-    y2 = 142
+    y1 = 91
+    y2 = 141
 
     skill1 = img[y1:y1 + h, x:x + w]
     skill2 = img[y2:y2 + h, x:x + w]
