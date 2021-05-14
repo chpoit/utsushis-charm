@@ -3,10 +3,12 @@ set tesseract_name="tesseract-installer.exe"
 set skill_corrections="skill_corrections.csv"
 set version=%1
 set version=%version:.=_%
+set archive_name="Utsushis-Charm_v%version%.zip"
 
 echo "Building version %version%"
 
-del Utsushis-Charm.v%version%.zip
+del %archive_name%
+rd /s /q "build"
 rd /s /q "dist"
 md dist
 md "dist\inputs"
@@ -22,4 +24,4 @@ if not exist %tesseract_name% (
 
 copy %tesseract_name% "dist\%tesseract_name%"
 
-7z a -tzip Utsushis-Charm_v%version%.zip ".\dist\*"
+7z a -tzip %archive_name% ".\dist\*"
