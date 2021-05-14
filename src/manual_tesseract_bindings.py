@@ -1,12 +1,11 @@
 # taken from https://stackoverflow.com/a/21754478/6471354 and https://groups.google.com/g/tesseract-ocr/c/xvTFjYCDRQU/m/rCEwjZL3BQAJ
 
+import numpy as np
+import os
 import sys
 import cv2
 import ctypes
 import ctypes.util
-from datetime import datetime
-import faulthandler
-faulthandler.enable()
 
 
 # TODO: Make this resilient to "change" (version)
@@ -15,8 +14,10 @@ if sys.platform == 'win32':
 else:
     LIBNAME = 'tesseract'
 
+
 class TesseractError(Exception):
     pass
+
 
 class Tesseract(object):
     _lib = None
@@ -32,7 +33,7 @@ class Tesseract(object):
         if lib_path is None:
             lib_path = ctypes.util.find_library(LIBNAME)
             if lib_path is None:
-                 raise TesseractError('tesseract library not found')
+                raise TesseractError('tesseract library not found')
         cls._lib = lib = ctypes.CDLL(lib_path)
 
         # source:
@@ -41,20 +42,20 @@ class Tesseract(object):
 
         lib.TessBaseAPICreate.restype = cls.TessBaseAPI
 
-        lib.TessBaseAPIDelete.restype = None # void
+        lib.TessBaseAPIDelete.restype = None  # void
         lib.TessBaseAPIDelete.argtypes = (
-            cls.TessBaseAPI,) # handle
+            cls.TessBaseAPI,)  # handle
 
         lib.TessBaseAPIInit3.restype = ctypes.c_int
         lib.TessBaseAPIInit3.argtypes = (
-            cls.TessBaseAPI, # handle
-            ctypes.c_char_p, #datapath
-            ctypes.c_char_p) # language
+            cls.TessBaseAPI,  # handle
+            ctypes.c_char_p,  # datapath
+            ctypes.c_char_p)  # language
 
         lib.TessBaseAPISetImage.restype = None
         lib.TessBaseAPISetImage.argtypes = (
-            cls.TessBaseAPI, # handle
-            ctypes.c_void_p, # imagedata
+            cls.TessBaseAPI,  # handle
+            ctypes.c_void_p,  # imagedata
             ctypes.c_int,    # width
             ctypes.c_int,    # height
             ctypes.c_int,    # bytes_per_pixel
@@ -62,7 +63,7 @@ class Tesseract(object):
 
         lib.TessBaseAPIGetUTF8Text.restype = ctypes.c_char_p
         lib.TessBaseAPIGetUTF8Text.argtypes = (
-            cls.TessBaseAPI,) # handle
+            cls.TessBaseAPI,)  # handle
 
         lib.TessBaseAPISetSourceResolution.restype = None
         lib.TessBaseAPISetSourceResolution.argtypes = (
@@ -76,8 +77,10 @@ class Tesseract(object):
         self._api = self._lib.TessBaseAPICreate()
 
         encoded_lang = language.encode("utf-8")
-        encoded_datapath = None if datapath is None else datapath.encode("utf-8")
-        init = self._lib.TessBaseAPIInit3(self._api, encoded_datapath, encoded_lang)
+        encoded_datapath = None if datapath is None else datapath.encode(
+            "utf-8")
+        init = self._lib.TessBaseAPIInit3(
+            self._api, encoded_datapath, encoded_lang)
 
         if init:
             raise TesseractError(f'initialization failed ({init})')
@@ -128,34 +131,70 @@ def convert_to_grayscale(image_data):
 
 def process_image_with_tesseract(tesseract, image):
     whitelist = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890\'/-"
-    tesseract.set_variable("whitelist", whitelist)
 
     height, width = image.shape[:2]
-    if len(image.shape)==2:
+    if len(image.shape) == 2:
         depth = 1
     else:
         depth = image.shape[2]
 
-    print("Shape:", image.shape)
+    # Forcing obnoxious type conversion, probably some windows BS
+    image = image.astype(np.uint8)
 
     tesseract.set_image(image.ctypes, width, height, depth)
+    tesseract.set_variable("whitelist", whitelist)
     tesseract.set_resolution()
     text = tesseract.get_text()
-    print(text)
-    print(tesseract.get_utf8_text())
+    # print(text)
+    # print(tesseract.get_utf8_text())
     return text.strip()
 
 
-
 if __name__ == '__main__':
-    test_img =[
-        './Untitled.png',
-        './un1.png',
+    PACKAGE_PARENT = '..'
+    SCRIPT_DIR = os.path.dirname(os.path.realpath(
+        os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+    sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
+    from src.utils import remove_non_skill_info, apply_trunc_threshold, get_skills, _trim_image_past_skill_name
+
+    test_img = [
+        "frames/frame0.png",
+        "frames/frame192.png",
+        "frames/frame200.png",
+        # './Untitled.png',
     ]
-    for t in test_img:
-        # img = cv2.imread('./frames/frame0.png')
-        img = cv2.imread(t)
-        # height, width, depth = img.shape
+    test_img2 = [
+        # './Untitled.png',
+        # './un1.png',
+        # './un2.png',
+    ]
+    tess = Tesseract()
+
+    try:
+        for t in test_img:
+            print(t)
+            img = cv2.imread(t)
+            # img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            skill_only_im = remove_non_skill_info(img)
+
+            inverted = cv2.bitwise_not(skill_only_im)
+            trunc_tr = apply_trunc_threshold(inverted)
+
+            skills = get_skills(trunc_tr, True)
+            for skill_img, level in skills:
+                # cv2.imshow("azsdf",skill_img)
+                # cv2.waitKey(0)
+                skill_img = cv2.cvtColor(skill_img, cv2.COLOR_BGR2GRAY)
+                skill_img = _trim_image_past_skill_name(skill_img)
+                res = process_image_with_tesseract(tess, skill_img)
+                print(res)
+        pass
+    except Exception as e:
+        print(e)
+        pass
+    
+    for t in test_img2:
         tess = Tesseract()
-        res = process_image_with_tesseract(tess, img)
-        print(res)
+        img = cv2.imread(t, 0)
+        res = process_image_with_tesseract(tess, img[:, :-1].astype(np.uint8))
+        print("From disk:", res)
