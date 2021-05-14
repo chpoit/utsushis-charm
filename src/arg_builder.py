@@ -15,4 +15,11 @@ def build_args():
     parser.add_argument("-f", "--frames", dest="frame_dir", required=False,
                     help="Changes the Directory used to store temporary frames", default='frames')
     
+    parser.add_argument("-c", "--charm-json", dest="charm_json", required=False,
+                    help="Changes the name of the json formatted charms", default='charms.json')
+    parser.add_argument("-e", "--charm-encoded", dest="charm_encoded", required=False,
+                    help="Changes the name of the MHR-Wiki formatted charms", default='charms.encoded.txt')
+    
+    
+
     return parser.parse_args()

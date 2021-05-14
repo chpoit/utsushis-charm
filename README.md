@@ -152,3 +152,5 @@ If you run from source, or call the executable from the terminal you can make us
 - ` --skip-charms`:`Skips the Tesseract-OCR step. Not sure why you would want that.
 - `-i <INPUT_DIR>` or `--input <INPUT_DIR>`: Changes the Input directory for videos
 - `-f <FRAME_DIR>` or `--frames <FRAME_DIR>`: Changes the Directory used to store temporary frames
+- `-c <FILE_NAME>` or `--charm-json <FILE_NAME>`: Changes the name of the json formatted charms
+- `-e <FILE_NAME>` or `--charm-encoded <FILE_NAME>`: Changes the name of the MHR-Wiki formatted charms
