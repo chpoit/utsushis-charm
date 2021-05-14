@@ -2,7 +2,6 @@ import os
 import cv2
 import numpy as np
 from skimage.metrics import structural_similarity
-# import pytesseract
 from math import floor
 from .manual_tesseract_bindings import Tesseract, process_image_with_tesseract
 tess = Tesseract()
@@ -80,10 +79,8 @@ def _trim_image_past_skill_name(img, background_color=203):
 def read_text_from_skill_tuple(skills):
     skill_text = []
     for skill_img, level in skills:
-        # skill_img = cv2.cvtColor(skill_img, cv2.COLOR_BGR2GRAY)
         skill_img = _trim_image_past_skill_name(skill_img)
         skill = process_image_with_tesseract(tess, skill_img)
-        # skill = pytesseract.image_to_string(skill_img)
         skill_text.append((skill, level))
 
     return skill_text
