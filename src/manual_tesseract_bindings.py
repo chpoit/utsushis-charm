@@ -7,6 +7,7 @@ import cv2
 import ctypes
 import ctypes.util
 import shutil
+import platform
 import logging
 logger = logging.getLogger(__name__)
 
@@ -21,15 +22,31 @@ def find_tesseract():
         ctypes.util.find_library("libtesseract-4"),  # win32
         ctypes.util.find_library("libtesseract302"),  # win32 version 3.2
         ctypes.util.find_library("tesseract"),  # others
-        os.path.join(os.getenv("ProgramW6432"),
-                     "Tesseract-OCR", "libtesseract-4.dll"),
-        os.path.join(os.getenv('LOCALAPPDATA'),
-                     "Tesseract-OCR", "libtesseract-4.dll"),
-        os.path.join(os.getenv("ProgramFiles"),
-                     "Tesseract-OCR", "libtesseract-4.dll"),
-        os.path.join(os.getenv("programfiles(x86)"),
-                     "Tesseract-OCR", "libtesseract-4.dll"),
     ]
+
+    if platform.system() == "Windows":
+        locations += [
+            os.path.join(os.getenv("ProgramW6432"),
+                         "Tesseract-OCR", "libtesseract-4.dll"),
+            os.path.join(os.getenv('LOCALAPPDATA'),
+                         "Tesseract-OCR", "libtesseract-4.dll"),
+            os.path.join(os.getenv("ProgramFiles"),
+                         "Tesseract-OCR", "libtesseract-4.dll"),
+            os.path.join(os.getenv("programfiles(x86)"),
+                         "Tesseract-OCR", "libtesseract-4.dll"),
+        ]
+    elif platform.system() == "Darwin":  # MacOS
+        locations += [
+            # add potential environment paths here:
+            # Example:
+            # os.path.join(os.getenv("MACOS_ENV_NAME"), "Tesseract-OCR", "libtesseract-4.dll"),
+        ]
+    elif platform.system() == "Linux":
+        locations += [
+            # add potential environment paths here:
+            # Example:
+            # os.path.join(os.getenv("LINUX_ENV_NAME"), "Tesseract-OCR", "libtesseract-4.dll"),
+        ]
 
     for potential in filter(lambda x: x, locations):
         if os.path.isfile(potential):
