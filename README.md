@@ -2,7 +2,7 @@
 
 > Whenever I look at Utsushi I feel like I can do anything. Unfortunately, when I need to register my charms, I can't lose myself in Utsushi's charm.
 > Fortunately, now, with Utsushi's charm, I can lose myself in Utsushi's charm for longer.
-> 
+>
 > \- Utsushi Fan Girl, probably
 
 
@@ -13,15 +13,15 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 # Usage
 
 ## Requirements
-- A computer (Windows) 
+- A computer (Windows)
   - Linux and Mac might work too, you wont be able to run the EXE and will have to run from source in a terminal window.
 - A USB cable to connect your switch to transfer files
 - This latest version of this downloaded to your computer (Utsushis-Charm_**vx_x**.zip)
   - You can find it [here](https://github.com/chpoit/utsushis-charm/releases/latest)
-- **Google Tesseract** installed and in path 
+- **Google Tesseract** installed and in path
   - A copy of the version 4 is bundled with the release. Just run it, no extra packages needed
-    - Built by UB-Mannheim [License (Apache 2.0)](https://github.com/tesseract-ocr/tesseract/blob/master/LICENSE) 
-    - Alternatively, download the same version here: [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.1.0.20190314.exe) 
+    - Built by UB-Mannheim [License (Apache 2.0)](https://github.com/tesseract-ocr/tesseract/blob/master/LICENSE)
+    - Alternatively, download the same version here: [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.1.0.20190314.exe)
     - Other Versions available on the [UB-Mannheim Github](https://github.com/UB-Mannheim/tesseract/wiki) page
 - Some knowledge of how to type things in the terminal
   - AKA: Knowing how to type in a hacker box
@@ -35,9 +35,9 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
    - Don't ask, this is way out of scope for something that takes you 30 seconds to do.
 1. Download the release bundle and follow the Requirements section  (Utsushis-Charm_**vx_x**.zip)
    - Make sure you unzip everythin and you leave the files where they are.
-   - You can delete the `tesseract-installer.exe` once it's installed  
-2. Record clips similar to the following of you going through your charms. Try placing the UI in front of something that is very "flat" in color and doesn't have NPCs walking in front. 
-   - I can easily go through 2-3 pages of charms in 30 seconds. 
+   - You can delete the `tesseract-installer.exe` once it's installed
+2. Record clips similar to the following of you going through your charms. Try placing the UI in front of something that is very "flat" in color and doesn't have NPCs walking in front.
+   - I can easily go through 2-3 pages of charms in 30 seconds.
    - Use a stopwatch on your phone if you have trouble timing the 30 seconds. I saved a clip every ~25 seconds.
    - Don't worry about passing over a charm multiple times. Duplicates will be removed at the end.
 
@@ -45,17 +45,17 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 
 3. Transfer the clips to your computer.
 4. Put the files in the "inputs" directory. If it does not exist, create it at the same place you can find `utsushis-charm.exe` and `tesseract-installer.exe`
-   - It does not matter how many you have 
+   - It does not matter how many you have
    - I haven't tried to see what would happen if there are clips that are not of the charm UI
 5. Run the `utsushis-charm.exe` (Double-click)
 6. A Terminal should pop up
-   - Wait a little bit, it need to do extract some data (~5-15s) 
+   - Wait a little bit, it need to do extract some data (~5-15s)
 7. The first step of the program should take roughly 30 seconds to 1 minute per clip you have in the inputs folder
 8. Once that step is done, the second phase starts, normally, it should be done without needing your attention
    - Follow the instructions on screen and correct any invalid skill names.
    - If a skill has to be corrected, a window with the skill should open, you might have to alt-tab to it, Windows likes to hide it.
 9. The program is done running. Press Enter and exit.
-   
+
    - You might see some warnings about memory leaks, you don't have to worry about that, it's cleared upon closing the program.
 10. Extra:
    - Sometimes tesseract is absolutely unable to read text, those charms will be logged in `app.log` and you can add them manually.
@@ -112,7 +112,7 @@ If the program starts and closes without anything happening, open the `app.log` 
 
 # How does this work
 
-Using a combination of coding and algorithms, the developer was able to make drones fly without them crashing into each other. 
+Using a combination of coding and algorithms, the developer was able to make drones fly without them crashing into each other.
 
 In all seriousness, the work is done in a few broad steps:
 1. Take all the videos and apply a filter and crop them to a smaller resolution to keep only the important data, keeping around one frame per charm
@@ -125,9 +125,9 @@ In all seriousness, the work is done in a few broad steps:
 # Contribute
 
 - If you ran everything and got new corrections in the [`skill_corrections.csv`](skill_corrections.csv) file, consider creating a pull request to add them for others.
-- If you feel like contributing anything, go ahead and submit a pull request I'll be happy to take a look and decide if it's something worth adding. 
+- If you feel like contributing anything, go ahead and submit a pull request I'll be happy to take a look and decide if it's something worth adding.
 
-# TODOS: 
+# TODOS:
 - [ ] Throw out Google Tesseract/Try newer version
   - Version 4 works great, this is going on the back burner for a while
   - Version 3 has trouble with quite a few words (Slugger, Recovery, Earplugs, Counterstrike, Maestro, etc.)
@@ -146,7 +146,7 @@ In all seriousness, the work is done in a few broad steps:
   - Unfortunately, the joblib 'loky' backend wont work with frozen executables, and the other backends offer no noticeable gain in performance. This is getting shelved until a potential rewrite under a "faster" rewrite. Current execution time is 4-8 minutes so it's really not too bad.
 
 # Building the executable
-- Requirements: 
+- Requirements:
   - 7zip in path
   - A virtual env called "env" in this project (I used the `virtualenv` module)
   - Have all the contents of `requirements.txt` installed in said env
@@ -154,6 +154,19 @@ In all seriousness, the work is done in a few broad steps:
 - Run the `scripts\build_release.bat` file.
 
 Sometimes windows will lock some files for a while and there is nothing you can do about it other than wait.
+
+# Running from source on a mac
+
+- Requirements:
+  - have python3 and tesseract installed via brew (or some other way)
+  - setup a virtual environment
+    - `pip3 install virtualenv` to install virtualenv
+    - create a virtual env at the root of the repository `virtualenv -p python3 env`
+- Running:
+  - switch to the virtualenv `source env/bin/activate` (run at the root of the repository)
+  - set TESSDATA_PREFIX: `export TESSDATA_PREFIX=/usr/local/Cellar/tesseract/<version>/share/tessdata`
+  - install the project dependencies: `pip3 install .`
+  - run with `python3 main.py`
 
 # Extra command line options
 If you run from source, or call the executable from the terminal you can make use of the following flags/arguments to achieve different functionality
