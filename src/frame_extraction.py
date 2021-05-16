@@ -33,11 +33,16 @@ def crop_frames(capture_device):
 
 def read_frames(capture_device):
     i = 0
+    fps = capture_device.get(cv2.CAP_PROP_FPS)
+
     while(True):
         ret, frame = capture_device.read()
         if not ret:
             break
-        yield i, resize_frame(frame)
+        if fps == 60 and (i % 2):
+            pass
+        else:
+            yield i, resize_frame(frame)
         i += 1
 
 
@@ -68,9 +73,12 @@ def extract_unique_frames(input_dir, frame_dir):
 
         cap = cv2.VideoCapture(f_loc)
         frame_count = floor(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        if cap.get(cv2.CAP_PROP_FPS) == 60:
+            print(r"60 fps video detected, skipping 50% of the frames")
+            frame_count /= 2
 
         previous_charm_marker = None
-        with tqdm(crop_frames(cap), total=frame_count, desc=f"{f_name},  Total Estimated charms/frames found: {charm_count}") as frame_pbar:
+        with tqdm(crop_frames(cap), total=floor(frame_count), desc=f"{f_name},  Total Estimated charms/frames found: {charm_count}") as frame_pbar:
             for i, cropped_tuple in frame_pbar:
                 cropped, charm_only = cropped_tuple
 

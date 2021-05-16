@@ -67,6 +67,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 - Q: Can I use a capture card instead?
   - I tested recording in 720p and 1080p with OBS using a Genki Shadowcast and everything worked. (MKV, others should work too)
   - I recommend recording in 30fps to avoid doubling the frames to process
+    - 60 fps is fine, half of the frames are skipped.
   - I see no reason other capture cards should not work
   - 1080p adds extra processing due to a downscaling step to 720p (20-30% slower)
   - I also tested using an Mclassic without any issues.
