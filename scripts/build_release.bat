@@ -17,11 +17,4 @@ cmd /c ".\env\scripts\activate & python -m PyInstaller .\utsushis-charm.spec --o
 
 copy %skill_corrections% "dist\%skill_corrections%"
 
-if not exist %tesseract_name% (
-    echo "Tesseract installer missing, downloading..."
-    curl https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.1.0.20190314.exe -o %tesseract_name%
-)
-
-copy %tesseract_name% "dist\%tesseract_name%"
-
 7z a -tzip %archive_name% ".\dist\*"

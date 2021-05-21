@@ -14,19 +14,12 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 
 ## Requirements
 - A computer (Windows)
-  - Linux and Mac might work too, you wont be able to run the EXE and will have to run from source in a terminal window.
+  - Linux and Mac might work too, you wont be able to run the EXE and will have to run from source in a terminal window. Refer to [Running from source](#Running-from-source)
 - A USB cable to connect your switch to transfer files
 - This latest version of this downloaded to your computer (Utsushis-Charm_**vx_x**.zip)
   - You can find it [here](https://github.com/chpoit/utsushis-charm/releases/latest)
-- **Google Tesseract** installed and in path
-  - A copy of the version 4 is bundled with the release. Just run it, no extra packages needed
-    - Built by UB-Mannheim [License (Apache 2.0)](https://github.com/tesseract-ocr/tesseract/blob/master/LICENSE)
-    - Alternatively, download the same version here: [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.1.0.20190314.exe)
-    - Other Versions available on the [UB-Mannheim Github](https://github.com/UB-Mannheim/tesseract/wiki) page
 - Some knowledge of how to type things in the terminal
-  - AKA: Knowing how to type in a hacker box
 - Being able to read
-
 
 ## Steps
 
@@ -156,18 +149,40 @@ In all seriousness, the work is done in a few broad steps:
 
 Sometimes windows will lock some files for a while and there is nothing you can do about it other than wait.
 
-# Running from source on a mac
+# Running from source
+Common requirements:
+- Python3 installed and in path
+- Set up a virtual environment (optional)
+- Install pip packages (in virtualenv if you use it.)
 
+Normal instructions apply once the application starts.
+
+## MacOS
 - Requirements:
   - have python3 and tesseract installed via brew (or some other way)
-  - setup a virtual environment
-    - `pip3 install virtualenv` to install virtualenv
-    - create a virtual env at the root of the repository `virtualenv -p python3 env`
+  - Virtual env on mac (optional):  `virtualenv -p python3 env`
 - Running:
   - switch to the virtualenv `source env/bin/activate` (run at the root of the repository)
   - set TESSDATA_PREFIX: `export TESSDATA_PREFIX=/usr/local/Cellar/tesseract/<version>/share/tessdata`
   - install the project dependencies: `pip3 install .`
   - run with `python3 main.py`
+
+## Linux
+- Requirements
+  - You will need to install Google tesseract with your package manager of choice.
+- Running
+  - `python3 main.py`
+  - 
+
+## Windows
+- Requirements
+  - **Google Tesseract** installed and in path
+    - A copy of the version 4 is bundled with the release. Just run it, no extra packages needed
+      - You can download the installer here version here: [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.1.0.20190314.exe)
+    - Make sure it's in path
+  - Python3 installed and in path
+- Running:
+  - `source env/bin/activate` (if you use a virtual env)
 
 # Extra command line options
 If you run from source, or call the executable from the terminal you can make use of the following flags/arguments to achieve different functionality
