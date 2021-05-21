@@ -47,12 +47,11 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
    - Follow the instructions on screen and correct any invalid skill names.
    - If a skill has to be corrected, a window with the skill should open, you might have to alt-tab to it, Windows likes to hide it.
 9. The program is done running. Press Enter and exit.
-
    - You might see some warnings about memory leaks, you don't have to worry about that, it's cleared upon closing the program.
 10. Extra:
-   - Sometimes tesseract is absolutely unable to read text, those charms will be logged in `app.log` and you can add them manually.
-   - You can see a list of duplicate charms (if they exist) in the `charms.duplicate.txt`
-   - If no charm errored, or you don't care about those charms, you should be able to open the `charms.encoded.txt` file and copy the contents into the import box of [MHR-Wiki](https://mhrise.wiki-db.com/sim/?hl=en)
+    - Sometimes tesseract is absolutely unable to read text, those charms will be logged in `app.log` and you can add them manually.
+    - You can see a list of duplicate charms (if they exist) in the `charms.duplicate.txt`
+    - If no charm errored, or you don't care about those charms, you should be able to open the `charms.encoded.txt` file and copy the contents into the import box of [MHR-Wiki](https://mhrise.wiki-db.com/sim/?hl=en)
 
 
 # FAQ
