@@ -20,6 +20,7 @@ import logging
 import json
 import cv2
 import os
+from pathlib import Path
 DEBUG = False
 
 
@@ -32,19 +33,30 @@ spell = SymSpell(max_dictionary_edit_distance=4)
 spell.load_dictionary(get_resource_path("skill_dict"), 0, 1)
 
 
-known_corrections = {}
-with open(get_resource_path('skill_corrections'), encoding='utf-8') as scf:
-    for line in scf.readlines():
-        line = line.strip()
-        w, r = line.split(',')
-        known_corrections[w] = r
+def load_corrections(known_corrections=None):
+    known_corrections = known_corrections or {}
+    corrections_path = get_resource_path('skill_corrections')
+    Path(corrections_path).touch()  # if not exists
+    with open(corrections_path, encoding='utf-8') as scf:
+        for line in scf.readlines():
+            line = line.strip()
+            w, r = line.split(',')
+            known_corrections[w] = r
+
+    return known_corrections
 
 
-all_skills = {}
-with open(get_resource_path('skill_list')) as slf:
-    for line in slf.readlines():
-        skill_name = line.strip()
-        all_skills[skill_name.lower()] = skill_name
+def load_all_skills(all_skills=None):
+    all_skills = all_skills or {}
+    with open(get_resource_path('skill_list')) as slf:
+        for line in slf.readlines():
+            skill_name = line.strip()
+            all_skills[skill_name.lower()] = skill_name
+    return all_skills
+
+
+known_corrections = load_corrections()
+all_skills = load_all_skills()
 
 
 def is_skill(skill_dict, skill_name):

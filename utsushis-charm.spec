@@ -8,6 +8,7 @@ a = Analysis(['main.py'],
              pathex=['.'],
              binaries=[],
              datas=[
+                 ("media/icon.ico", 'media/icon.ico' ), 
                  ("images", 'images' ), 
                  ("data", 'data' ),
                  ("LICENSES", 'LICENSES' ),
@@ -37,4 +38,5 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True)
+          console=True,
+          icon='media/icon.ico')
