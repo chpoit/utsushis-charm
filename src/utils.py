@@ -3,9 +3,10 @@ import cv2
 import numpy as np
 from skimage.metrics import structural_similarity
 from math import floor
-from .manual_tesseract_bindings import Tesseract, process_image_with_tesseract
-tess = Tesseract()
+from .tesseract.Tesseract import Tesseract
+from .tesseract.tesseract_utils import process_image_with_tesseract
 
+tess = Tesseract()
 
 def _load_potentially_transparent(filename):
     pot_transparent = cv2.imread(filename, cv2.IMREAD_UNCHANGED)

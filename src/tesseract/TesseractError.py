@@ -1,0 +1,3 @@
+
+class TesseractError(Exception):
+    pass

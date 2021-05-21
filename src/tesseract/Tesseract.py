@@ -9,69 +9,11 @@ import ctypes.util
 import shutil
 import platform
 import logging
+from pathlib import Path
+from .tesseract_utils import *
 logger = logging.getLogger(__name__)
 
-
-class TesseractError(Exception):
-    pass
-
-
-def find_tesseract():
-    # TODO: Make this resilient to "change" (tesseract version), probably not necessary
-    locations = [
-        ctypes.util.find_library("libtesseract-4"),  # win32
-        ctypes.util.find_library("libtesseract302"),  # win32 version 3.2
-        ctypes.util.find_library("tesseract"),  # others
-    ]
-
-    if platform.system() == "Windows":
-        locations += [
-            os.path.join(os.getenv("ProgramW6432"),
-                         "Tesseract-OCR", "libtesseract-4.dll"),
-            os.path.join(os.getenv('LOCALAPPDATA'),
-                         "Tesseract-OCR", "libtesseract-4.dll"),
-            os.path.join(os.getenv("ProgramFiles"),
-                         "Tesseract-OCR", "libtesseract-4.dll"),
-            os.path.join(os.getenv("programfiles(x86)"),
-                         "Tesseract-OCR", "libtesseract-4.dll"),
-        ]
-    elif platform.system() == "Darwin":  # MacOS
-        locations += [
-            # add potential environment paths here:
-            # Example:
-            # os.path.join(os.getenv("MACOS_ENV_NAME"), "Tesseract-OCR", "libtesseract-4.dll"),
-        ]
-    elif platform.system() == "Linux":
-        locations += [
-            # add potential environment paths here:
-            # Example:
-            # os.path.join(os.getenv("LINUX_ENV_NAME"), "Tesseract-OCR", "libtesseract-4.dll"),
-        ]
-
-    for potential in filter(lambda x: x, locations):
-        if os.path.isfile(potential):
-            logger.debug(f"Using tesseract at {potential}")
-            return potential
-
-    raise TesseractError(
-        'Tesseract library was not found on your system. Please install it')
-
-
-def set_tessdata():
-    if 'TESSDATA_PREFIX' in os.environ:
-        return
-    path = find_tesseract()
-    path = os.path.dirname(path)
-    TESSDATA_PREFIX = os.path.join(path, 'tessdata')
-    os.environ['TESSDATA_PREFIX'] = TESSDATA_PREFIX
-    logger.debug(f"Set 'TESSDATA_PREFIX' to {TESSDATA_PREFIX}")
-
-
-def get_datapath():
-    if 'TESSDATA_PREFIX' not in os.environ:
-        set_tessdata()
-    return os.environ['TESSDATA_PREFIX']
-
+from .TesseractError import TesseractError
 
 class Tesseract(object):
     _lib = None
@@ -130,6 +72,8 @@ class Tesseract(object):
             self.setup_lib(lib_path)
         self._api = self._lib.TessBaseAPICreate()
 
+        download_language_data(language)
+        
         # required windows nonsense
         encoded_lang = language.encode("utf-8")
         datapath = get_datapath() if datapath is None else datapath
@@ -182,36 +126,13 @@ class Tesseract(object):
         self._lib.TessBaseAPISetVariable(self._api, key, val)
 
 
-def convert_to_grayscale(image_data):
-    return cv2.cvtColor(image_data, cv2.COLOR_BGR2GRAY)
-
-
-def process_image_with_tesseract(tesseract, image):
-    whitelist = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890\'/-"
-
-    height, width = image.shape[:2]
-    if len(image.shape) == 2:
-        depth = 1
-    else:
-        depth = image.shape[2]
-
-    # Forcing obnoxious type conversion, probably some windows BS
-    image = image.astype(np.uint8)
-
-    tesseract.set_image(image.ctypes, width, height, depth)
-    tesseract.set_variable("whitelist", whitelist)
-    tesseract.set_resolution()
-    text = tesseract.get_text()
-    return text.strip()
-
-
 if __name__ == '__main__':
     set_tessdata()
     PACKAGE_PARENT = '..'
     SCRIPT_DIR = os.path.dirname(os.path.realpath(
         os.path.join(os.getcwd(), os.path.expanduser(__file__))))
     sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
-    from src.utils import remove_non_skill_info, apply_trunc_threshold, get_skills, _trim_image_past_skill_name
+    from ..utils import remove_non_skill_info, apply_trunc_threshold, get_skills, _trim_image_past_skill_name
 
     test_img = [
         "frames/frame0.png",
