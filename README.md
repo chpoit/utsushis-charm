@@ -27,8 +27,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
    - Item Box -> Manage Equipment -> Set Decorations -> Equipment Box -> Remove all (Press '-' on controller)
    - Don't ask, this is way out of scope for something that takes you 30 seconds to do.
 1. Download the release bundle and follow the Requirements section  (Utsushis-Charm_**vx_x**.zip)
-   - Make sure you unzip everythin and you leave the files where they are.
-   - You can delete the `tesseract-installer.exe` once it's installed
+   - You're free to delete `skill_corrections.csv` if you want. A new empty one will be recreated.
 2. Record clips similar to the following of you going through your charms. Try placing the UI in front of something that is very "flat" in color and doesn't have NPCs walking in front.
    - I can easily go through 2-3 pages of charms in 30 seconds.
    - Use a stopwatch on your phone if you have trouble timing the 30 seconds. I saved a clip every ~25 seconds.
@@ -37,7 +36,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 ![Example Clip](./media/example_clip.gif)
 
 3. Transfer the clips to your computer.
-4. Put the files in the "inputs" directory. If it does not exist, create it at the same place you can find `utsushis-charm.exe` and `tesseract-installer.exe`
+4. Put the files in the "inputs" directory. If it does not exist, create it at the same place you can find `utsushis-charm.exe`.
    - It does not matter how many you have
    - I haven't tried to see what would happen if there are clips that are not of the charm UI
 5. Run the `utsushis-charm.exe` (Double-click)
@@ -78,6 +77,7 @@ If the program starts and closes without anything happening, open the `app.log` 
 - I get through the First phase, but it stops when checking the first frame of
   - This is an issue with Tesseract not being installed. Check the next bullet point.
 - Google Tesseract is not installed/not found
+  - This should not happen in version 1.4 and above. 
   - Make sure you installed it. You might have to reboot
   - Try adding it manually to the path
     - Potential Locations:
