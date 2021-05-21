@@ -16,8 +16,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 - A computer (Windows)
   - Linux and Mac might work too, you wont be able to run the EXE and will have to run from source in a terminal window. Refer to [Running from source](#Running-from-source)
 - A USB cable to connect your switch to transfer files
-- This latest version of this downloaded to your computer (Utsushis-Charm_**vx_x**.zip)
-  - You can find it [here](https://github.com/chpoit/utsushis-charm/releases/latest)
+- [The latest version of this](https://github.com/chpoit/utsushis-charm/releases/latest) downloaded to your computer (Utsushis-Charm_**vx_x**.zip)
 - Some knowledge of how to type things in the terminal
 - Being able to read
 
