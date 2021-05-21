@@ -8,6 +8,7 @@ a = Analysis(['main.py'],
              pathex=['.'],
              binaries=[],
              datas=[
+                 ("media/icon.ico", 'media/icon.ico' ), 
                  ("images", 'images' ), 
                  ("data", 'data' ),
                  ("LICENSES", 'LICENSES' ),
@@ -38,4 +39,4 @@ exe = EXE(pyz,
           upx_exclude=[],
           runtime_tmpdir=None,
           console=True,
-          icon='./media/utsushi.ico')
+          icon='media/icon.ico')

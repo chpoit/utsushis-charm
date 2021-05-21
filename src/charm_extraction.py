@@ -33,7 +33,7 @@ spell = SymSpell(max_dictionary_edit_distance=4)
 spell.load_dictionary(get_resource_path("skill_dict"), 0, 1)
 
 
-def load_corrections(known_corrections):
+def load_corrections(known_corrections=None):
     known_corrections = known_corrections or {}
     corrections_path = get_resource_path('skill_corrections')
     Path(corrections_path).touch()  # if not exists
@@ -46,7 +46,7 @@ def load_corrections(known_corrections):
     return known_corrections
 
 
-def load_all_skills(all_skills):
+def load_all_skills(all_skills=None):
     all_skills = all_skills or {}
     with open(get_resource_path('skill_list')) as slf:
         for line in slf.readlines():
