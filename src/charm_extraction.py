@@ -13,6 +13,7 @@
 
 from .Charm import Charm
 from .utils import *
+from .tesseract.Tesseract import Tesseract
 from tqdm import tqdm
 from symspellpy.symspellpy import SymSpell
 import numpy as np
@@ -175,6 +176,7 @@ def extract_charm(frame_loc, slots, skills, skill_text):
 
 
 def extract_charms(frame_dir):
+    tess = Tesseract()
     charms = []
     charm_loc = []
     try:
@@ -185,9 +187,10 @@ def extract_charms(frame_dir):
             combined_data = list(filter(
                 lambda x: x,
                 map(
-                    lambda frame_loc: extract_basic_info(
-                        frame_loc, cv2.imread(frame_loc)
-                    ),
+                    lambda frame_loc: extract_basic_info(tess,
+                                                         frame_loc, cv2.imread(
+                                                             frame_loc)
+                                                         ),
                     tqdm_iter
                 )
             )
@@ -236,7 +239,7 @@ def save_duplicates(charm_loc, charms):
     print(f"Duplicate charms can be found in {dupe_file_name}")
 
 
-def extract_basic_info(frame_loc, frame):
+def extract_basic_info(tess: Tesseract, frame_loc, frame):
     try:
         skill_only_im = remove_non_skill_info(frame)
         slots = get_slots(skill_only_im)
@@ -247,7 +250,7 @@ def extract_basic_info(frame_loc, frame):
 
         skills = get_skills(trunc_tr, True)
 
-        skill_text = read_text_from_skill_tuple(skills)
+        skill_text = read_text_from_skill_tuple(tess, skills)
         return frame_loc, slots, skills, skill_text
     except Exception as e:
         logger.error(
