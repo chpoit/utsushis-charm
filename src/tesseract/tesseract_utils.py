@@ -12,7 +12,9 @@ import logging
 from pathlib import Path
 logger = logging.getLogger(__name__)
 HOME = str(Path.home())
-
+WINDOWS = (platform.system() == "Windows")
+LINUX = (platform.system() == "Linux")
+MAC = (platform.system() == "Darwin")
 
 def _is_pyinstaller():
     return hasattr(sys, '_MEIPASS')
@@ -37,7 +39,7 @@ def find_tesseract():
         ctypes.util.find_library("tesseract"),  # others
     ]
 
-    if platform.system() == "Windows":
+    if WINDOWS:
         locations += [
             os.path.join(os.getenv("ProgramW6432"),
                          "Tesseract-OCR", "libtesseract-4.dll"),
@@ -48,13 +50,13 @@ def find_tesseract():
             os.path.join(os.getenv("programfiles(x86)"),
                          "Tesseract-OCR", "libtesseract-4.dll"),
         ]
-    elif platform.system() == "Darwin":  # MacOS
+    elif MAC:  # MacOS
         locations += [
             # add potential environment paths here:
             # Example:
             # os.path.join(os.getenv("MACOS_ENV_NAME"), "Tesseract-OCR", "libtesseract-4.dll"),
         ]
-    elif platform.system() == "Linux":
+    elif LINUX:
         locations += [
             # add potential environment paths here:
             # Example:
@@ -73,7 +75,7 @@ def find_tesseract():
 def set_tessdata():
     if _is_pyinstaller() or True:
         base_path = HOME
-        if platform.system() == "Windows":
+        if WINDOWS:
             base_path = os.getenv('LOCALAPPDATA') or HOME
         tessdata = os.path.join(base_path, "utsushis-charm", 'tessdata')
         os.environ['TESSDATA_PREFIX'] = tessdata
