@@ -190,7 +190,8 @@ Normal instructions apply once the application starts.
 If you run from source, or call the executable from the terminal you can make use of the following flags/arguments to achieve different functionality
 
 - `-h` or ` --help`: Shows arguments
-- `--thirdparty `: Shows 3rd party licenses
+- `--thirdparty`: Shows 3rd party licenses
+- `--console`: Runs the app in "console" mode
 - `--skip-frames`: Skips the first frame extraction step. Useful if the second step crashed.
 - ` --skip-charms`:`Skips the Tesseract-OCR step. Not sure why you would want that.
 - `-i <INPUT_DIR>` or `--input <INPUT_DIR>`: Changes the Input directory for videos

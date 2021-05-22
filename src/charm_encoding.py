@@ -1,15 +1,12 @@
 import json
-from .Charm import Charm
+from .Charm import Charm, CharmList
 
 
 def encode_charms(charm_file, charm_encoded):
-    with open(charm_file) as cjsf:
-        charms = json.load(cjsf)
-    with open(charm_encoded, "w") as encoded:
-        for charm in map(Charm.from_dict, charms):
-            encoded.write(f"{charm.to_simple_encode()}\n")
+    charms = CharmList.from_file(charm_file)
 
+    with open(charm_encoded, "w") as encoded_file:
+        encoded_charms = charms.encode_all()
+        encoded_file.write(encoded_charms)
 
-if __name__ == "__main__":
-    charm_file = "charms.json"
-    encode_charms(charm_file)
+    return encoded_charms
