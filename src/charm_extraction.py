@@ -11,7 +11,7 @@
 # Level 2: 618, 167
 # Level 3: 618, 217 -> Jewels were not removed
 
-from .Charm import Charm
+from .Charm import Charm, CharmList
 from .utils import *
 from .tesseract.Tesseract import Tesseract
 from tqdm import tqdm
@@ -211,7 +211,7 @@ def extract_charms(frame_dir):
     except Exception as e:
         logger.error(f"Crashed with {e}")
 
-    unique_charms = set(charms)
+    unique_charms = CharmList(charms)
     if len(charms) != len(unique_charms):
         print("Pre-duplicate", len(charms))
         print("Post-duplicate:", len(unique_charms))
@@ -258,10 +258,9 @@ def extract_basic_info(tess: Tesseract, frame_loc, frame):
         return None
 
 
-def save_charms(charms, charm_json):
+def save_charms(charms:CharmList, charm_json):
     with open(charm_json, "w") as charm_file:
-        charms = list(map(lambda x: x.to_dict(), charms))
-        json.dump(charms, charm_file)
+        json.dump(charms.to_dict(), charm_file)
 
 
 if __name__ == "__main__":

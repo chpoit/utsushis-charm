@@ -3,6 +3,9 @@ import argparse
 
 def build_args():
     parser = argparse.ArgumentParser()
+    parser.add_argument('--console', dest='console', action='store_true',
+                        help='Runs in console mode')
+
     parser.add_argument('--thirdparty', dest='license', action='store_true',
                         help='Shows 3rd party licenses')
 

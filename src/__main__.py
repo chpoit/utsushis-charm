@@ -5,6 +5,8 @@ from .charm_extraction import extract_charms, save_charms
 from .charm_encoding import encode_charms
 from .arg_builder import build_args
 from .utils import print_licenses
+from .ui.main_window import MainWindow
+from .text_finder import TextFinder
 import logging
 
 logging.basicConfig(filename='app.log', filemode='w',
@@ -18,7 +20,19 @@ def main(args):
         print_licenses()
         sys.exit(0)
 
+    text_finder = TextFinder()   
 
+    if args.console:
+        run_in_console(args)
+
+    else:
+        w = MainWindow(text_finder, args)
+        sys.stdout=w
+        w.mainloop()
+
+
+
+def run_in_console(args):
     input_dir = args.input_dir
     frame_dir = args.frame_dir
     charm_json = args.charm_json
@@ -41,9 +55,5 @@ def main(args):
     print("Charms encoded under \"charms.encoded.txt\". Use the contents of that file on the MHR Wiki armor set builder")
 
 
-if __name__ == "__main__":
-    try:
-        args = build_args()
-        main(args)
-    except Exception as e:
-        logger.error(f"Crashed with {e}")
+    input("Press Enter to Exit...")
+
