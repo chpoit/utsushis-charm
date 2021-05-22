@@ -3,10 +3,7 @@ import cv2
 import numpy as np
 from skimage.metrics import structural_similarity
 from math import floor
-from .tesseract.Tesseract import Tesseract
 from .tesseract.tesseract_utils import process_image_with_tesseract
-
-tess = Tesseract()
 
 
 def _load_potentially_transparent(filename):
@@ -69,7 +66,7 @@ def _trim_image_past_skill_name(img, background_color=203):
     return trimmed
 
 
-def read_text_from_skill_tuple(skills):
+def read_text_from_skill_tuple(tess, skills):
     skill_text = []
     for skill_img, level in skills:
         skill_img = _trim_image_past_skill_name(skill_img)
@@ -185,7 +182,6 @@ def _get_levels(img, inverted=False):
 
 
 def get_resource_path(resource):
-
     return _resources[resource] if resource in _resources else resource
 
 
@@ -244,4 +240,5 @@ _resources = {
     "charm_only": _alter_resource_path(os.path.join("images", "charm_only.png")),
     "skill_mask": _alter_resource_path(os.path.join("images", "skill_mask.png")),
     "licences": _alter_resource_path("LICENSES"),
+    "TRANSLATIONS": _alter_resource_path(os.path.join("data", "translation")),
 }
