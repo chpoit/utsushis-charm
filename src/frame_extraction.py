@@ -63,7 +63,7 @@ def is_new_frame(previous_charm_marker, charm_only):
 
 
 def is_validated_video_format(video_name):
-    return os.path.splitext(video_name)[-1] in [".mp4", ".mkv"]
+    return os.path.splitext(video_name)[-1] in [".mp4", ".mkv", ".avi", ".ogv", '.flv']
 
 
 def extract_unique_frames(input_dir, frame_dir):
