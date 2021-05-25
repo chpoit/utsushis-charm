@@ -57,7 +57,9 @@ def is_validated_video_format(video_name):
     return os.path.splitext(video_name)[-1] in [".mp4", ".mkv", ".avi", ".ogv", '.flv']
 
 
-def extract_unique_frames(input_dir, frame_dir):
+def extract_unique_frames(input_dir, frame_dir, iter_wrapper=None):
+    if not iter_wrapper:
+        iter_wrapper = tqdm
     charm_count = 0
     currentFrame = 0
 
@@ -78,7 +80,7 @@ def extract_unique_frames(input_dir, frame_dir):
             frame_count /= 2
 
         previous_charm_marker = None
-        with tqdm(crop_frames(cap), total=floor(frame_count), desc=f"{f_name},  Total Estimated charms/frames found: {charm_count}") as frame_pbar:
+        with iter_wrapper(crop_frames(cap), total=floor(frame_count), desc=f"{f_name},  Total Estimated charms/frames found: {charm_count}") as frame_pbar:
             for i, cropped_tuple in frame_pbar:
                 cropped, charm_only = cropped_tuple
 
@@ -103,18 +105,19 @@ def extract_unique_frames(input_dir, frame_dir):
         cv2.destroyAllWindows()
 
     non_seq = 0
-    for i in tqdm(range(len(all_unique_frames)), desc="Detecting non-sequential duplicate frames"):
-        is_new = True
-        sourceNo, sourceCrop, sourceCharmOnly = all_unique_frames[i]
-        for j in range(i+1, len(all_unique_frames)):
-            _, cropped, charm_only = all_unique_frames[j]
-            is_new = is_new_frame(sourceCharmOnly, charm_only)
-            if not is_new:
-                break
-        if is_new:
-            non_seq += 1
-            name = os.path.join(frame_dir, f"frame{sourceNo}.png")
-            cv2.imwrite(name, sourceCrop)
+    with iter_wrapper(range(len(all_unique_frames)), desc="Detecting non-sequential duplicate frames") as pbar:
+        for i in pbar:
+            is_new = True
+            sourceNo, sourceCrop, sourceCharmOnly = all_unique_frames[i]
+            for j in range(i+1, len(all_unique_frames)):
+                _, cropped, charm_only = all_unique_frames[j]
+                is_new = is_new_frame(sourceCharmOnly, charm_only)
+                if not is_new:
+                    break
+            if is_new:
+                non_seq += 1
+                name = os.path.join(frame_dir, f"frame{sourceNo}.png")
+                cv2.imwrite(name, sourceCrop)
 
     print(f"Reduced frames from {charm_count} to {non_seq}")
 
