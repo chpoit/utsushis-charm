@@ -12,7 +12,7 @@ with open("requirements.txt") as reqf:
 
 setup(
     name="utsushis-charm",
-    version="1.4.0",
+    version="1.5.0",
     description="Read the latest Real Python tutorials",
     long_description=README,
     long_description_content_type="text/markdown",
