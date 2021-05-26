@@ -39,8 +39,8 @@ class MainWindow(tk.Tk):
             _ = self.text_finder
 
         def _runtime_opts(parent=self):
-            # runtime_frame = tk.Frame(parent)
-            runtime_frame = parent
+            runtime_frame = tk.Frame(parent)
+            # runtime_frame = parent
             self.autosave_box = tk.Checkbutton(runtime_frame, text=_(
                 "autosave-files"), variable=self.autosave)
 
@@ -60,8 +60,8 @@ class MainWindow(tk.Tk):
             return runtime_frame
 
         def _buttons(parent=self):
-            # button_frame = tk.Frame(parent)
-            button_frame = parent
+            button_frame = tk.Frame(parent)
+            # button_frame = parent
 
             self.input_btn = tk.Button(
                 button_frame, text=_("change-input"), command=self._change_input_dir)
@@ -84,8 +84,10 @@ class MainWindow(tk.Tk):
         self.btn_frame = _buttons(self.opt_f)
 
         pad = 5
-        # self.btn_frame.grid(column=0, row=0,sticky="n", pady=pad, padx=pad)
-        # self.runtime_opts.grid(column=1, row=0, sticky="n", pady=pad, padx=pad)
+        self.btn_frame.columnconfigure(0, weight=1)
+        self.btn_frame.grid(column=0, row=0,sticky="w", pady=pad, padx=pad)
+        self.runtime_opts.columnconfigure(0, weight=1)
+        self.runtime_opts.grid(column=1, row=0, sticky="w", pady=pad, padx=pad)
         # self.btn_frame.pack(fill='both',side='left', expand=True, pady=pad, padx=pad)
         # self.runtime_opts.pack(fill='both',side='right', expand=True, pady=pad, padx=pad)
         self.opt_f.columnconfigure(0, weight=1)
