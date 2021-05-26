@@ -76,72 +76,71 @@ def extract_unique_frames(
     if not iter_wrapper:
         iter_wrapper = tqdm
 
-    charm_count = 0
-    currentFrame = 0
+    frame_count = 0
+    current_frame = 0
+    seq_count = 0
 
     input_files = list(
         filter(lambda x: is_validated_video_format(x.name), os.scandir(input_dir))
     )
     print(_("total-input").format(len(input_files)))
 
-    frame_prog_item = {"total_files": len(input_files), "current_file": 0}
+    frame_callback({"total_files": len(input_files), "current_file": 0})
 
     all_unique_frames = []
 
-    for f_loc in input_files:
+    for file_no, f_loc in enumerate(input_files):
         f_name = f_loc.name
         f_loc = f_loc.path
-        frame_prog_item["f_name"] = f_name
-        frame_callback(frame_prog_item)
 
         cap = cv2.VideoCapture(f_loc)
         frame_count = floor(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         if cap.get(cv2.CAP_PROP_FPS) == 60:
             print(_("60-fps"))
-            frame_count /= 2
+            frame_count = floor(frame_count/2)
+
+        frame_callback({"f_name": f_name, "frame_count": frame_count})
 
         previous_charm_marker = None
-        with iter_wrapper(
-            crop_frames(cap),
-            total=floor(frame_count),
-            desc=_("fn-total-charm").format(f_name, charm_count),
-        ) as frame_pbar:
+        with iter_wrapper(crop_frames(cap), total=frame_count, desc=_("fn-total-charm").format(f_name, frame_count)) as frame_pbar:
             for i, cropped_tuple in frame_pbar:
                 cropped, charm_only = cropped_tuple
 
                 if previous_charm_marker is not None:
-
                     if is_new_frame(previous_charm_marker, charm_only):
-                        charm_count += 1
-                        all_unique_frames.append((currentFrame, cropped, charm_only))
+                        seq_count += 1
+                        all_unique_frames.append(
+                            (current_frame, cropped, charm_only))
                 else:
-                    charm_count += 1
-                    all_unique_frames.append((currentFrame, cropped, charm_only))
+                    seq_count += 1
+                    all_unique_frames.append(
+                        (current_frame, cropped, charm_only))
 
                 previous_charm_marker = charm_only
 
                 frame_pbar.set_description(
-                    _("fn-total-charm").format(f_name, charm_count)
-                )
-                currentFrame += 1
+                    _("fn-total-charm").format(f_name, current_frame))
+                current_frame += 1
 
-                frame_prog_item["charm_count"] = charm_count
-                frame_prog_item["current_frame"] = currentFrame
-                frame_callback(frame_prog_item)
+                frame_callback({
+                "frame_count":frame_count,
+                "current_frame": current_frame,
+                "seq": seq_count})
 
         cap.release()
         cv2.destroyAllWindows()
-        frame_prog_item["current_file"] += 1
 
-    frame_callback(frame_prog_item)
+        frame_callback({"file_no": file_no})
+
+    frame_callback({"f_name": _("done-scanning")})
 
     non_seq = 0
     with iter_wrapper(range(len(all_unique_frames)), desc=_("detect-non-seq")) as pbar:
         for i in pbar:
             is_new = True
             sourceNo, sourceCrop, sourceCharmOnly = all_unique_frames[i]
-            for j in range(i + 1, len(all_unique_frames)):
-                _, cropped, charm_only = all_unique_frames[j]
+            for j in range(i+1, len(all_unique_frames)):
+                _unused, cropped, charm_only = all_unique_frames[j]
                 is_new = is_new_frame(sourceCharmOnly, charm_only)
                 if not is_new:
                     break
@@ -150,7 +149,9 @@ def extract_unique_frames(
                 name = os.path.join(frame_dir, f"frame{sourceNo}.png")
                 cv2.imwrite(name, sourceCrop)
 
-    print(_("non-seq-diff").format(charm_count, non_seq))
+            frame_callback({"non_seq": non_seq})
+
+    print(_("non-seq-diff").format(frame_count, non_seq))
 
 
 if __name__ == "__main__":

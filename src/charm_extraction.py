@@ -182,27 +182,33 @@ def extract_charm(frame_loc, slots, skills, skill_text):
     return charm
 
 
-def extract_charms(frame_dir, _=lambda x: x, iter_wrapper=None):
+def extract_charms(
+    frame_dir, _=lambda x: x, iter_wrapper=None, charm_callback=lambda x: None
+):
     if not iter_wrapper:
         iter_wrapper = tqdm
     tess = Tesseract()
     charms = []
     charm_loc = []
+
     try:
         frames = list(map(lambda frame_loc: frame_loc.path, os.scandir(frame_dir)))
 
+        def keep_existing_and_update(x):
+            i, x = x
+            if x:
+
+                return x
+
         with iter_wrapper(frames, desc=_("parsing-skills-slots")) as parse_pbar:
-            combined_data = list(
-                filter(
-                    lambda x: x,
-                    map(
-                        lambda frame_loc: extract_basic_info(
-                            tess, frame_loc, cv2.imread(frame_loc)
-                        ),
-                        parse_pbar,
-                    ),
-                )
-            )
+            count = 0
+            combined_data = []
+            for frame_loc in parse_pbar:
+                charm_tuple = extract_basic_info(tess, frame_loc, cv2.imread(frame_loc))
+                if charm_tuple:
+                    count += 1
+                    charm_callback({"charm_count": count})
+                    combined_data.append(charm_tuple)
 
         with iter_wrapper(combined_data, desc=_("validate-fix")) as build_pbar:
             for frame_loc, slots, skills, skill_text in build_pbar:
@@ -220,6 +226,7 @@ def extract_charms(frame_dir, _=lambda x: x, iter_wrapper=None):
         logger.error(f"Crashed with {e}")
 
     unique_charms = CharmList(charms)
+    charm_callback({"unique_charms": len(unique_charms)})
     if len(charms) != len(unique_charms):
         print("Pre-duplicate", len(charms))
         print("Post-duplicate:", len(unique_charms))
