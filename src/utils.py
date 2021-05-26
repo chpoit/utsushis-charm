@@ -239,4 +239,5 @@ _resources = {
     'skill_mask': _alter_resource_path(os.path.join("images", "skill_mask.png")),
     'licences': _alter_resource_path("LICENSES"),
     'TRANSLATIONS': _alter_resource_path(os.path.join("data", "translation")),
+    'ICON': _alter_resource_path(os.path.join("media", "icon.ico")),
 }
