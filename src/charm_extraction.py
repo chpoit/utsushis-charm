@@ -175,7 +175,9 @@ def extract_charm(frame_loc, slots, skills, skill_text):
     return charm
 
 
-def extract_charms(frame_dir):
+def extract_charms(frame_dir,_=lambda x:x, iter_wrapper=None):
+    if not iter_wrapper:
+        iter_wrapper = tqdm
     tess = Tesseract()
     charms = []
     charm_loc = []
@@ -183,7 +185,7 @@ def extract_charms(frame_dir):
         frames = list(
             map(lambda frame_loc: frame_loc.path, os.scandir(frame_dir)))
 
-        with tqdm(frames, desc="Parsing skill and slots") as tqdm_iter:
+        with iter_wrapper(frames, desc=_("parsing-skills-slots")) as parse_pbar:
             combined_data = list(filter(
                 lambda x: x,
                 map(
@@ -191,22 +193,22 @@ def extract_charms(frame_dir):
                                                          frame_loc, cv2.imread(
                                                              frame_loc)
                                                          ),
-                    tqdm_iter
+                    parse_pbar
                 )
             )
             )
 
-        for frame_loc, slots, skills, skill_text in tqdm(combined_data, desc="Validating and fixing charms"):
-            try:
-                charm = extract_charm(frame_loc, slots, skills, skill_text)
-                if charm.has_skills():
-                    charms.append(charm)
-                    charm_loc.append(frame_loc)
-                else:
-                    logger.warn(f"Skill-less charm found in {frame_loc}")
-            except Exception as e:
-                logger.error(
-                    f"An error occured when extracting charm on {frame_loc}. Error: {e}")
+        with iter_wrapper(combined_data, desc=_("validate-fix")) as build_pbar:
+            for frame_loc, slots, skills, skill_text in build_pbar:
+                try:
+                    charm = extract_charm(frame_loc, slots, skills, skill_text)
+                    if charm.has_skills():
+                        charms.append(charm)
+                        charm_loc.append(frame_loc)
+                    else:
+                        logger.warn(_("logger-skill-less").format(frame_loc))
+                except Exception as e:
+                    logger.error(_("logger-charm-error").format(frame_loc, e)                        )
 
     except Exception as e:
         logger.error(f"Crashed with {e}")

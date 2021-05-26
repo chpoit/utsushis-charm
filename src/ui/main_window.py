@@ -26,8 +26,8 @@ class MainWindow(tk.Tk):
         self.charm_json = args.charm_json
         self.charm_encoded = args.charm_encoded
 
-        self.skip_charms = tk.IntVar(value=args.skip_charms)
         self.skip_frames = tk.IntVar(value=args.skip_frames)
+        self.skip_charms = tk.IntVar(value=args.skip_charms)
         self.autosave = tk.IntVar(value=1)
         self.delete_frames_val = tk.IntVar()
 
@@ -38,8 +38,9 @@ class MainWindow(tk.Tk):
         if not _:
             _ = self.text_finder
 
-        def _runtime_opts():
-            runtime_frame = tk.Frame(self)
+        def _runtime_opts(parent=self):
+            # runtime_frame = tk.Frame(parent)
+            runtime_frame = parent
             self.autosave_box = tk.Checkbutton(runtime_frame, text=_(
                 "autosave-files"), variable=self.autosave)
 
@@ -47,34 +48,53 @@ class MainWindow(tk.Tk):
                 "delete-frames"), variable=self.delete_frames_val)
 
             self.skip_frames_box = tk.Checkbutton(runtime_frame, text=_(
-                "skip-frames"), variable=self.delete_frames_val)
+                "skip-frames"), variable=self.skip_frames)
 
             self.skip_charms_box = tk.Checkbutton(runtime_frame, text=_(
-                "skip-charms"), variable=self.delete_frames_val)
+                "skip-charms"), variable=self.skip_charms)
 
-            self.autosave_box.pack()
-            self.del_frames_box.pack()
-            self.skip_frames_box.pack()
-            # self.skip_charms_box.pack() # Hidden for now
+            self.autosave_box.grid(column=1, row=0, sticky="w")
+            self.del_frames_box.grid(column=1, row=1, sticky="w")
+            self.skip_frames_box.grid(column=1, row=2, sticky="w")
+            # self.skip_charms_box.grid(column=0, row=3, sticky="w") # Hidden for now
             return runtime_frame
 
-        self.input_btn = tk.Button(
-            self, text=_("change-input"), command=self._change_input_dir)
-        self.frame_btn = tk.Button(
-            self, text=_("change-frames"), command=self._change_frame_dir)
-        self.run_btn = tk.Button(self, text=_("Run"), command=self.run)
+        def _buttons(parent=self):
+            # button_frame = tk.Frame(parent)
+            button_frame = parent
 
-        self.pbar = PbarWrapper(self, _, length =400) 
+            self.input_btn = tk.Button(
+                button_frame, text=_("change-input"), command=self._change_input_dir)
+            self.frame_btn = tk.Button(
+                button_frame, text=_("change-frames"), command=self._change_frame_dir)
+            self.save_charms_btn = tk.Button(
+                button_frame, text=_("save-charms"), command=self.save_charms)
+
+            self.input_btn.grid(column=0, row=0, sticky="w")
+            self.frame_btn.grid(column=0, row=1, sticky="w")
+            self.save_charms_btn.grid(column=0, row=2, sticky="w")
+            return button_frame
+
+        self.run_btn = tk.Button(self, text=_("run"), command=self.run)
+        self.pbar = PbarWrapper(self, _, length=600) 
         self.console = tk.Text(self)
 
-        self.input_btn.pack()
-        self.frame_btn.pack()
-        self.run_btn.pack()
+        self.opt_f = tk.Frame(self)
+        self.runtime_opts = _runtime_opts(self.opt_f)
+        self.btn_frame = _buttons(self.opt_f)
 
-        self.runtime_opts = _runtime_opts()
-        self.runtime_opts.pack()
+        pad = 5
+        # self.btn_frame.grid(column=0, row=0,sticky="n", pady=pad, padx=pad)
+        # self.runtime_opts.grid(column=1, row=0, sticky="n", pady=pad, padx=pad)
+        # self.btn_frame.pack(fill='both',side='left', expand=True, pady=pad, padx=pad)
+        # self.runtime_opts.pack(fill='both',side='right', expand=True, pady=pad, padx=pad)
+        self.opt_f.columnconfigure(0, weight=1)
+        self.opt_f.pack(fill='both',side='top', expand=True)
+
+        self.run_btn.pack()
         self.pbar.pack()
         self.console.pack()
+        self._update_save_status()
 
     def _change_input_dir(self):
         new_dir = self._request_directory()
@@ -91,19 +111,34 @@ class MainWindow(tk.Tk):
     def _request_directory(self):
         return tk.filedialog.askdirectory()
 
-    def run(self):
+    def _update_save_status(self):
+        if len(self.charms)==0:
+            self.save_charms_btn["state"] = "disabled"
+        else:
+            self.save_charms_btn["state"] = "normal"
+
+    def run(self,_: TextFinder = None):
+        if not _:
+            _= self.text_finder
         self.print_status()
         if self.delete_frames_val.get():
             self.delete_frames()
 
         if not self.skip_frames.get():
-            extract_unique_frames(self.input_dir, self.frame_dir, self.pbar)
+            extract_unique_frames(self.input_dir, self.frame_dir, _, self.pbar, self.frame_callback)
 
         if not self.skip_charms.get():
-            self.charms = extract_charms(self.frame_dir)
+            self.charms = extract_charms(self.frame_dir, _, self.pbar)
 
         if self.autosave.get():
             self.save_charms()
+
+        self.print_end()
+
+    def frame_callback(self, data):
+        for key in data:
+            if key=="":
+                pass
 
     def print_status(self, _: TextFinder = None):
         if not _:
@@ -114,9 +149,18 @@ class MainWindow(tk.Tk):
         print(_("skipping-frames"), bool(self.skip_frames.get()))
         print(_("deleting-frames"), bool(self.delete_frames_val.get()))
 
+    def print_end(self, _: TextFinder = None):
+        if not _:
+            _ = self.text_finder
+        print(_("done"))
+        if not self.autosave.get():
+            print(_("not-saved"))
+        print()
+
+
     def save_charms(self):
         encoded = self.charms.encode_all()
-        charm_dict = self.charm.to_dict()
+        charm_dict = self.charms.to_dict()
 
         with open(self.charm_json, "w") as json_file:
             json.dump(charm_dict, json_file)

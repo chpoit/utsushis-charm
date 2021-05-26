@@ -57,30 +57,35 @@ def is_validated_video_format(video_name):
     return os.path.splitext(video_name)[-1] in [".mp4", ".mkv", ".avi", ".ogv", '.flv']
 
 
-def extract_unique_frames(input_dir, frame_dir, iter_wrapper=None):
+def extract_unique_frames(input_dir, frame_dir, _=lambda x: x, iter_wrapper=None, frame_callback=lambda x: None):
     if not iter_wrapper:
         iter_wrapper = tqdm
+
     charm_count = 0
     currentFrame = 0
 
     input_files = list(
         filter(lambda x: is_validated_video_format(x.name), os.scandir(input_dir)))
-    print(f"Total input files to scan: {len(input_files)}")
+    print(_("total-input").format(len(input_files)))
+
+    frame_prog_item = {"total_files": len(input_files), "current_file": 0}
 
     all_unique_frames = []
 
     for f_loc in input_files:
         f_name = f_loc.name
         f_loc = f_loc.path
+        frame_prog_item["f_name"] = f_name
+        frame_callback(frame_prog_item)
 
         cap = cv2.VideoCapture(f_loc)
         frame_count = floor(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         if cap.get(cv2.CAP_PROP_FPS) == 60:
-            print(r"60 fps video detected, skipping 50% of the frames")
+            print(_("60-fps"))
             frame_count /= 2
 
         previous_charm_marker = None
-        with iter_wrapper(crop_frames(cap), total=floor(frame_count), desc=f"{f_name},  Total Estimated charms/frames found: {charm_count}") as frame_pbar:
+        with iter_wrapper(crop_frames(cap), total=floor(frame_count), desc=_("fn-total-charm").format(f_name, charm_count)) as frame_pbar:
             for i, cropped_tuple in frame_pbar:
                 cropped, charm_only = cropped_tuple
 
@@ -98,14 +103,21 @@ def extract_unique_frames(input_dir, frame_dir, iter_wrapper=None):
                 previous_charm_marker = charm_only
 
                 frame_pbar.set_description(
-                    f"{f_name},  Total Estimated charms/frames found: {charm_count}")
+                    _("fn-total-charm").format(f_name, charm_count))
                 currentFrame += 1
+
+                frame_prog_item["charm_count"] = charm_count
+                frame_prog_item["current_frame"] = currentFrame
+                frame_callback(frame_prog_item)
 
         cap.release()
         cv2.destroyAllWindows()
+        frame_prog_item["current_file"] += 1
+
+    frame_callback(frame_prog_item)
 
     non_seq = 0
-    with iter_wrapper(range(len(all_unique_frames)), desc="Detecting non-sequential duplicate frames") as pbar:
+    with iter_wrapper(range(len(all_unique_frames)), desc=_("detect-non-seq")) as pbar:
         for i in pbar:
             is_new = True
             sourceNo, sourceCrop, sourceCharmOnly = all_unique_frames[i]
@@ -119,7 +131,7 @@ def extract_unique_frames(input_dir, frame_dir, iter_wrapper=None):
                 name = os.path.join(frame_dir, f"frame{sourceNo}.png")
                 cv2.imwrite(name, sourceCrop)
 
-    print(f"Reduced frames from {charm_count} to {non_seq}")
+    print(_("non-seq-diff").format(charm_count, non_seq))
 
 
 if __name__ == "__main__":
