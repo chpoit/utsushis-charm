@@ -45,17 +45,21 @@ class MainWindow(tk.Tk):
         def _runtime_opts(parent=self):
             runtime_frame = tk.Frame(parent)
             # runtime_frame = parent
-            self.autosave_box = tk.Checkbutton(runtime_frame, text=_(
-                "autosave-files"), variable=self.autosave)
+            self.autosave_box = tk.Checkbutton(
+                runtime_frame, text=_("autosave-files"), variable=self.autosave
+            )
 
-            self.del_frames_box = tk.Checkbutton(runtime_frame, text=_(
-                "delete-frames"), variable=self.delete_frames_val)
+            self.del_frames_box = tk.Checkbutton(
+                runtime_frame, text=_("delete-frames"), variable=self.delete_frames_val
+            )
 
-            self.skip_frames_box = tk.Checkbutton(runtime_frame, text=_(
-                "skip-frames"), variable=self.skip_frames)
+            self.skip_frames_box = tk.Checkbutton(
+                runtime_frame, text=_("skip-frames"), variable=self.skip_frames
+            )
 
-            self.skip_charms_box = tk.Checkbutton(runtime_frame, text=_(
-                "skip-charms"), variable=self.skip_charms)
+            self.skip_charms_box = tk.Checkbutton(
+                runtime_frame, text=_("skip-charms"), variable=self.skip_charms
+            )
 
             self.autosave_box.grid(column=1, row=0, sticky="w")
             self.del_frames_box.grid(column=1, row=1, sticky="w")
@@ -68,18 +72,24 @@ class MainWindow(tk.Tk):
             # button_frame = parent
 
             self.input_btn = tk.Button(
-                button_frame, text=_("change-input"), command=self._change_input_dir)
+                button_frame, text=_("change-input"), command=self._change_input_dir
+            )
             self.frame_btn = tk.Button(
-                button_frame, text=_("change-frames"), command=self._change_frame_dir)
+                button_frame, text=_("change-frames"), command=self._change_frame_dir
+            )
             self.save_charms_btn = tk.Button(
-                button_frame, text=_("save-charms"), command=self.save_charms)
+                button_frame, text=_("save-charms"), command=self.save_charms
+            )
             self.copy_to_clip_btn = tk.Button(
-                button_frame, text=_("copy-to-clipboard"), command=self.copy_to_clip)
+                button_frame, text=_("copy-to-clipboard"), command=self.copy_to_clip
+            )
 
             self.input_location_lbl = tk.Label(
-                button_frame, textvariable=self.input_dir)
+                button_frame, textvariable=self.input_dir
+            )
             self.frames_location_lbl = tk.Label(
-                button_frame, textvariable=self.frame_dir)
+                button_frame, textvariable=self.frame_dir
+            )
 
             self.input_btn.grid(column=0, row=0, sticky="w")
             self.frame_btn.grid(column=0, row=1, sticky="w")
@@ -149,10 +159,11 @@ class MainWindow(tk.Tk):
 
         # self.runtime_opts.columnconfigure(1)
         self.progress_info.grid(
-            column=0, row=1, sticky="w", pady=pad, padx=pad, columnspan=2)
+            column=0, row=1, sticky="w", pady=pad, padx=pad, columnspan=2
+        )
 
         self.opt_f.columnconfigure(0, weight=1)
-        self.opt_f.pack(fill='both', side='top', expand=True)
+        self.opt_f.pack(fill="both", side="top", expand=True)
 
         # self.progress_info.pack( side="left", expand=False)
         self.run_btn.pack()
@@ -203,12 +214,18 @@ class MainWindow(tk.Tk):
         if not self.skip_frames.get():
             print(_("step-1-name"))
             extract_unique_frames(
-                self.input_dir.get(), self.frame_dir.get(), _, self.pbar, self.progress_callback)
+                self.input_dir.get(),
+                self.frame_dir.get(),
+                _,
+                self.pbar,
+                self.progress_callback,
+            )
 
         if not self.skip_charms.get():
             print(_("step-2-name"))
             self.charms = extract_charms(
-                self.frame_dir.get(), _, self.pbar, self.progress_callback)
+                self.frame_dir.get(), _, self.pbar, self.progress_callback
+            )
 
         if self.autosave.get():
             self.save_charms()
@@ -233,19 +250,19 @@ class MainWindow(tk.Tk):
             elif key == "unique_charms":
                 self.unique_charms_val["text"] = data[key]
         if "frame_count" in data and "current_frame" in data:
-            c, t = data['current_frame'], data['frame_count']
+            c, t = data["current_frame"], data["frame_count"]
             self.file_progress_val["text"] = f"{c}/{t} {c/t*100:.2f}%"
         self.update()
 
     def _reset_progress(self):
-        self.total_files_val['text'] = "0"
-        self.files_done_val['text'] = "0"
-        self.frames_found_val['text'] = "0"
-        self.unique_frames_val['text'] = "0"
-        self.charms_found_val['text'] = "0"
-        self.unique_charms_val['text'] = "0"
-        self.current_file_val['text'] = ""
-        self.file_progress_val['text'] = "0"
+        self.total_files_val["text"] = "0"
+        self.files_done_val["text"] = "0"
+        self.frames_found_val["text"] = "0"
+        self.unique_frames_val["text"] = "0"
+        self.charms_found_val["text"] = "0"
+        self.unique_charms_val["text"] = "0"
+        self.current_file_val["text"] = ""
+        self.file_progress_val["text"] = "0"
 
     def print_status(self, _: TextFinder = None):
         if not _:
