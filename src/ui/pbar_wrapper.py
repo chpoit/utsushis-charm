@@ -48,9 +48,9 @@ class PbarWrapper(ttk.Progressbar):
         self["maximum"] = n
 
     def set_description(self, message):
-        if not self.prev == message:
-            print(message)
-            self.prev = message
+        # if not self.prev == message:
+        #     print(message)
+        #     self.prev = message
         pass
 
     def _reset_pbar(self):
@@ -58,3 +58,10 @@ class PbarWrapper(ttk.Progressbar):
         self.iterable = None
         self["value"] = 0
         self["maximum"] = 100
+
+
+class PBarFrame(tk.Frame):
+    def __init__(self, parent, _, **kwargs):
+        super().__init__(parent, **kwargs)
+
+        self.pbar = PbarWrapper(self, _)
