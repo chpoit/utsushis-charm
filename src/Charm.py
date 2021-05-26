@@ -2,7 +2,6 @@ import json
 
 
 class Charm:
-
     def __init__(self, slots, skills=None):
         if not skills:
             skills = {}
@@ -35,17 +34,18 @@ class Charm:
         return {"slots": self.slots, "skills": self.skills}
 
     def is_identical(self, charm):
-        if self.slots[0] != charm.slots[0] or\
-            self.slots[1] != charm.slots[1] or\
-                self.slots[2] != charm.slots[2]:
+        if (
+            self.slots[0] != charm.slots[0]
+            or self.slots[1] != charm.slots[1]
+            or self.slots[2] != charm.slots[2]
+        ):
             return False
 
         if len(self.skills) != len(charm.skills):
             return False
 
         for skill in self.skills:
-            if skill not in charm.skills or\
-                    self.skills[skill] != charm.skills[skill]:
+            if skill not in charm.skills or self.skills[skill] != charm.skills[skill]:
                 return False
 
         return True

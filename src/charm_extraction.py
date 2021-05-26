@@ -21,6 +21,7 @@ import json
 import cv2
 import os
 from pathlib import Path
+
 DEBUG = False
 
 
@@ -35,12 +36,12 @@ spell.load_dictionary(get_resource_path("skill_dict"), 0, 1)
 
 def load_corrections(known_corrections=None):
     known_corrections = known_corrections or {}
-    corrections_path = get_resource_path('skill_corrections')
+    corrections_path = get_resource_path("skill_corrections")
     Path(corrections_path).touch()  # if not exists
-    with open(corrections_path, encoding='utf-8') as scf:
+    with open(corrections_path, encoding="utf-8") as scf:
         for line in scf.readlines():
             line = line.strip()
-            w, r = line.split(',')
+            w, r = line.split(",")
             known_corrections[w] = r
 
     return known_corrections
@@ -48,7 +49,7 @@ def load_corrections(known_corrections=None):
 
 def load_all_skills(all_skills=None):
     all_skills = all_skills or {}
-    with open(get_resource_path('skill_list')) as slf:
+    with open(get_resource_path("skill_list")) as slf:
         for line in slf.readlines():
             skill_name = line.strip()
             all_skills[skill_name.lower()] = skill_name
@@ -80,7 +81,8 @@ def extract_charm(frame_loc, slots, skills, skill_text):
 
         if not skill:
             logger.warning(
-                f"Empty skill string for skill {skill_number} on {frame_loc}")
+                f"Empty skill string for skill {skill_number} on {frame_loc}"
+            )
             continue
 
         if is_skill(all_skills, skill):
@@ -91,7 +93,7 @@ def extract_charm(frame_loc, slots, skills, skill_text):
         logger.info("Parsed skill: ", skill.strip(), "level", level)
 
         reconstructed_skill = ""
-        while (True):
+        while True:
             for w in skill.split():
                 if w in known_corrections:
                     true_w = known_corrections[w]
@@ -112,12 +114,13 @@ def extract_charm(frame_loc, slots, skills, skill_text):
                 cv2.imshow(f"{skill}", skill_img)
                 cv2.waitKey(1)
 
-                while (True):
+                while True:
                     if len(suggestions) == 1 and not has_errored:
                         new_word = ""
                     else:
                         new_word = input(
-                            f"Select Correction for word '{w}', or type it in. [0] is default. Type 'empty' for no skill:")
+                            f"Select Correction for word '{w}', or type it in. [0] is default. Type 'empty' for no skill:"
+                        )
                     has_errored = False
 
                     if new_word == "empty":
@@ -148,14 +151,18 @@ def extract_charm(frame_loc, slots, skills, skill_text):
                     continue
                 print(f"'{reconstructed_skill}' is not a valid skill.")
                 print(
-                    "Make sure you only correct one word at a time. You can look at the picture to help identify the proper skill.")
+                    "Make sure you only correct one word at a time. You can look at the picture to help identify the proper skill."
+                )
                 reconstructed_skill = ""
             else:
-                logger.info(
-                    f"Corrected skill: {reconstructed_skill} from {skill}")
+                logger.info(f"Corrected skill: {reconstructed_skill} from {skill}")
                 for w, r in zip(skill.split(), reconstructed_skill.split()):
                     if w not in known_corrections:
-                        with open(get_resource_path("skill_corrections"), "a", encoding="utf-8") as scf:
+                        with open(
+                            get_resource_path("skill_corrections"),
+                            "a",
+                            encoding="utf-8",
+                        ) as scf:
                             scf.write(f"{w.strip()},{r.strip()}\n")
                         known_corrections[w] = r
                 break
@@ -178,22 +185,24 @@ def extract_charms(frame_dir):
     charms = []
     charm_loc = []
     try:
-        frames = list(
-            map(lambda frame_loc: frame_loc.path, os.scandir(frame_dir)))
+        frames = list(map(lambda frame_loc: frame_loc.path, os.scandir(frame_dir)))
 
         with tqdm(frames, desc="Parsing skill and slots") as tqdm_iter:
-            combined_data = list(filter(
-                lambda x: x,
-                map(
-                    lambda frame_loc: extract_basic_info(
-                        frame_loc, cv2.imread(frame_loc)
+            combined_data = list(
+                filter(
+                    lambda x: x,
+                    map(
+                        lambda frame_loc: extract_basic_info(
+                            frame_loc, cv2.imread(frame_loc)
+                        ),
+                        tqdm_iter,
                     ),
-                    tqdm_iter
                 )
             )
-            )
 
-        for frame_loc, slots, skills, skill_text in tqdm(combined_data, desc="Validating and fixing charms"):
+        for frame_loc, slots, skills, skill_text in tqdm(
+            combined_data, desc="Validating and fixing charms"
+        ):
             try:
                 charm = extract_charm(frame_loc, slots, skills, skill_text)
                 if charm.has_skills():
@@ -203,7 +212,8 @@ def extract_charms(frame_dir):
                     logger.warn(f"Skill-less charm found in {frame_loc}")
             except Exception as e:
                 logger.error(
-                    f"An error occured when extracting charm on {frame_loc}. Error: {e}")
+                    f"An error occured when extracting charm on {frame_loc}. Error: {e}"
+                )
 
     except Exception as e:
         logger.error(f"Crashed with {e}")
@@ -250,8 +260,7 @@ def extract_basic_info(frame_loc, frame):
         skill_text = read_text_from_skill_tuple(skills)
         return frame_loc, slots, skills, skill_text
     except Exception as e:
-        logger.error(
-            f"An error occured when analysing frame {frame_loc}. Error: {e}")
+        logger.error(f"An error occured when analysing frame {frame_loc}. Error: {e}")
         return None
 
 

@@ -8,6 +8,7 @@ from .tesseract.tesseract_utils import process_image_with_tesseract
 
 tess = Tesseract()
 
+
 def _load_potentially_transparent(filename):
     pot_transparent = cv2.imread(filename, cv2.IMREAD_UNCHANGED)
     trans_mask = pot_transparent[:, :, 3] == 0
@@ -16,8 +17,8 @@ def _load_potentially_transparent(filename):
 
 
 def apply_black_white_mask(img, mask_img):
-    lower = np.array([1]*3)
-    upper = np.array([255]*3)
+    lower = np.array([1] * 3)
+    upper = np.array([255] * 3)
     mask = cv2.inRange(mask_img, lower, upper)
 
     return cv2.bitwise_and(img, img, mask=mask)
@@ -50,7 +51,7 @@ def apply_trunc_threshold(img):
 def _trim_image_past_skill_name(img, background_color=203):
     shape = img.shape
     empty_col = 0
-    i = floor(shape[0]/2)
+    i = floor(shape[0] / 2)
     for j in range(shape[1]):
         if len(shape) == 3:
             pixel = img[i][j][0]
@@ -64,7 +65,7 @@ def _trim_image_past_skill_name(img, background_color=203):
         if empty_col >= 15:
             break
 
-    trimmed = img[:, :j-10] if len(shape) != 3 else img[:, :j-10, :]
+    trimmed = img[:, : j - 10] if len(shape) != 3 else img[:, : j - 10, :]
     return trimmed
 
 
@@ -84,17 +85,17 @@ def get_slots(img):
     y = 26
 
     x1 = 547
-    x2 = x1 + w+1
-    x3 = x1 + w*2+1
+    x2 = x1 + w + 1
+    x3 = x1 + w * 2 + 1
 
-    slot0 = cv2.imread(get_resource_path('slot0'))
-    slot1 = cv2.imread(get_resource_path('slot1'))
-    slot2 = cv2.imread(get_resource_path('slot2'))
-    slot3 = cv2.imread(get_resource_path('slot3'))
+    slot0 = cv2.imread(get_resource_path("slot0"))
+    slot1 = cv2.imread(get_resource_path("slot1"))
+    slot2 = cv2.imread(get_resource_path("slot2"))
+    slot3 = cv2.imread(get_resource_path("slot3"))
 
-    spot1 = img[y:y + h, x1:x1 + w]
-    spot2 = img[y:y + h, x2:x2 + w]
-    spot3 = img[y:y + h, x3:x3 + w]
+    spot1 = img[y : y + h, x1 : x1 + w]
+    spot2 = img[y : y + h, x2 : x2 + w]
+    spot3 = img[y : y + h, x3 : x3 + w]
 
     slots = []
     most_similar = None
@@ -114,7 +115,7 @@ def get_slots(img):
                 if i == 0:
                     break
 
-    slots += [0]*3
+    slots += [0] * 3
     return slots[:3]
 
 
@@ -122,6 +123,7 @@ def get_skills(img, inverted=False):
     def _has_level(x):
         x, y = x
         return y > 0
+
     skills = _get_skills(img)
     levels = _get_levels(img, inverted=inverted)
 
@@ -136,8 +138,8 @@ def _get_skills(img):
     y1 = 92
     y2 = 142
 
-    skill1 = img[y1:y1 + h, x:x + w]
-    skill2 = img[y2:y2 + h, x:x + w]
+    skill1 = img[y1 : y1 + h, x : x + w]
+    skill2 = img[y2 : y2 + h, x : x + w]
 
     return skill1, skill2
 
@@ -150,12 +152,12 @@ def _get_levels(img, inverted=False):
     y1 = 117
     y2 = 167
 
-    lv1 = cv2.imread(get_resource_path('lv1'), 0)
-    lv2 = cv2.imread(get_resource_path('lv2'), 0)
-    lv3 = cv2.imread(get_resource_path('lv3'), 0)
+    lv1 = cv2.imread(get_resource_path("lv1"), 0)
+    lv2 = cv2.imread(get_resource_path("lv2"), 0)
+    lv3 = cv2.imread(get_resource_path("lv3"), 0)
 
-    level1 = img[y1:y1 + h, x:x + w]
-    level2 = img[y2:y2 + h, x:x + w]
+    level1 = img[y1 : y1 + h, x : x + w]
+    level2 = img[y2 : y2 + h, x : x + w]
     if inverted:
         level1 = cv2.bitwise_not(level1)
         level2 = cv2.bitwise_not(level2)
@@ -177,7 +179,7 @@ def _get_levels(img, inverted=False):
             continue
         for i, s in enumerate(scores):
             if s == best:
-                levels.append(i+1)
+                levels.append(i + 1)
 
     return levels
 
@@ -189,6 +191,7 @@ def get_resource_path(resource):
 
 def _alter_resource_path(relative_path):
     import sys
+
     """ Get absolute path to resource, works for dev and for PyInstaller """
     try:
         # PyInstaller creates a temp folder and stores path in _MEIPASS
@@ -227,18 +230,18 @@ def batchify_lazy(lst, batch_size):
 
 
 _resources = {
-    'skill_dict': _alter_resource_path(os.path.join("data", "skill_dict.freq")),
-    'skill_list': _alter_resource_path(os.path.join("data", "skill_list.txt")),
-    'skill_corrections': "skill_corrections.csv",
-    'lv1': _alter_resource_path(os.path.join("images", "levels", "lv1.png")),
-    'lv2': _alter_resource_path(os.path.join("images", "levels", "lv2.png")),
-    'lv3': _alter_resource_path(os.path.join("images", "levels", "lv3.png")),
-    'slot0': _alter_resource_path(os.path.join("images", "slots", "slot0.png")),
-    'slot1': _alter_resource_path(os.path.join("images", "slots", "slot1.png")),
-    'slot2': _alter_resource_path(os.path.join("images", "slots", "slot2.png")),
-    'slot3': _alter_resource_path(os.path.join("images", "slots", "slot3.png")),
-    'mask': _alter_resource_path(os.path.join("images", "mask.png")),
-    'charm_only': _alter_resource_path(os.path.join("images", "charm_only.png")),
-    'skill_mask': _alter_resource_path(os.path.join("images", "skill_mask.png")),
-    'licences': _alter_resource_path("LICENSES"),
+    "skill_dict": _alter_resource_path(os.path.join("data", "skill_dict.freq")),
+    "skill_list": _alter_resource_path(os.path.join("data", "skill_list.txt")),
+    "skill_corrections": "skill_corrections.csv",
+    "lv1": _alter_resource_path(os.path.join("images", "levels", "lv1.png")),
+    "lv2": _alter_resource_path(os.path.join("images", "levels", "lv2.png")),
+    "lv3": _alter_resource_path(os.path.join("images", "levels", "lv3.png")),
+    "slot0": _alter_resource_path(os.path.join("images", "slots", "slot0.png")),
+    "slot1": _alter_resource_path(os.path.join("images", "slots", "slot1.png")),
+    "slot2": _alter_resource_path(os.path.join("images", "slots", "slot2.png")),
+    "slot3": _alter_resource_path(os.path.join("images", "slots", "slot3.png")),
+    "mask": _alter_resource_path(os.path.join("images", "mask.png")),
+    "charm_only": _alter_resource_path(os.path.join("images", "charm_only.png")),
+    "skill_mask": _alter_resource_path(os.path.join("images", "skill_mask.png")),
+    "licences": _alter_resource_path("LICENSES"),
 }

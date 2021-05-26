@@ -10,20 +10,21 @@ from tqdm import tqdm
 
 import logging
 from pathlib import Path
+
 logger = logging.getLogger(__name__)
 HOME = str(Path.home())
-WINDOWS = (platform.system() == "Windows")
-LINUX = (platform.system() == "Linux")
-MAC = (platform.system() == "Darwin")
+WINDOWS = platform.system() == "Windows"
+LINUX = platform.system() == "Linux"
+MAC = platform.system() == "Darwin"
+
 
 def _is_pyinstaller():
-    return hasattr(sys, '_MEIPASS')
+    return hasattr(sys, "_MEIPASS")
 
 
 def _get_pyinstaller_tesseract_path():
     base_path = sys._MEIPASS
-    bundled_path = os.path.join(base_path,
-                                "Tesseract-OCR", "libtesseract-4.dll")
+    bundled_path = os.path.join(base_path, "Tesseract-OCR", "libtesseract-4.dll")
     return bundled_path
 
 
@@ -41,14 +42,18 @@ def find_tesseract():
 
     if WINDOWS:
         locations += [
-            os.path.join(os.getenv("ProgramW6432"),
-                         "Tesseract-OCR", "libtesseract-4.dll"),
-            os.path.join(os.getenv('LOCALAPPDATA'),
-                         "Tesseract-OCR", "libtesseract-4.dll"),
-            os.path.join(os.getenv("ProgramFiles"),
-                         "Tesseract-OCR", "libtesseract-4.dll"),
-            os.path.join(os.getenv("programfiles(x86)"),
-                         "Tesseract-OCR", "libtesseract-4.dll"),
+            os.path.join(
+                os.getenv("ProgramW6432"), "Tesseract-OCR", "libtesseract-4.dll"
+            ),
+            os.path.join(
+                os.getenv("LOCALAPPDATA"), "Tesseract-OCR", "libtesseract-4.dll"
+            ),
+            os.path.join(
+                os.getenv("ProgramFiles"), "Tesseract-OCR", "libtesseract-4.dll"
+            ),
+            os.path.join(
+                os.getenv("programfiles(x86)"), "Tesseract-OCR", "libtesseract-4.dll"
+            ),
         ]
     elif MAC:  # MacOS
         locations += [
@@ -69,33 +74,34 @@ def find_tesseract():
             return potential
 
     raise TesseractError(
-        'Tesseract library was not found on your system. Please install it')
+        "Tesseract library was not found on your system. Please install it"
+    )
 
 
 def set_tessdata():
     if _is_pyinstaller() or True:
         base_path = HOME
         if WINDOWS:
-            base_path = os.getenv('LOCALAPPDATA') or HOME
-        tessdata = os.path.join(base_path, "utsushis-charm", 'tessdata')
-        os.environ['TESSDATA_PREFIX'] = tessdata
+            base_path = os.getenv("LOCALAPPDATA") or HOME
+        tessdata = os.path.join(base_path, "utsushis-charm", "tessdata")
+        os.environ["TESSDATA_PREFIX"] = tessdata
         os.makedirs(tessdata, exist_ok=True)
 
-    if 'TESSDATA_PREFIX' in os.environ:
+    if "TESSDATA_PREFIX" in os.environ:
         return
 
     path = find_tesseract()
     path = os.path.dirname(path)
-    TESSDATA_PREFIX = os.path.join(path, 'tessdata')
-    os.environ['TESSDATA_PREFIX'] = TESSDATA_PREFIX
+    TESSDATA_PREFIX = os.path.join(path, "tessdata")
+    os.environ["TESSDATA_PREFIX"] = TESSDATA_PREFIX
     logger.debug(f"Set 'TESSDATA_PREFIX' to {TESSDATA_PREFIX}")
 
 
 def get_datapath():
-    if 'TESSDATA_PREFIX' not in os.environ:
+    if "TESSDATA_PREFIX" not in os.environ:
         set_tessdata()
 
-    return os.environ['TESSDATA_PREFIX']
+    return os.environ["TESSDATA_PREFIX"]
 
 
 def download_language_data(lang="eng"):
@@ -107,18 +113,26 @@ def download_language_data(lang="eng"):
     name_map = {"eng": "English"}
     pack_name = name_map[lang]
 
-    url = f"https://github.com/tesseract-ocr/tessdata_best/raw/master/{lang}.traineddata"
+    url = (
+        f"https://github.com/tesseract-ocr/tessdata_best/raw/master/{lang}.traineddata"
+    )
 
     print(f"Downloading {pack_name} language pack to: {target_dir}")
-    with tqdm(unit='B', unit_scale=True, unit_divisor=1024, miniters=1,
-              desc=f"Downloading {pack_name} pack...") as pbar:
+    with tqdm(
+        unit="B",
+        unit_scale=True,
+        unit_divisor=1024,
+        miniters=1,
+        desc=f"Downloading {pack_name} pack...",
+    ) as pbar:
 
-        request.urlretrieve(url, filename=full_name,
-                           reporthook=_tqdm_dl_hook(pbar), data=None)
+        request.urlretrieve(
+            url, filename=full_name, reporthook=_tqdm_dl_hook(pbar), data=None
+        )
 
 
 def process_image_with_tesseract(tesseract, image):
-    whitelist = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890\'/-"
+    whitelist = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890'/-"
 
     height, width = image.shape[:2]
     if len(image.shape) == 2:

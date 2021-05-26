@@ -7,8 +7,9 @@ from .arg_builder import build_args
 from .utils import print_licenses
 import logging
 
-logging.basicConfig(filename='app.log', filemode='w',
-                    format='%(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    filename="app.log", filemode="w", format="%(name)s - %(levelname)s - %(message)s"
+)
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +18,6 @@ def main(args):
     if args.license:
         print_licenses()
         sys.exit(0)
-
 
     input_dir = args.input_dir
     frame_dir = args.frame_dir
@@ -38,7 +38,9 @@ def main(args):
 
     print("Encoding charms")
     encode_charms(charm_json, charm_encoded)
-    print("Charms encoded under \"charms.encoded.txt\". Use the contents of that file on the MHR Wiki armor set builder")
+    print(
+        'Charms encoded under "charms.encoded.txt". Use the contents of that file on the MHR Wiki armor set builder'
+    )
 
 
 if __name__ == "__main__":

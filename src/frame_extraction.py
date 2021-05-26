@@ -1,6 +1,10 @@
 import os
 import cv2
-from .utils import apply_pre_crop_mask, get_frame_change_observation_section, get_resource_path
+from .utils import (
+    apply_pre_crop_mask,
+    get_frame_change_observation_section,
+    get_resource_path,
+)
 from tqdm import tqdm
 from math import floor
 from skimage.metrics import structural_similarity
@@ -10,8 +14,8 @@ import numpy as np
 def crop_frame(frame):
     x = 620
     y = 175
-    x2 = x+630
-    y2 = y+440
+    x2 = x + 630
+    y2 = y + 440
     pre_crop = apply_pre_crop_mask(frame)
     cropped = pre_crop[y:y2, x:x2]
     charm_only = get_frame_change_observation_section(cropped)
@@ -35,7 +39,7 @@ def read_frames(capture_device):
     i = 0
     fps = capture_device.get(cv2.CAP_PROP_FPS)
 
-    while(True):
+    while True:
         ret, frame = capture_device.read()
         if not ret:
             break
@@ -50,7 +54,12 @@ def is_new_frame(previous_charm_marker, charm_only):
     diff = cv2.absdiff(previous_charm_marker, charm_only)
     ret, threshold = cv2.threshold(diff, 60, 255, cv2.THRESH_BINARY_INV)
 
-    return 0 in threshold[:, ]
+    return (
+        0
+        in threshold[
+            :,
+        ]
+    )
 
 
 def is_validated_video_format(video_name):
@@ -62,7 +71,8 @@ def extract_unique_frames(input_dir, frame_dir):
     currentFrame = 0
 
     input_files = list(
-        filter(lambda x: is_validated_video_format(x.name), os.scandir(input_dir)))
+        filter(lambda x: is_validated_video_format(x.name), os.scandir(input_dir))
+    )
     print(f"Total input files to scan: {len(input_files)}")
 
     all_unique_frames = []
@@ -78,7 +88,11 @@ def extract_unique_frames(input_dir, frame_dir):
             frame_count /= 2
 
         previous_charm_marker = None
-        with tqdm(crop_frames(cap), total=floor(frame_count), desc=f"{f_name},  Total Estimated charms/frames found: {charm_count}") as frame_pbar:
+        with tqdm(
+            crop_frames(cap),
+            total=floor(frame_count),
+            desc=f"{f_name},  Total Estimated charms/frames found: {charm_count}",
+        ) as frame_pbar:
             for i, cropped_tuple in frame_pbar:
                 cropped, charm_only = cropped_tuple
 
@@ -86,27 +100,28 @@ def extract_unique_frames(input_dir, frame_dir):
 
                     if is_new_frame(previous_charm_marker, charm_only):
                         charm_count += 1
-                        all_unique_frames.append(
-                            (currentFrame, cropped, charm_only))
+                        all_unique_frames.append((currentFrame, cropped, charm_only))
                 else:
                     charm_count += 1
-                    all_unique_frames.append(
-                        (currentFrame, cropped, charm_only))
+                    all_unique_frames.append((currentFrame, cropped, charm_only))
 
                 previous_charm_marker = charm_only
 
                 frame_pbar.set_description(
-                    f"{f_name},  Total Estimated charms/frames found: {charm_count}")
+                    f"{f_name},  Total Estimated charms/frames found: {charm_count}"
+                )
                 currentFrame += 1
 
         cap.release()
         cv2.destroyAllWindows()
 
     non_seq = 0
-    for i in tqdm(range(len(all_unique_frames)), desc="Detecting non-sequential duplicate frames"):
+    for i in tqdm(
+        range(len(all_unique_frames)), desc="Detecting non-sequential duplicate frames"
+    ):
         is_new = True
         sourceNo, sourceCrop, sourceCharmOnly = all_unique_frames[i]
-        for j in range(i+1, len(all_unique_frames)):
+        for j in range(i + 1, len(all_unique_frames)):
             _, cropped, charm_only = all_unique_frames[j]
             is_new = is_new_frame(sourceCharmOnly, charm_only)
             if not is_new:
