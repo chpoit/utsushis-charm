@@ -121,6 +121,7 @@ In all seriousness, the work is done in a few broad steps:
 
 - If you ran everything and got new corrections in the [`skill_corrections.csv`](skill_corrections.csv) file, consider creating a pull request to add them for others.
 - If you feel like contributing anything, go ahead and submit a pull request I'll be happy to take a look and decide if it's something worth adding.
+- Please use the default settings of `black` to format the python source code.
 
 # TODOS:
 - [ ] Throw out Google Tesseract/Try newer version

@@ -11,16 +11,18 @@ import platform
 import logging
 from pathlib import Path
 from .tesseract_utils import *
+
 logger = logging.getLogger(__name__)
 
 from .TesseractError import TesseractError
+
 
 class Tesseract(object):
     _lib = None
     _api = None
 
     class TessBaseAPI(ctypes._Pointer):
-        _type_ = type('_TessBaseAPI', (ctypes.Structure,), {})
+        _type_ = type("_TessBaseAPI", (ctypes.Structure,), {})
 
     @classmethod
     def setup_lib(cls, lib_path=None):
@@ -30,7 +32,8 @@ class Tesseract(object):
             lib_path = find_tesseract()
             if lib_path is None:
                 raise TesseractError(
-                    'Tesseract library was not found on your system. Please install it')
+                    "Tesseract library was not found on your system. Please install it"
+                )
         cls._lib = lib = ctypes.CDLL(lib_path)
 
         # source:
@@ -39,74 +42,68 @@ class Tesseract(object):
         lib.TessBaseAPICreate.restype = cls.TessBaseAPI
 
         lib.TessBaseAPIDelete.restype = None  # void
-        lib.TessBaseAPIDelete.argtypes = (
-            cls.TessBaseAPI,)  # handle
+        lib.TessBaseAPIDelete.argtypes = (cls.TessBaseAPI,)  # handle
 
         lib.TessBaseAPIInit3.restype = ctypes.c_int
         lib.TessBaseAPIInit3.argtypes = (
             cls.TessBaseAPI,  # handle
             ctypes.c_char_p,  # datapath
-            ctypes.c_char_p)  # language
+            ctypes.c_char_p,
+        )  # language
 
         lib.TessBaseAPISetImage.restype = None
         lib.TessBaseAPISetImage.argtypes = (
             cls.TessBaseAPI,  # handle
             ctypes.c_void_p,  # imagedata
-            ctypes.c_int,    # width
-            ctypes.c_int,    # height
-            ctypes.c_int,    # bytes_per_pixel
-            ctypes.c_int)    # bytes_per_line
+            ctypes.c_int,  # width
+            ctypes.c_int,  # height
+            ctypes.c_int,  # bytes_per_pixel
+            ctypes.c_int,
+        )  # bytes_per_line
 
         lib.TessBaseAPIGetUTF8Text.restype = ctypes.c_char_p
-        lib.TessBaseAPIGetUTF8Text.argtypes = (
-            cls.TessBaseAPI,)  # handle
+        lib.TessBaseAPIGetUTF8Text.argtypes = (cls.TessBaseAPI,)  # handle
 
         lib.TessBaseAPISetSourceResolution.restype = None
-        lib.TessBaseAPISetSourceResolution.argtypes = (
-            cls.TessBaseAPI,
-            ctypes.c_int
-        )
+        lib.TessBaseAPISetSourceResolution.argtypes = (cls.TessBaseAPI, ctypes.c_int)
 
-    def __init__(self, language='eng', datapath=None, lib_path=None):
+    def __init__(self, language="eng", datapath=None, lib_path=None):
         if self._lib is None:
             self.setup_lib(lib_path)
         self._api = self._lib.TessBaseAPICreate()
 
         download_language_data(language)
-        
+
         # required windows nonsense
         encoded_lang = language.encode("utf-8")
         datapath = get_datapath() if datapath is None else datapath
-        encoded_datapath = None if datapath is None else datapath.encode(
-            "utf-8")
+        encoded_datapath = None if datapath is None else datapath.encode("utf-8")
 
-        init = self._lib.TessBaseAPIInit3(
-            self._api, encoded_datapath, encoded_lang)
+        init = self._lib.TessBaseAPIInit3(self._api, encoded_datapath, encoded_lang)
 
         if init:
-            raise TesseractError(f'initialization failed ({init})')
+            raise TesseractError(f"initialization failed ({init})")
 
     def __del__(self):
         if not self._lib or not self._api:
             return
-        if not getattr(self, 'closed', False):
+        if not getattr(self, "closed", False):
             self._lib.TessBaseAPIDelete(self._api)
             self.closed = True
 
     def _check_setup(self):
         if not self._lib:
-            raise TesseractError('lib not configured')
+            raise TesseractError("lib not configured")
         if not self._api:
-            raise TesseractError('api not created')
+            raise TesseractError("api not created")
 
-    def set_image(self, imagedata, width, height,
-                  bytes_per_pixel, bytes_per_line=None):
+    def set_image(self, imagedata, width, height, bytes_per_pixel, bytes_per_line=None):
         self._check_setup()
         if bytes_per_line is None:
             bytes_per_line = width * bytes_per_pixel
-        self._lib.TessBaseAPISetImage(self._api,
-                                      imagedata, width, height,
-                                      bytes_per_pixel, bytes_per_line)
+        self._lib.TessBaseAPISetImage(
+            self._api, imagedata, width, height, bytes_per_pixel, bytes_per_line
+        )
 
     def set_resolution(self, resolution=70):
         self._lib.TessBaseAPISetSourceResolution(self._api, resolution)
@@ -115,7 +112,7 @@ class Tesseract(object):
         self._check_setup()
         result = self._lib.TessBaseAPIGetUTF8Text(self._api)
         if result:
-            return result.decode('utf-8')
+            return result.decode("utf-8")
 
     def get_utf8_text(self):
         self._check_setup()
@@ -126,13 +123,19 @@ class Tesseract(object):
         self._lib.TessBaseAPISetVariable(self._api, key, val)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     set_tessdata()
-    PACKAGE_PARENT = '..'
-    SCRIPT_DIR = os.path.dirname(os.path.realpath(
-        os.path.join(os.getcwd(), os.path.expanduser(__file__))))
+    PACKAGE_PARENT = ".."
+    SCRIPT_DIR = os.path.dirname(
+        os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__)))
+    )
     sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
-    from ..utils import remove_non_skill_info, apply_trunc_threshold, get_skills, _trim_image_past_skill_name
+    from ..utils import (
+        remove_non_skill_info,
+        apply_trunc_threshold,
+        get_skills,
+        _trim_image_past_skill_name,
+    )
 
     test_img = [
         "frames/frame0.png",

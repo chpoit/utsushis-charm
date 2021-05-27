@@ -5,7 +5,7 @@ class Charm:
     def __init__(self, slots, frame_loc, skills=None):
         if not skills:
             skills = {}
-        self.slots = slots
+        self.slots = list(sorted(slots, reverse=True))
         self.frame = frame_loc
         self.skills = skills
 
@@ -37,8 +37,8 @@ class Charm:
     def is_identical(self, charm):
         if (
             self.slots[0] != charm.slots[0]
-            and self.slots[1] != charm.slots[1]
-            and self.slots[2] != charm.slots[2]
+            or self.slots[1] != charm.slots[1]
+            or self.slots[2] != charm.slots[2]
         ):
             return False
 
@@ -55,8 +55,10 @@ class Charm:
         acc = ""
         for skill in self.skills:
             acc += f"{skill},{self.skills[skill]},"
-        if len(self.skills) == 1:
-            acc += f",0,"
+        if len(self.skills) == 0:  # should be impossible
+            acc += ",0,"
+        if len(self.skills) <= 1:
+            acc += ",0,"
 
         for level in self.slots:
             acc += f"{level},"
