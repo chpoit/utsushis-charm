@@ -164,17 +164,17 @@ Normal instructions apply once the application starts.
   - have python3 and tesseract installed via brew (or some other way)
   - Virtual env on mac (optional):  `virtualenv -p python3 env`
 - Running:
-  - switch to the virtualenv `source env/bin/activate` (run at the root of the repository)
-  - set TESSDATA_PREFIX: `export TESSDATA_PREFIX=/usr/local/Cellar/tesseract/<version>/share/tessdata`
-  - install the project dependencies: `pip3 install .`
-  - run with `python3 main.py`
+  - Switch to the virtualenv `source env/bin/activate` (run at the root of the repository)
+  - Set TESSDATA_PREFIX: `export TESSDATA_PREFIX=/usr/local/Cellar/tesseract/<version>/share/tessdata`
+  - Install the project dependencies: `pip3 install .`
+  - Run with `python3 main.py`
 
 ## Linux
 - Requirements
-  - You will need to install Google tesseract with your package manager of choice.
+  - You will need to install Google tesseract with your package manager of choice. Probably found under `tesseract-ocr`
+  - TkInter must be installed, probably found under `python3-tk`
 - Running
   - `python3 main.py`
-  - 
 
 ## Windows
 - Requirements

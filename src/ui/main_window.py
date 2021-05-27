@@ -19,8 +19,11 @@ class MainWindow(tk.Tk):
         self.charms = CharmList()
 
         self.title(_("Utsushi's Charm"))
-        icon = get_resource_path("ICON")
-        self.iconbitmap(icon)
+        try:
+            icon = get_resource_path("ICON")
+            self.iconbitmap(icon)
+        except:
+            pass
 
         self._ = _
 
@@ -314,3 +317,6 @@ class MainWindow(tk.Tk):
         self.console.insert(END, text)
         self.console.see(END)
         self.update()
+
+    def flush(self):
+        pass
