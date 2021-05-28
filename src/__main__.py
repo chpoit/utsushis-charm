@@ -1,7 +1,12 @@
 import os
 import sys
 from .frame_extraction import extract_unique_frames
-from .charm_extraction import extract_charms, save_charms
+from .charm_extraction import (
+    extract_charms,
+    save_charms,
+    repair_invalid,
+    remove_duplicates,
+)
 from .charm_encoding import encode_charms
 from .arg_builder import build_args
 from .utils import print_licenses
@@ -50,6 +55,9 @@ def run_in_console(args):
 
     if not args.skip_charms:
         charms = extract_charms(frame_dir, lang, translator)
+        if charms.has_invalids():
+            charms = repair_invalid(lang, charms, translator)
+            charms = remove_duplicates(charms, mode="a")
 
         save_charms(charms, charm_json)
         print(f"Saved {len(charms)} charms")

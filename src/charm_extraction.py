@@ -17,28 +17,24 @@ from .utils import *
 from .resources import (
     get_resource_path,
     get_all_skills,
-    get_word_freqs_location,
     load_corrections,
+    get_spell_checker,
+    add_corrections,
 )
 from .tesseract.Tesseract import Tesseract
 from tqdm import tqdm
-from symspellpy.symspellpy import SymSpell
 import numpy as np
 import logging
 import json
 import cv2
 import os
 
-DEBUG = True
+DEBUG = False
 
 
 logger = logging.getLogger(__name__)
 if DEBUG:
     logger.setLevel(logging.DEBUG)
-
-
-spell = SymSpell(max_dictionary_edit_distance=4)
-spell.load_dictionary(get_word_freqs_location("en"), 0, 1)
 
 
 def is_skill(skill_dict, skill_name):
@@ -49,27 +45,35 @@ def fix_skill_name(skill_dict, skill_name):
     return skill_dict[skill_name.lower().strip()]
 
 
-def ask_repair():
+def ask_repair(
+    language,
+    all_skills,
+    spell,
+    known_corrections,
+    skill_img,
+    parsed_text,
+    level,
+    _: lambda x: x,
+):
+    has_errored = False
     reconstructed_skill = ""
     while True:
-        for w in skill.split():
+        for w in parsed_text.split():
             if w in known_corrections:
                 true_w = known_corrections[w]
                 reconstructed_skill += true_w + " "
-                if reconstructed_skill.strip() == "<EMPTY_SKILL>":
-                    break
                 continue
 
             suggestions = spell.lookup(w, 2)
-            print(f"\nFull skill: '{skill}' Level {level}")
+            print(f"\nParsed Text: '{parsed_text}' Level {level}")
             print(f"Current word: '{w}'")
             if len(suggestions) == 0:
-                print("Too many errors in the word")
+                print("Too many errors in the word, no suggestions")
             if len(suggestions) > 1:
                 print("Corrections: ")
                 for i, s in enumerate(suggestions):
                     print(f"[{i}] {s.term}")
-            cv2.imshow(f"{skill}", skill_img)
+            cv2.imshow(f"{parsed_text}", skill_img)
             cv2.waitKey(1)
 
             while True:
@@ -77,13 +81,14 @@ def ask_repair():
                     new_word = ""
                 else:
                     new_word = input(
-                        f"Select Correction for word '{w}', or type it in. [0] is default. Type 'empty' for no skill:"
+                        f"Select Correction for word '{w}', or type it in. [0] is default. Type 'empty' for no skill, Type 'cancel' to skip this charm:"
                     )
                 has_errored = False
 
                 if new_word == "empty":
-                    reconstructed_skill = "<EMPTY_SKILL>"
-                    break
+                    return "<EMPTY>"
+                elif new_word == "cancel":
+                    return "<CANCELLED>"
                 if str.isdigit(new_word) or not new_word:
                     if not new_word:
                         new_word = 0
@@ -95,14 +100,10 @@ def ask_repair():
                     reconstructed_skill += new_word + " "
                 break
 
-            cv2.destroyWindow(f"{skill}")
+            cv2.destroyWindow(f"{parsed_text}")
 
         reconstructed_skill = reconstructed_skill.strip()
-        if "<EMPTY_SKILL>" in reconstructed_skill:
-            with open(get_resource_path("skill_corrections"), "a") as scf:
-                scf.write(f"{w.strip()},{reconstructed_skill}\n")
-            known_corrections[skill] = reconstructed_skill
-        elif not is_skill(all_skills, reconstructed_skill):
+        if not is_skill(all_skills, reconstructed_skill):
             if len(suggestions) == 1:
                 reconstructed_skill = ""
                 has_errored = True
@@ -113,21 +114,56 @@ def ask_repair():
             )
             reconstructed_skill = ""
         else:
-            logger.info(f"Corrected skill: {reconstructed_skill} from {skill}")
-            for w, r in zip(skill.split(), reconstructed_skill.split()):
-                if w not in known_corrections:
-                    with open(
-                        get_resource_path("skill_corrections"),
-                        "a",
-                        encoding="utf-8",
-                    ) as scf:
-                        scf.write(f"{w.strip()},{r.strip()}\n")
-                    known_corrections[w] = r
+            logger.info(f"Corrected skill: {reconstructed_skill} from {parsed_text}")
+            new_corrections = [
+                (w, r) for w, r in zip(parsed_text.split(), reconstructed_skill.split())
+            ]
+
+            add_corrections(language, known_corrections, *new_corrections)
             break
 
     skill = reconstructed_skill.strip()
-    if "<EMPTY_SKILL>" in skill:
-        logger.warning(f"Empty/invalid skill found on {frame_loc}")
+    return skill
+
+
+def repair_invalid(language, charms, _=lambda x: x, repair_callback=ask_repair):
+    spell_checker = get_spell_checker(language)
+    known_corrections = load_corrections(language)
+    all_skills = get_all_skills(language)
+
+    fixed = []
+    for charm in charms:
+        if type(charm) == InvalidCharm:
+            cancel = False
+            fixed_skills = charm.skills
+            errors = charm.get_errors()
+            for img, parsed_text, level, error in errors:
+                repaired = repair_callback(
+                    language,
+                    all_skills,
+                    spell_checker,
+                    known_corrections,
+                    img,
+                    parsed_text,
+                    level,
+                    _,
+                )
+                if repaired == "<EMPTY>":
+                    continue
+                elif repaired == "<CANCELLED>":
+                    logger.warning(
+                        f"Charm skipped and removed through cancellation: {charm.frame_loc}"
+                    )
+                    cancel = True
+                    break
+
+                fixed_skills[repaired] = level
+            if not cancel:
+                fixed.append(charm.repair(fixed_skills))
+        else:
+            fixed.append(charm)
+
+    return fixed
 
 
 def extract_charm(frame_loc, slots, skills, skill_text, all_skills, known_corrections):
@@ -135,7 +171,7 @@ def extract_charm(frame_loc, slots, skills, skill_text, all_skills, known_correc
     suggestions = []
     has_errored = False
     skill_number = 0
-    charm = Charm(slots)
+    charm = Charm(slots, frame_loc=frame_loc)
     errors = []
     for (img, text) in zip(skills, skill_text):
         skill_number += 1
@@ -147,7 +183,7 @@ def extract_charm(frame_loc, slots, skills, skill_text, all_skills, known_correc
             logger.warning(
                 f"Empty skill string for skill {skill_number} on {frame_loc}"
             )
-            errors.append((img, skill, level, ParseError.NO_SKILL))
+            errors.append((skill_img, skill, level, ParseError.NO_SKILL))
             continue
 
         if not is_skill(all_skills, skill):
@@ -165,7 +201,7 @@ def extract_charm(frame_loc, slots, skills, skill_text, all_skills, known_correc
             charm.add_skill(skill, level)
             logger.debug(f"Parsed and added skill: {skill.strip()}, level: {level}")
         else:
-            errors.append((img, text[0], level, ParseError.MUST_FIX))
+            errors.append((skill_img, text[0], level, ParseError.MUST_FIX))
             logger.debug(f"Failed to parse skill {text[0].strip()}, level: {level}")
 
     if len(errors) > 0:
@@ -192,10 +228,9 @@ def extract_charms(
         iter_wrapper = tqdm
     tess = Tesseract(language=language, _=_)
     charms = []
-    charm_loc = []
 
     try:
-        frames = list(map(lambda frame_loc: frame_loc.path, os.scandir(frame_dir)))[:10]
+        frames = list(map(lambda frame_loc: frame_loc.path, os.scandir(frame_dir)))
 
         def keep_existing_and_update(x):
             i, x = x
@@ -226,7 +261,6 @@ def extract_charms(
                     )
                     if charm.has_skills():
                         charms.append(charm)
-                        charm_loc.append(frame_loc)
                     else:
                         logger.warn(_("logger-skill-less").format(frame_loc))
                 except Exception as e:
@@ -235,25 +269,30 @@ def extract_charms(
     except Exception as e:
         logger.error(f"Crashed with {e}")
 
+    return remove_duplicates(charms, charm_callback)
+
+
+def remove_duplicates(charms, charm_callback=lambda x: None, mode="w"):
     unique_charms = CharmList(charms)
     charm_callback({"unique_charms": len(unique_charms)})
     if len(charms) != len(unique_charms):
         print("Pre-duplicate", len(charms))
         print("Post-duplicate:", len(unique_charms))
-        save_duplicates(charm_loc, charms)
+        save_duplicates(charms)
 
     return unique_charms
 
 
-def save_duplicates(charm_loc, charms):
+def save_duplicates(charms, mode="w"):
     dupe_file_name = "charm.duplicates.txt"
     charm_dupes = {}
-    for frame_loc, charm in zip(charm_loc, charms):
+    for charm in charms:
+        frame_loc = charm.frame_loc
         if charm not in charm_dupes:
             charm_dupes[charm] = []
         charm_dupes[charm].append(frame_loc)
 
-    with open(dupe_file_name, "w") as dupe_file:
+    with open(dupe_file_name, mode) as dupe_file:
         for charm in filter(lambda x: len(charm_dupes[x]) > 1, charm_dupes):
             locations = charm_dupes[charm]
             dupe_file.write(f"{charm.to_dict()}\n")

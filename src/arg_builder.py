@@ -74,7 +74,7 @@ def build_args():
         "--autoexit",
         dest="autoexit",
         action="store_true",
-        desc='Skips the "Press enter to exit" prompt in console mode.',
+        help='Skips the "Press enter to exit" prompt in console mode.',
     )
 
     return parser.parse_args()

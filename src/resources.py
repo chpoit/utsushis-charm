@@ -2,6 +2,7 @@ import os
 import shutil
 import platform
 from pathlib import Path
+from symspellpy.symspellpy import SymSpell
 
 
 HOME = str(Path.home())
@@ -67,12 +68,19 @@ def load_corrections(language_code, known_corrections=None):
     return known_corrections
 
 
-def add_correction(language_code, known_corrections, *new_tuples):
+def get_spell_checker(language_code):
+    spell = SymSpell(max_dictionary_edit_distance=4)
+    spell.load_dictionary(get_word_freqs_location(language_code), 0, 1)
+    return spell
+
+
+def add_corrections(language_code, known_corrections, *new_tuples):
     corrections_path = _corrections_path(language_code)
     with open(corrections_path, "a", encoding="utf-8") as c_fp:
         for a, b in new_tuples:
-            known_corrections[a] = b
-            c_fp.write(f"{a},{b}\n")
+            if not a in known_corrections:
+                known_corrections[a] = b
+                c_fp.write(f"{a},{b}\n")
     return known_corrections
 
 
