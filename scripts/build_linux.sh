@@ -16,7 +16,6 @@ mkdir -p dist/inputs
 
 source ./env/bin/activate && python -m PyInstaller ./utsushis-charm.spec --onefile
 
-cp $skill_corrections "./dist/$skill_corrections"
 chmod +x dist/utsushis-charm
 
 zip $archive_name -r dist/*

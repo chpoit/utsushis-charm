@@ -29,7 +29,6 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
    - Item Box -> Manage Equipment -> Set Decorations -> Equipment Box -> Remove all (Press '-' on controller)
    - Don't ask, this is way out of scope for something that takes you 30 seconds to do.
 1. Download the release bundle and follow the Requirements section  (Utsushis-Charm_**vx_x**.zip)
-   - You're free to delete `skill_corrections.csv` if you want. A new empty one will be recreated.
 2. Record clips similar to the following of you going through your charms. Try placing the UI in front of something that is very "flat" in color and doesn't have NPCs walking in front.
    - I can easily go through 2-3 pages of charms in 30 seconds.
    - Use a stopwatch on your phone if you have trouble timing the 30 seconds. I saved a clip every ~25 seconds.
@@ -119,7 +118,7 @@ In all seriousness, the work is done in a few broad steps:
 
 # Contribute
 
-- If you ran everything and got new corrections in the [`skill_corrections.csv`](skill_corrections.csv) file, consider creating a pull request to add them for others.
+- If you ran everything and had to correct some skills, you probably have new corrections in in your `Appdata/Local/utsushis-charm/skill_corrections.LANG.csv` or `~/utsushis-charm/skill_corrections.LANG.csv` file, consider creating a pull request to add them for others.
 - If you feel like contributing anything, go ahead and submit a pull request I'll be happy to take a look and decide if it's something worth adding.
 - Please use the default settings of `black` to format the python source code.
 
