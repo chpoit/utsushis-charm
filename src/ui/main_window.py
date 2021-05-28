@@ -220,35 +220,44 @@ class MainWindow(tk.Tk):
             self.copy_to_clip_btn["state"] = "normal"
 
     def run(self, _: Translator = None):
-        self._reset_progress()
-        if not _:
-            _ = self._
-        self.print_status()
-        if self.delete_frames_val.get():
-            self.delete_frames()
+        self.run_btn["state"] = "disabled"
+        try:
+            self._reset_progress()
+            if not _:
+                _ = self._
+            self.print_status()
+            if self.delete_frames_val.get():
+                self.delete_frames()
 
-        if not self.skip_frames.get():
-            print(_("step-1-name"))
-            extract_unique_frames(
-                self.input_dir.get(),
-                self.frame_dir.get(),
-                _,
-                self.pbar,
-                self.progress_callback,
-            )
+            if not self.skip_frames.get():
+                print(_("step-1-name"))
+                extract_unique_frames(
+                    self.input_dir.get(),
+                    self.frame_dir.get(),
+                    _,
+                    self.pbar,
+                    self.progress_callback,
+                )
 
-        if not self.skip_charms.get():
-            print(_("step-2-name"))
-            lang_code = get_language_code(self.lang.get())
-            self.charms = extract_charms(
-                self.frame_dir.get(), lang_code, _, self.pbar, self.progress_callback
-            )
+            if not self.skip_charms.get():
+                print(_("step-2-name"))
+                lang_code = get_language_code(self.lang.get())
+                self.charms = extract_charms(
+                    self.frame_dir.get(),
+                    lang_code,
+                    _,
+                    self.pbar,
+                    self.progress_callback,
+                )
 
-        if self.autosave.get():
-            self.save_charms()
+            if self.autosave.get():
+                self.save_charms()
 
-        self._update_save_status()
-        self.print_end()
+            self._update_save_status()
+            self.print_end()
+        except Exception as e:
+            self.run_btn["state"] = "normal"
+            raise e
 
     def progress_callback(self, data):
         for key in data:

@@ -7,6 +7,7 @@ from .arg_builder import build_args
 from .utils import print_licenses
 from .ui.main_window import MainWindow
 from .translator import Translator
+from .resources import get_language_code
 import logging
 
 logging.basicConfig(
@@ -33,19 +34,22 @@ def main(args):
 
 
 def run_in_console(args):
+    translator = Translator()
     input_dir = args.input_dir
     frame_dir = args.frame_dir
     charm_json = args.charm_json
     charm_encoded = args.charm_encoded
 
+    lang = get_language_code(args.language)
+
     os.makedirs(input_dir, exist_ok=True)
     os.makedirs(frame_dir, exist_ok=True)
 
     if not args.skip_frames:
-        extract_unique_frames(input_dir, frame_dir)
+        extract_unique_frames(input_dir, frame_dir, translator)
 
     if not args.skip_charms:
-        charms = extract_charms(frame_dir)
+        charms = extract_charms(frame_dir, lang, translator)
 
         save_charms(charms, charm_json)
         print(f"Saved {len(charms)} charms")

@@ -5,7 +5,7 @@ from .resources import get_resource_path
 
 
 class Translator:
-    def __init__(self, language="en"):
+    def __init__(self, language="eng"):
         self.load_language(language)
 
     def __call__(self, *args, **kwargs):
