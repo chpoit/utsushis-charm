@@ -4,7 +4,7 @@ import sys
 from .resources import get_resource_path
 
 
-class TextFinder:
+class Translator:
     def __init__(self, language="en"):
         self.load_language(language)
 

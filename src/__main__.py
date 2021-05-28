@@ -6,7 +6,7 @@ from .charm_encoding import encode_charms
 from .arg_builder import build_args
 from .utils import print_licenses
 from .ui.main_window import MainWindow
-from .text_finder import TextFinder
+from .translator import Translator
 import logging
 
 logging.basicConfig(
@@ -21,13 +21,13 @@ def main(args):
         print_licenses()
         sys.exit(0)
 
-    text_finder = TextFinder()
+    translator = Translator()
 
     if args.console:
         run_in_console(args)
 
     else:
-        w = MainWindow(text_finder, args)
+        w = MainWindow(translator, args)
         sys.stdout = w
         w.mainloop()
 

@@ -1,11 +1,11 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 from tqdm import tqdm
-from ..text_finder import TextFinder
+from ..translator import Translator
 
 
 class PbarWrapper(ttk.Progressbar):
-    def __init__(self, parent, _: TextFinder, **kwargs):
+    def __init__(self, parent, _: Translator, **kwargs):
         super().__init__(parent, **kwargs)
         self.parent = parent
 

@@ -10,12 +10,12 @@ from ..Charm import Charm, CharmList
 from ..arg_builder import build_args
 from ..utils import print_licenses  # TODO
 from ..resources import get_resource_path  # TODO
-from ..text_finder import TextFinder
+from ..translator import Translator
 from .pbar_wrapper import PbarWrapper
 
 
 class MainWindow(tk.Tk):
-    def __init__(self, _: TextFinder, args):
+    def __init__(self, _: Translator, args):
         super().__init__()
         self.charms = CharmList()
 
@@ -42,7 +42,7 @@ class MainWindow(tk.Tk):
         self._regen_paths()
         self._build_ui()
 
-    def _build_ui(self, _: TextFinder = None):
+    def _build_ui(self, _: Translator = None):
         if not _:
             _ = self._
 
@@ -187,7 +187,7 @@ class MainWindow(tk.Tk):
             self.frame_dir.set(new_dir)
             self._regen_paths()
 
-    def copy_to_clip(self, _: TextFinder = None):
+    def copy_to_clip(self, _: Translator = None):
         if not _:
             _ = self._
 
@@ -207,7 +207,7 @@ class MainWindow(tk.Tk):
             self.save_charms_btn["state"] = "normal"
             self.copy_to_clip_btn["state"] = "normal"
 
-    def run(self, _: TextFinder = None):
+    def run(self, _: Translator = None):
         self._reset_progress()
         if not _:
             _ = self._
@@ -268,7 +268,7 @@ class MainWindow(tk.Tk):
         self.current_file_val["text"] = ""
         self.file_progress_val["text"] = "0"
 
-    def print_status(self, _: TextFinder = None):
+    def print_status(self, _: Translator = None):
         if not _:
             _ = self._
         print(_("input-dir"), self.input_dir.get())
@@ -277,7 +277,7 @@ class MainWindow(tk.Tk):
         print(_("skipping-frames"), bool(self.skip_frames.get()))
         print(_("deleting-frames"), bool(self.delete_frames_val.get()))
 
-    def print_end(self, _: TextFinder = None):
+    def print_end(self, _: Translator = None):
         if not _:
             _ = self._
         print(_("done"))
@@ -285,7 +285,7 @@ class MainWindow(tk.Tk):
             print(_("not-saved"))
         print()
 
-    def save_charms(self, _: TextFinder = None):
+    def save_charms(self, _: Translator = None):
         if not _:
             _ = self._
         encoded = self.charms.encode_all()
