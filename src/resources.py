@@ -1,10 +1,10 @@
 import os
 
 
-def get_skills(lang="en"):
+def get_all_skills(lang="en"):
     all_skills = {}
     skill_dir = get_resource_path("skill_directory")
-    skill_file = os.path.join(skill_dir, f"skills.{lang}.freq")
+    skill_file = os.path.join(skill_dir, f"skills.{lang}.txt")
     with open(skill_file, encoding="utf-8") as slf:
         for line in slf.readlines():
             skill_name = line.strip()

@@ -13,7 +13,7 @@
 
 from .Charm import Charm, CharmList
 from .utils import *
-from .resources import get_resource_path, get_skills, get_word_freqs_location
+from .resources import get_resource_path, get_all_skills, get_word_freqs_location
 from .tesseract.Tesseract import Tesseract
 from tqdm import tqdm
 from symspellpy.symspellpy import SymSpell
@@ -51,7 +51,7 @@ def load_corrections(known_corrections=None):
 
 
 known_corrections = load_corrections()
-all_skills = get_skills("en")
+all_skills = get_all_skills("en")
 
 
 def is_skill(skill_dict, skill_name):
