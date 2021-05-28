@@ -3,7 +3,6 @@ import cv2
 from .utils import (
     apply_pre_crop_mask,
     get_frame_change_observation_section,
-    get_resource_path,
 )
 from tqdm import tqdm
 from math import floor

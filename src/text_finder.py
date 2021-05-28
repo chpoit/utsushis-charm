@@ -1,7 +1,7 @@
 import os
 import json
 import sys
-from .utils import get_resource_path
+from .resources import get_resource_path
 
 
 class TextFinder:

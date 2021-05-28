@@ -27,6 +27,7 @@ Diversion
 Divine Blessing
 Dragon Attack
 Dragon Resistance
+Dragonheart
 Earplugs
 Evade Extender
 Evade Window
@@ -93,6 +94,7 @@ Spread Up
 Stamina Surge
 Stamina Thief
 Steadiness
+Stormsoul
 Stun Resistance
 Teostra Blessing
 Thunder Alignment

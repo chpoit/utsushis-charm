@@ -8,7 +8,8 @@ from ..charm_extraction import extract_charms, save_charms
 from ..charm_encoding import encode_charms
 from ..Charm import Charm, CharmList
 from ..arg_builder import build_args
-from ..utils import print_licenses, get_resource_path  # TODO
+from ..utils import print_licenses  # TODO
+from ..resources import get_resource_path  # TODO
 from ..text_finder import TextFinder
 from .pbar_wrapper import PbarWrapper
 
