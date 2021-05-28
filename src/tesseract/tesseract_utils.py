@@ -10,6 +10,7 @@ from tqdm import tqdm
 
 import logging
 from pathlib import Path
+from ..resources import get_language_from_code
 
 logger = logging.getLogger(__name__)
 HOME = str(Path.home())
@@ -78,14 +79,19 @@ def find_tesseract():
     )
 
 
+def override_tessdata():
+    base_path = HOME
+    if WINDOWS:
+        base_path = os.getenv("LOCALAPPDATA") or HOME
+    tessdata = os.path.join(base_path, "utsushis-charm", "tessdata")
+    os.environ["TESSDATA_PREFIX"] = tessdata
+    os.makedirs(tessdata, exist_ok=True)
+
+
 def set_tessdata():
-    if _is_pyinstaller() or True:
-        base_path = HOME
-        if WINDOWS:
-            base_path = os.getenv("LOCALAPPDATA") or HOME
-        tessdata = os.path.join(base_path, "utsushis-charm", "tessdata")
-        os.environ["TESSDATA_PREFIX"] = tessdata
-        os.makedirs(tessdata, exist_ok=True)
+    if _is_pyinstaller():
+        override_tessdata()
+        return
 
     if "TESSDATA_PREFIX" in os.environ:
         return
@@ -104,31 +110,30 @@ def get_datapath():
     return os.environ["TESSDATA_PREFIX"]
 
 
-def download_language_data(lang="eng"):
+def download_language_data(lang="eng", _=lambda x: x, retry=False):
     target_dir = get_datapath()
     full_name = os.path.join(target_dir, f"{lang}.traineddata")
     if os.path.isfile(full_name):
+        print(_("tess-found-language"))
         return
 
-    name_map = {"eng": "English"}
-    pack_name = name_map[lang]
+    pack_name = get_language_from_code(lang)
 
     url = (
         f"https://github.com/tesseract-ocr/tessdata_best/raw/master/{lang}.traineddata"
     )
 
-    print(f"Downloading {pack_name} language pack to: {target_dir}")
-    with tqdm(
-        unit="B",
-        unit_scale=True,
-        unit_divisor=1024,
-        miniters=1,
-        desc=f"Downloading {pack_name} pack...",
-    ) as pbar:
+    print(_("tess-download-pack").format(pack_name, target_dir))
+    try:
+        request.urlretrieve(url, filename=full_name, data=None)
+        print(_("tess-download-done"))
+    except PermissionError as e:
+        if retry:
+            raise TesseractError("Unable to download Tesseract language pack.")
+        print(_("tess-permission-denied"))
 
-        request.urlretrieve(
-            url, filename=full_name, reporthook=_tqdm_dl_hook(pbar), data=None
-        )
+        override_tessdata()
+        download_language_data(lang, _, retry=True)
 
 
 def process_image_with_tesseract(tesseract, image):
@@ -148,36 +153,3 @@ def process_image_with_tesseract(tesseract, image):
     tesseract.set_resolution()
     text = tesseract.get_text()
     return text.strip()
-
-
-def _tqdm_dl_hook(tqdm_instance):
-    # Source: https://github.com/tqdm/tqdm/blob/master/examples/tqdm_wget.py
-    # Licence: LICENSES/tqdm (MPLv2.0 and MIT)
-    """Wraps tqdm instance.
-    Don't forget to close() or __exit__()
-    the tqdm instance once you're done with it (easiest using `with` syntax).
-    Example
-    -------
-    >>> with tqdm(...) as t:
-    ...     reporthook = my_hook(t)
-    ...     urllib.urlretrieve(..., reporthook=reporthook)
-    """
-    last_b = [0]
-
-    def update_to(b=1, bsize=1, tsize=None):
-        """
-        b  : int, optional
-            Number of blocks transferred so far [default: 1].
-        bsize  : int, optional
-            Size of each block (in tqdm units) [default: 1].
-        tsize  : int, optional
-            Total size (in tqdm units). If [default: None] or -1,
-            remains unchanged.
-        """
-        if tsize not in (None, -1):
-            tqdm_instance.total = tsize
-        displayed = tqdm_instance.update((b - last_b[0]) * bsize)
-        last_b[0] = b
-        return displayed
-
-    return update_to

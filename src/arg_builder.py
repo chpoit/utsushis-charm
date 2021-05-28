@@ -61,4 +61,13 @@ def build_args():
         default="charms.encoded.txt",
     )
 
+    parser.add_argument(
+        "-l",
+        "--language",
+        dest="language",
+        required=False,
+        help="Sets the language of the switch recording.",
+        default="English",
+    )
+
     return parser.parse_args()

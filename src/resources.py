@@ -1,7 +1,7 @@
 import os
 
 
-def get_all_skills(lang="en"):
+def get_all_skills(lang="eng"):
     all_skills = {}
     skill_dir = get_resource_path("skill_directory")
     skill_file = os.path.join(skill_dir, f"skills.{lang}.txt")
@@ -12,7 +12,7 @@ def get_all_skills(lang="en"):
     return all_skills
 
 
-def get_word_freqs_location(lang="en"):
+def get_word_freqs_location(lang="eng"):
     skill_dir = get_resource_path("skill_directory")
     return os.path.join(skill_dir, f"skills.{lang}.freq")
 
@@ -39,7 +39,11 @@ def get_language_list():
 
 
 def get_language_code(language):
-    return _mappings[language]
+    return _language_code_mappings[language]
+
+
+def get_language_from_code(language_code):
+    return _reverse_language_code_mappings[language_code]
 
 
 _resources = {
@@ -60,7 +64,7 @@ _resources = {
     "ICON": _alter_resource_path(os.path.join("media", "icon.ico")),
 }
 
-_mappings = {
+_language_code_mappings = {
     "English": "eng",
     "Japanese": "jpn",
     "French": "fra",
@@ -72,6 +76,20 @@ _mappings = {
     "Korean": "kor",
     "Traditional Chinese": "chi_tra",
     "Simplified Chinese": "chi_sim",
+}
+
+_reverse_language_code_mappings = {
+    "eng": "English",
+    "jpn": "Japanese",
+    "fra": "French",
+    "ita": "Italian",
+    "deu": "German",
+    "spa": "Spanish",
+    "rus": "Russian",
+    "pol": "Polish",
+    "kor": "Korean",
+    "chi_tra": "Traditional Chinese",
+    "chi_sim": "Simplified Chinese",
 }
 
 _language_list = [

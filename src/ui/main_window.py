@@ -9,7 +9,7 @@ from ..charm_encoding import encode_charms
 from ..Charm import Charm, CharmList
 from ..arg_builder import build_args
 from ..utils import print_licenses  # TODO
-from ..resources import get_resource_path  # TODO
+from ..resources import get_resource_path, get_language_code, get_language_list
 from ..translator import Translator
 from .pbar_wrapper import PbarWrapper
 
@@ -30,6 +30,7 @@ class MainWindow(tk.Tk):
 
         self.input_dir = tk.StringVar(value=args.input_dir)
         self.frame_dir = tk.StringVar(value=args.frame_dir)
+        self.lang = tk.StringVar(value=args.language)
 
         self.charm_json = args.charm_json
         self.charm_encoded = args.charm_encoded
@@ -88,6 +89,10 @@ class MainWindow(tk.Tk):
                 button_frame, text=_("copy-to-clipboard"), command=self.copy_to_clip
             )
 
+            self.lang_menu = tk.OptionMenu(
+                button_frame, self.lang, *get_language_list()
+            )
+
             self.input_location_lbl = tk.Label(
                 button_frame, textvariable=self.input_dir
             )
@@ -95,13 +100,20 @@ class MainWindow(tk.Tk):
                 button_frame, textvariable=self.frame_dir
             )
 
+            self.lang_lbl = tk.Label(button_frame, text=_("recording-language"))
+
             self.input_btn.grid(column=0, row=0, sticky="w")
             self.frame_btn.grid(column=0, row=1, sticky="w")
-            self.save_charms_btn.grid(column=0, row=2, sticky="w")
-            self.copy_to_clip_btn.grid(column=0, row=3, sticky="w")
 
             self.input_location_lbl.grid(column=1, row=0, sticky="w")
             self.frames_location_lbl.grid(column=1, row=1, sticky="w")
+
+            self.lang_lbl.grid(column=0, row=2, sticky="w")
+            self.lang_menu.grid(column=1, row=2, sticky="w")
+
+            self.save_charms_btn.grid(column=0, row=3, sticky="w")
+            self.copy_to_clip_btn.grid(column=0, row=4, sticky="w")
+
             return button_frame
 
         def _progress_info(parent=self):
@@ -227,8 +239,9 @@ class MainWindow(tk.Tk):
 
         if not self.skip_charms.get():
             print(_("step-2-name"))
+            lang_code = get_language_code(self.lang.get())
             self.charms = extract_charms(
-                self.frame_dir.get(), _, self.pbar, self.progress_callback
+                self.frame_dir.get(), lang_code, _, self.pbar, self.progress_callback
             )
 
         if self.autosave.get():

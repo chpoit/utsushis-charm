@@ -49,9 +49,8 @@ def load_corrections(known_corrections=None):
     return known_corrections
 
 
-
 known_corrections = load_corrections()
-all_skills = get_all_skills("en")
+all_skills = get_all_skills("eng")
 
 
 def is_skill(skill_dict, skill_name):
@@ -176,11 +175,15 @@ def extract_charm(frame_loc, slots, skills, skill_text):
 
 
 def extract_charms(
-    frame_dir, _=lambda x: x, iter_wrapper=None, charm_callback=lambda x: None
+    frame_dir,
+    language="eng",
+    _=lambda x: x,
+    iter_wrapper=None,
+    charm_callback=lambda x: None,
 ):
     if not iter_wrapper:
         iter_wrapper = tqdm
-    tess = Tesseract()
+    tess = Tesseract(language=language, _=_)
     charms = []
     charm_loc = []
 
