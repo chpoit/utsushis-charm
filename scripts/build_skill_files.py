@@ -48,13 +48,17 @@ for index, row in content.iterrows():
 for lang_code in mappings.values():
     skill_file = os.path.join(sp, f"skills.{lang_code}.txt")
     freq_file = os.path.join(sp, f"skills.{lang_code}.freq")
+    corrections_file = os.path.join(sp, f"corrections.{lang_code}.csv")
     with open(skill_file, "w", encoding="utf-8") as skill_fp:
         for s_n in sorted(skills[lang_code]):
             skill_fp.write(f"{s_n}\n")
 
-    with open(freq_file, "w", encoding="utf-8") as freq_fp:
+    with open(freq_file, "w", encoding="utf-8") as freq_fp, open(
+        corrections_file, "w", encoding="utf-8"
+    ) as corrections_fp:
         for word in sorted(freqs[lang_code]):
             freq_fp.write(f"{word} {freqs[lang_code][word]}\n")
+            corrections_fp.write(f"{word},{word}\n")
 
 with open(
     os.path.join(sp, "skill_mappings.en.json"), "w", encoding="utf-8"

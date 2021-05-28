@@ -1,4 +1,11 @@
 import os
+import shutil
+import platform
+from pathlib import Path
+
+
+HOME = str(Path.home())
+WINDOWS = platform.system() == "Windows"
 
 
 def get_all_skills(lang="eng"):
@@ -46,9 +53,48 @@ def get_language_from_code(language_code):
     return _reverse_language_code_mappings[language_code]
 
 
+def load_corrections(language_code, known_corrections=None):
+    known_corrections = known_corrections or {}
+    corrections_path = _corrections_path(language_code)
+    if not os.path.exists(corrections_path):
+        _create_default_skill_corrections(language_code)
+
+    with open(corrections_path, encoding="utf-8") as scf:
+        known_corrections = {
+            w: c for w, c in map(lambda x: x.strip().split(","), scf.readlines())
+        }
+
+    return known_corrections
+
+
+def add_correction(language_code, known_corrections, *new_tuples):
+    corrections_path = _corrections_path(language_code)
+    with open(corrections_path, "a", encoding="utf-8") as c_fp:
+        for a, b in new_tuples:
+            known_corrections[a] = b
+            c_fp.write(f"{a},{b}\n")
+    return known_corrections
+
+
+def _create_default_skill_corrections(language_code):
+    packaged_corrections = _alter_resource_path(
+        os.path.join("data", "skills", f"corrections.{language_code}.csv")
+    )
+    corrections_path = _corrections_path(language_code)
+    shutil.copy(packaged_corrections, corrections_path)
+
+
+def _corrections_path(language_code):
+    return get_resource_path("skill_corrections").format(language_code)
+
+
 _resources = {
     "skill_directory": _alter_resource_path(os.path.join("data", "skills")),
-    "skill_corrections": "skill_corrections.csv",
+    "skill_corrections": os.path.join(
+        (os.getenv("LOCALAPPDATA") or HOME if WINDOWS else HOME),
+        "utsushis-charm",
+        "corrections.{}.csv",
+    ),
     "lv1": _alter_resource_path(os.path.join("images", "levels", "lv1.png")),
     "lv2": _alter_resource_path(os.path.join("images", "levels", "lv2.png")),
     "lv3": _alter_resource_path(os.path.join("images", "levels", "lv3.png")),

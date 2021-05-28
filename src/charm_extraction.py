@@ -13,7 +13,12 @@
 
 from .Charm import Charm, CharmList
 from .utils import *
-from .resources import get_resource_path, get_all_skills, get_word_freqs_location
+from .resources import (
+    get_resource_path,
+    get_all_skills,
+    get_word_freqs_location,
+    load_corrections,
+)
 from .tesseract.Tesseract import Tesseract
 from tqdm import tqdm
 from symspellpy.symspellpy import SymSpell
@@ -22,7 +27,6 @@ import logging
 import json
 import cv2
 import os
-from pathlib import Path
 
 DEBUG = False
 
@@ -36,23 +40,6 @@ spell = SymSpell(max_dictionary_edit_distance=4)
 spell.load_dictionary(get_word_freqs_location("en"), 0, 1)
 
 
-def load_corrections(known_corrections=None):
-    known_corrections = known_corrections or {}
-    corrections_path = get_resource_path("skill_corrections")
-    Path(corrections_path).touch()  # if not exists
-    with open(corrections_path, encoding="utf-8") as scf:
-        for line in scf.readlines():
-            line = line.strip()
-            w, r = line.split(",")
-            known_corrections[w] = r
-
-    return known_corrections
-
-
-known_corrections = load_corrections()
-all_skills = get_all_skills("eng")
-
-
 def is_skill(skill_dict, skill_name):
     return skill_name.lower().strip() in skill_dict
 
@@ -61,8 +48,9 @@ def fix_skill_name(skill_dict, skill_name):
     return skill_dict[skill_name.lower()]
 
 
-def extract_charm(frame_loc, slots, skills, skill_text):
+def extract_charm(frame_loc, slots, skills, skill_text, all_skills, known_corrections):
     logger.debug(f"Starting charm for {frame_loc}")
+    suggestions = []
     has_errored = False
     charm = Charm(slots)
     skill_number = 0
@@ -181,6 +169,9 @@ def extract_charms(
     iter_wrapper=None,
     charm_callback=lambda x: None,
 ):
+    known_corrections = load_corrections(language)
+    all_skills = get_all_skills(language)
+
     if not iter_wrapper:
         iter_wrapper = tqdm
     tess = Tesseract(language=language, _=_)
@@ -209,7 +200,14 @@ def extract_charms(
         with iter_wrapper(combined_data, desc=_("validate-fix")) as build_pbar:
             for frame_loc, slots, skills, skill_text in build_pbar:
                 try:
-                    charm = extract_charm(frame_loc, slots, skills, skill_text)
+                    charm = extract_charm(
+                        frame_loc,
+                        slots,
+                        skills,
+                        skill_text,
+                        all_skills,
+                        known_corrections,
+                    )
                     if charm.has_skills():
                         charms.append(charm)
                         charm_loc.append(frame_loc)
