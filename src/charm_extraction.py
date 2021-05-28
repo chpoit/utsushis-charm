@@ -11,7 +11,8 @@
 # Level 2: 618, 167
 # Level 3: 618, 217 -> Jewels were not removed
 
-from .Charm import Charm, CharmList
+from .parse_errors import ParseError
+from .Charm import Charm, CharmList, InvalidCharm
 from .utils import *
 from .resources import (
     get_resource_path,
@@ -28,7 +29,7 @@ import json
 import cv2
 import os
 
-DEBUG = False
+DEBUG = True
 
 
 logger = logging.getLogger(__name__)
@@ -45,15 +46,97 @@ def is_skill(skill_dict, skill_name):
 
 
 def fix_skill_name(skill_dict, skill_name):
-    return skill_dict[skill_name.lower()]
+    return skill_dict[skill_name.lower().strip()]
+
+
+def ask_repair():
+    reconstructed_skill = ""
+    while True:
+        for w in skill.split():
+            if w in known_corrections:
+                true_w = known_corrections[w]
+                reconstructed_skill += true_w + " "
+                if reconstructed_skill.strip() == "<EMPTY_SKILL>":
+                    break
+                continue
+
+            suggestions = spell.lookup(w, 2)
+            print(f"\nFull skill: '{skill}' Level {level}")
+            print(f"Current word: '{w}'")
+            if len(suggestions) == 0:
+                print("Too many errors in the word")
+            if len(suggestions) > 1:
+                print("Corrections: ")
+                for i, s in enumerate(suggestions):
+                    print(f"[{i}] {s.term}")
+            cv2.imshow(f"{skill}", skill_img)
+            cv2.waitKey(1)
+
+            while True:
+                if len(suggestions) == 1 and not has_errored:
+                    new_word = ""
+                else:
+                    new_word = input(
+                        f"Select Correction for word '{w}', or type it in. [0] is default. Type 'empty' for no skill:"
+                    )
+                has_errored = False
+
+                if new_word == "empty":
+                    reconstructed_skill = "<EMPTY_SKILL>"
+                    break
+                if str.isdigit(new_word) or not new_word:
+                    if not new_word:
+                        new_word = 0
+                    idx = int(new_word)
+                    if idx >= len(suggestions):
+                        continue
+                    reconstructed_skill += suggestions[idx].term + " "
+                else:
+                    reconstructed_skill += new_word + " "
+                break
+
+            cv2.destroyWindow(f"{skill}")
+
+        reconstructed_skill = reconstructed_skill.strip()
+        if "<EMPTY_SKILL>" in reconstructed_skill:
+            with open(get_resource_path("skill_corrections"), "a") as scf:
+                scf.write(f"{w.strip()},{reconstructed_skill}\n")
+            known_corrections[skill] = reconstructed_skill
+        elif not is_skill(all_skills, reconstructed_skill):
+            if len(suggestions) == 1:
+                reconstructed_skill = ""
+                has_errored = True
+                continue
+            print(f"'{reconstructed_skill}' is not a valid skill.")
+            print(
+                "Make sure you only correct one word at a time. You can look at the picture to help identify the proper skill."
+            )
+            reconstructed_skill = ""
+        else:
+            logger.info(f"Corrected skill: {reconstructed_skill} from {skill}")
+            for w, r in zip(skill.split(), reconstructed_skill.split()):
+                if w not in known_corrections:
+                    with open(
+                        get_resource_path("skill_corrections"),
+                        "a",
+                        encoding="utf-8",
+                    ) as scf:
+                        scf.write(f"{w.strip()},{r.strip()}\n")
+                    known_corrections[w] = r
+            break
+
+    skill = reconstructed_skill.strip()
+    if "<EMPTY_SKILL>" in skill:
+        logger.warning(f"Empty/invalid skill found on {frame_loc}")
 
 
 def extract_charm(frame_loc, slots, skills, skill_text, all_skills, known_corrections):
     logger.debug(f"Starting charm for {frame_loc}")
     suggestions = []
     has_errored = False
-    charm = Charm(slots)
     skill_number = 0
+    charm = Charm(slots)
+    errors = []
     for (img, text) in zip(skills, skill_text):
         skill_number += 1
         skill_img, _ = img
@@ -64,101 +147,34 @@ def extract_charm(frame_loc, slots, skills, skill_text, all_skills, known_correc
             logger.warning(
                 f"Empty skill string for skill {skill_number} on {frame_loc}"
             )
+            errors.append((img, skill, level, ParseError.NO_SKILL))
             continue
 
-        if is_skill(all_skills, skill):
-            logger.debug(f"Added {skill}, {level}")
-            charm.add_skill(skill, level)
-            continue
-
-        logger.info("Parsed skill: ", skill.strip(), "level", level)
-
-        reconstructed_skill = ""
-        while True:
+        if not is_skill(all_skills, skill):
+            reconstructed_skill = ""
             for w in skill.split():
                 if w in known_corrections:
                     true_w = known_corrections[w]
-                    reconstructed_skill += true_w + " "
-                    if reconstructed_skill.strip() == "<EMPTY_SKILL>":
-                        break
-                    continue
-
-                suggestions = spell.lookup(w, 2)
-                print(f"\nFull skill: '{skill}' Level {level}")
-                print(f"Current word: '{w}'")
-                if len(suggestions) == 0:
-                    print("Too many errors in the word")
-                if len(suggestions) > 1:
-                    print("Corrections: ")
-                    for i, s in enumerate(suggestions):
-                        print(f"[{i}] {s.term}")
-                cv2.imshow(f"{skill}", skill_img)
-                cv2.waitKey(1)
-
-                while True:
-                    if len(suggestions) == 1 and not has_errored:
-                        new_word = ""
-                    else:
-                        new_word = input(
-                            f"Select Correction for word '{w}', or type it in. [0] is default. Type 'empty' for no skill:"
-                        )
-                    has_errored = False
-
-                    if new_word == "empty":
-                        reconstructed_skill = "<EMPTY_SKILL>"
-                        break
-                    if str.isdigit(new_word) or not new_word:
-                        if not new_word:
-                            new_word = 0
-                        idx = int(new_word)
-                        if idx >= len(suggestions):
-                            continue
-                        reconstructed_skill += suggestions[idx].term + " "
-                    else:
-                        reconstructed_skill += new_word + " "
+                    reconstructed_skill += f"{true_w} "
+                else:
                     break
+            skill = reconstructed_skill
 
-                cv2.destroyWindow(f"{skill}")
+        if is_skill(all_skills, skill):
+            skill = fix_skill_name(all_skills, skill)
+            charm.add_skill(skill, level)
+            logger.debug(f"Parsed and added skill: {skill.strip()}, level: {level}")
+        else:
+            errors.append((img, text[0], level, ParseError.MUST_FIX))
+            logger.debug(f"Failed to parse skill {text[0].strip()}, level: {level}")
 
-            reconstructed_skill = reconstructed_skill.strip()
-            if "<EMPTY_SKILL>" in reconstructed_skill:
-                with open(get_resource_path("skill_corrections"), "a") as scf:
-                    scf.write(f"{w.strip()},{reconstructed_skill}\n")
-                known_corrections[skill] = reconstructed_skill
-            elif not is_skill(all_skills, reconstructed_skill):
-                if len(suggestions) == 1:
-                    reconstructed_skill = ""
-                    has_errored = True
-                    continue
-                print(f"'{reconstructed_skill}' is not a valid skill.")
-                print(
-                    "Make sure you only correct one word at a time. You can look at the picture to help identify the proper skill."
-                )
-                reconstructed_skill = ""
-            else:
-                logger.info(f"Corrected skill: {reconstructed_skill} from {skill}")
-                for w, r in zip(skill.split(), reconstructed_skill.split()):
-                    if w not in known_corrections:
-                        with open(
-                            get_resource_path("skill_corrections"),
-                            "a",
-                            encoding="utf-8",
-                        ) as scf:
-                            scf.write(f"{w.strip()},{r.strip()}\n")
-                        known_corrections[w] = r
-                break
+    if len(errors) > 0:
+        logger.warning(f"Charm for {frame_loc} has errors")
+        charm = InvalidCharm(charm, errors)
+    else:
+        logger.debug(f"Finished charm for {frame_loc}")
 
-        skill = reconstructed_skill.strip()
-        if "<EMPTY_SKILL>" in skill:
-            logger.warning(f"Empty/invalid skill found on {frame_loc}")
-            continue
-
-        logger.debug(f"Added {skill}, {level}")
-        charm.add_skill(fix_skill_name(all_skills, skill), level)
-
-    logger.debug(f"Finished charm for {frame_loc}")
     logger.debug(f"{frame_loc}: {charm.to_dict()}")
-
     return charm
 
 
@@ -179,7 +195,7 @@ def extract_charms(
     charm_loc = []
 
     try:
-        frames = list(map(lambda frame_loc: frame_loc.path, os.scandir(frame_dir)))
+        frames = list(map(lambda frame_loc: frame_loc.path, os.scandir(frame_dir)))[:10]
 
         def keep_existing_and_update(x):
             i, x = x

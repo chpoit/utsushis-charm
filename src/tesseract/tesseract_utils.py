@@ -125,6 +125,7 @@ def download_language_data(lang="eng", _=lambda x: x, retry=False):
 
     print(_("tess-download-pack").format(pack_name, target_dir))
     try:
+        Path(full_name).touch()  # "Simple" way to test if I can write there
         request.urlretrieve(url, filename=full_name, data=None)
         print(_("tess-download-done"))
     except PermissionError as e:

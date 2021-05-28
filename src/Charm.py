@@ -1,4 +1,5 @@
 import json
+from .parse_errors import ParseError
 
 
 class Charm:
@@ -67,6 +68,24 @@ class Charm:
         return len(self.skills)
 
 
+class InvalidCharm(Charm):
+    def __init__(self, charm: Charm, skill_errors: [(list, str, int, ParseError)]):
+        super().__init__(charm.slots, charm.skills)
+        self.skill_errors = skill_errors
+
+    def get_skill_data(self):
+        yield from self.skill_info
+
+    def repair(self, fixed_skills):
+        return Charm(self.slots, fixed_skills)
+
+    def to_dict(self):
+        base = super().to_dict()
+        simpler_errors = list(map(lambda x: list(map(str, x[1:])), self.skill_errors))
+        base["errors"] = simpler_errors
+        return base
+
+
 class CharmList(set):
     def __init__(self, *args, **kwargs):
         if args and len(args) > 0:
@@ -105,5 +124,5 @@ class CharmList(set):
 
     @staticmethod
     def _test_item(obj):
-        if not type(obj) == Charm:
+        if not (type(obj) == Charm or type(obj) == InvalidCharm):
             raise TypeError("Items must be charms")
