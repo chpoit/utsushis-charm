@@ -60,4 +60,5 @@ def run_in_console(args):
         'Charms encoded under "charms.encoded.txt". Use the contents of that file on the MHR Wiki armor set builder'
     )
 
-    input("Press Enter to Exit...")
+    if not args.autoexit:
+        input("Press Enter to Exit...")

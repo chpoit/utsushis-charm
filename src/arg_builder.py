@@ -70,4 +70,11 @@ def build_args():
         default="English",
     )
 
+    parser.add_argument(
+        "--autoexit",
+        dest="autoexit",
+        action="store_true",
+        desc='Skips the "Press enter to exit" prompt in console mode.',
+    )
+
     return parser.parse_args()

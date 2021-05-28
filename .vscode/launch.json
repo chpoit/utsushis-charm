@@ -27,7 +27,8 @@
             "console": "integratedTerminal",
             "args": [
                 "--skip-charms",
-                "--console"
+                "--console",
+                "--autoexit"
             ]
         },
         {
@@ -38,7 +39,22 @@
             "console": "integratedTerminal",
             "args": [
                 "--skip-frames",
-                "--console"
+                "--console",
+                "--autoexit"
+            ]
+        },
+        {
+            "name": "Charm Extraction (With parse errors)",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--skip-frames",
+                "--console",
+                "-f",
+                "frames2",
+                "--autoexit"
             ]
         },
         {
@@ -51,7 +67,8 @@
                 "--skip-frames",
                 "--console",
                 "-l",
-                "French"
+                "French",
+                "--autoexit"
             ]
         },
         {
@@ -64,7 +81,8 @@
                 "--skip-frames",
                 "--frames",
                 "debug-frames",
-                "--console"
+                "--console",
+                "--autoexit"
             ]
         }
     ]
