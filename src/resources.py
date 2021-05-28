@@ -34,6 +34,14 @@ def _alter_resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 
+def get_language_list():
+    return _language_list
+
+
+def get_language_code(language):
+    return _mappings[language]
+
+
 _resources = {
     "skill_directory": _alter_resource_path(os.path.join("data", "skills")),
     "skill_corrections": "skill_corrections.csv",
@@ -51,3 +59,31 @@ _resources = {
     "TRANSLATIONS": _alter_resource_path(os.path.join("data", "translation")),
     "ICON": _alter_resource_path(os.path.join("media", "icon.ico")),
 }
+
+_mappings = {
+    "English": "eng",
+    "Japanese": "jpn",
+    "French": "fra",
+    "Italian": "ita",
+    "German": "deu",
+    "Spanish": "spa",
+    "Russian": "rus",
+    "Polish": "pol",
+    "Korean": "kor",
+    "Traditional Chinese": "chi_tra",
+    "Simplified Chinese": "chi_sim",
+}
+
+_language_list = [
+    "English",
+    "Japanese",
+    "French",
+    "Italian",
+    "German",
+    "Spanish",
+    "Russian",
+    "Polish",
+    "Korean",
+    "Traditional Chinese",
+    "Simplified Chinese",
+]

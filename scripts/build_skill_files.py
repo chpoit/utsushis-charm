@@ -4,17 +4,17 @@ import pandas as pd
 
 
 mappings = {
-    "English": "en",
-    "Japanese": "ja",
-    "French": "fr",
-    "Italian": "it",
-    "German": "de",
-    "Spanish": "es",
-    "Russian": "ru",
-    "Polish": "pl",
-    "Korean": "ko",
-    "traditional Chinese": "zh_trad",
-    "Simplified Chinese": "zh",
+    "English": "eng",
+    "Japanese": "jpn",
+    "French": "fra",
+    "Italian": "ita",
+    "German": "deu",
+    "Spanish": "spa",
+    "Russian": "rus",
+    "Polish": "pol",
+    "Korean": "kor",
+    "traditional Chinese": "chi_tra",
+    "Simplified Chinese": "chi_sim",
 }
 
 

@@ -207,19 +207,3 @@ def batchify_lazy(lst, batch_size):
         batch.append(item)
         i += 1
     yield batch
-
-
-def get_language_code(language):
-    mappings = {
-        "English": "en",
-        "Japanese": "ja",
-        "French": "fr",
-        "Italian": "it",
-        "German": "de",
-        "Spanish": "es",
-        "Russian": "ru",
-        "Polish": "pl",
-        "Korean": "ko",
-        "Traditional Chinese": "zh_trad",
-        "Simplified Chinese": "zh",
-    }
