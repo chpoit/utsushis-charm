@@ -67,12 +67,13 @@ class Tesseract(object):
         lib.TessBaseAPISetSourceResolution.restype = None
         lib.TessBaseAPISetSourceResolution.argtypes = (cls.TessBaseAPI, ctypes.c_int)
 
-    def __init__(self, language="eng", datapath=None, lib_path=None):
+    def __init__(self, language="eng", datapath=None, lib_path=None, _=lambda x: x):
         if self._lib is None:
             self.setup_lib(lib_path)
         self._api = self._lib.TessBaseAPICreate()
+        self._ = _
 
-        download_language_data(language)
+        download_language_data(language, self._)
 
         # required windows nonsense
         encoded_lang = language.encode("utf-8")

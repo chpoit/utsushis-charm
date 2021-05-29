@@ -5,4 +5,3 @@ if __name__ == "__main__":
     args = build_args()
     main(args)
 
-    input("Press Enter to Exit...")

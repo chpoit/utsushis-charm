@@ -3,10 +3,16 @@ import cv2
 import numpy as np
 from skimage.metrics import structural_similarity
 from math import floor
-from .tesseract.Tesseract import Tesseract
 from .tesseract.tesseract_utils import process_image_with_tesseract
+from .resources import get_resource_path
 
-tess = Tesseract()
+
+def is_skill(skill_dict, skill_name):
+    return skill_name.lower().strip() in skill_dict
+
+
+def fix_skill_name(skill_dict, skill_name):
+    return skill_dict[skill_name.lower().strip()]
 
 
 def _load_potentially_transparent(filename):
@@ -69,7 +75,7 @@ def _trim_image_past_skill_name(img, background_color=203):
     return trimmed
 
 
-def read_text_from_skill_tuple(skills):
+def read_text_from_skill_tuple(tess, skills):
     skill_text = []
     for skill_img, level in skills:
         skill_img = _trim_image_past_skill_name(skill_img)
@@ -184,24 +190,6 @@ def _get_levels(img, inverted=False):
     return levels
 
 
-def get_resource_path(resource):
-
-    return _resources[resource] if resource in _resources else resource
-
-
-def _alter_resource_path(relative_path):
-    import sys
-
-    """ Get absolute path to resource, works for dev and for PyInstaller """
-    try:
-        # PyInstaller creates a temp folder and stores path in _MEIPASS
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
-
-
 def print_licenses():
     print("Third party licenses")
     for f in os.scandir(get_resource_path("licences")):
@@ -227,21 +215,3 @@ def batchify_lazy(lst, batch_size):
         batch.append(item)
         i += 1
     yield batch
-
-
-_resources = {
-    "skill_dict": _alter_resource_path(os.path.join("data", "skill_dict.freq")),
-    "skill_list": _alter_resource_path(os.path.join("data", "skill_list.txt")),
-    "skill_corrections": "skill_corrections.csv",
-    "lv1": _alter_resource_path(os.path.join("images", "levels", "lv1.png")),
-    "lv2": _alter_resource_path(os.path.join("images", "levels", "lv2.png")),
-    "lv3": _alter_resource_path(os.path.join("images", "levels", "lv3.png")),
-    "slot0": _alter_resource_path(os.path.join("images", "slots", "slot0.png")),
-    "slot1": _alter_resource_path(os.path.join("images", "slots", "slot1.png")),
-    "slot2": _alter_resource_path(os.path.join("images", "slots", "slot2.png")),
-    "slot3": _alter_resource_path(os.path.join("images", "slots", "slot3.png")),
-    "mask": _alter_resource_path(os.path.join("images", "mask.png")),
-    "charm_only": _alter_resource_path(os.path.join("images", "charm_only.png")),
-    "skill_mask": _alter_resource_path(os.path.join("images", "skill_mask.png")),
-    "licences": _alter_resource_path("LICENSES"),
-}

@@ -12,15 +12,18 @@ This repo contains code that will allow you to extract all of your charms in Mon
 
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but ["this armor set searcher exists"](https://mhrise.wiki-db.com/sim/?hl=en). I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
+# New Update (Updated May 28th)
+- Now with a User Interface
+- Support for [Multiple Game languages](#supported-game-language)
+
 # Usage
 
 ## Requirements
 - A computer (Windows)
   - Linux and Mac might work too, you wont be able to run the EXE and will have to run from source in a terminal window. Refer to [Running from source](#Running-from-source)
 - A USB cable to connect your switch to transfer files
-- [The latest version of this](https://github.com/chpoit/utsushis-charm/releases/latest) downloaded to your computer (Utsushis-Charm_**vx_x**.zip)
-  - A [pre-release](https://github.com/chpoit/utsushis-charm/releases/tag/v1.5.0-alpha) with a User Interface is available
-- Some knowledge of how to type things in the terminal
+- [The latest version of this (Now with a User Interface)](https://github.com/chpoit/utsushis-charm/releases/latest)  downloaded to your computer (Utsushis-Charm_**vx_x**.zip)
+  - You only need the executable. The inputs folder is only there for faster setup
 - Being able to read
 
 ## Steps
@@ -28,8 +31,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 0. Unequip all jewels. You will create "fake" charms otherwise.
    - Item Box -> Manage Equipment -> Set Decorations -> Equipment Box -> Remove all (Press '-' on controller)
    - Don't ask, this is way out of scope for something that takes you 30 seconds to do.
-1. Download the release bundle and follow the Requirements section  (Utsushis-Charm_**vx_x**.zip)
-   - You're free to delete `skill_corrections.csv` if you want. A new empty one will be recreated.
+1. Download the release bundle and follow the [Requirements](##Requirements) section  (Utsushis-Charm_**vx_x**.zip)
 2. Record clips similar to the following of you going through your charms. Try placing the UI in front of something that is very "flat" in color and doesn't have NPCs walking in front.
    - I can easily go through 2-3 pages of charms in 30 seconds.
    - Use a stopwatch on your phone if you have trouble timing the 30 seconds. I saved a clip every ~25 seconds.
@@ -38,23 +40,47 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 ![Example Clip](./media/example_clip.gif)
 
 3. Transfer the clips to your computer.
-4. Put the files in the "inputs" directory. If it does not exist, create it at the same place you can find `utsushis-charm.exe`.
+4. Put the files in the `inputs` directory. If it does not exist, create it at the same place you can find `utsushis-charm.exe`.
    - It does not matter how many you have
+   - The `inputs` directory can be changed by clicking the button
    - I haven't tried to see what would happen if there are clips that are not of the charm UI
+   - 
 5. Run the `utsushis-charm.exe` (Double-click)
-6. A Terminal should pop up
-   - Wait a little bit, it need to do extract some data (~5-15s)
-7. The first step of the program should take roughly 30 seconds to 1 minute per clip you have in the inputs folder
-8. Once that step is done, the second phase starts, normally, it should be done without needing your attention
+   - The app will start
+   - Wait a little bit, it needs to extract some data (~5-15s)
+6. Enter the options you want relative to where your files are and the game language
+7. The program will run and do the following:
+   1. Find all unique frames
+   2. Extract Charms
+   3. Apply known automatic fixes to the charms
+8. If there were errors in parsing, a new window will open
    - Follow the instructions on screen and correct any invalid skill names.
-   - If a skill has to be corrected, a window with the skill should open, you might have to alt-tab to it, Windows likes to hide it.
-9. The program is done running. Press Enter and exit.
-   - You might see some warnings about memory leaks, you don't have to worry about that, it's cleared upon closing the program.
-10. Extra:
+   - If a skill/charm has to be corrected, a window will open and request your input.
+     - Pressing cancel skips the charm and moves to the next.
+     - Pressing empty removes the skill. 
+     - Only valid skill names can be entered. Case Insensitive.
+9.  The program is done running. 
+   - Normally, charms are automatically saved to the files listed in the console
+   - You can directly copy the charms to your clipboard by clicking the button.
+11. Extra:
     - Sometimes tesseract is absolutely unable to read text, those charms will be logged in `app.log` and you can add them manually.
     - You can see a list of duplicate charms (if they exist) in the `charms.duplicate.txt`
     - If no charm errored, or you don't care about those charms, you should be able to open the `charms.encoded.txt` file and copy the contents into the import box of [MHR-Wiki](https://mhrise.wiki-db.com/sim/?hl=en)
 
+## Supported Game language:
+- Confirmed: 
+  - English
+  - French
+- Theoretical:
+  - Japanese
+  - Italian
+  - German
+  - Spanish
+  - Russian
+  - Polish
+  - Korean
+  - Traditional Chinese
+  - Simplified Chinese
 
 # FAQ
 - Q: Can I use a capture card instead?
@@ -64,6 +90,13 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
   - I see no reason other capture cards should not work
   - 1080p adds extra processing due to a downscaling step to 720p (20-30% slower)
   - I also tested using an Mclassic without any issues.
+
+# Notes
+- Version 1.5 is the last version that will officially support console mode, I may fix it from time to time if I need it for dev reasons, but I don't want to maintain a secondary workflow that will likely be used by nobody.
+
+# Known issues
+- Automatic skill corrections don't get updated in "UI" mode. 
+
 
 # Troubleshooting
 
@@ -119,7 +152,7 @@ In all seriousness, the work is done in a few broad steps:
 
 # Contribute
 
-- If you ran everything and got new corrections in the [`skill_corrections.csv`](skill_corrections.csv) file, consider creating a pull request to add them for others.
+- If you ran everything and had to correct some skills, you probably have new corrections in in your `Appdata/Local/utsushis-charm/skill_corrections.LANG.csv` or `~/utsushis-charm/skill_corrections.LANG.csv` file, consider creating a pull request to add them for others.
 - If you feel like contributing anything, go ahead and submit a pull request I'll be happy to take a look and decide if it's something worth adding.
 - Please use the default settings of `black` to format the python source code.
 
@@ -164,17 +197,17 @@ Normal instructions apply once the application starts.
   - have python3 and tesseract installed via brew (or some other way)
   - Virtual env on mac (optional):  `virtualenv -p python3 env`
 - Running:
-  - switch to the virtualenv `source env/bin/activate` (run at the root of the repository)
-  - set TESSDATA_PREFIX: `export TESSDATA_PREFIX=/usr/local/Cellar/tesseract/<version>/share/tessdata`
-  - install the project dependencies: `pip3 install .`
-  - run with `python3 main.py`
+  - Switch to the virtualenv `source env/bin/activate` (run at the root of the repository)
+  - Set TESSDATA_PREFIX: `export TESSDATA_PREFIX=/usr/local/Cellar/tesseract/<version>/share/tessdata`
+  - Install the project dependencies: `pip3 install .`
+  - Run with `python3 main.py`
 
 ## Linux
 - Requirements
-  - You will need to install Google tesseract with your package manager of choice.
+  - You will need to install Google tesseract with your package manager of choice. Probably found under `tesseract-ocr`
+  - TkInter must be installed, probably found under `python3-tk`
 - Running
   - `python3 main.py`
-  - 
 
 ## Windows
 - Requirements
@@ -190,10 +223,13 @@ Normal instructions apply once the application starts.
 If you run from source, or call the executable from the terminal you can make use of the following flags/arguments to achieve different functionality
 
 - `-h` or ` --help`: Shows arguments
-- `--thirdparty `: Shows 3rd party licenses
+- `--thirdparty`: Shows 3rd party licenses
+- `--console`: Runs the app in "console" mode
+- `--autoexit`: Skips the "Press enter to exit" prompt in console mode
 - `--skip-frames`: Skips the first frame extraction step. Useful if the second step crashed.
 - ` --skip-charms`:`Skips the Tesseract-OCR step. Not sure why you would want that.
 - `-i <INPUT_DIR>` or `--input <INPUT_DIR>`: Changes the Input directory for videos
 - `-f <FRAME_DIR>` or `--frames <FRAME_DIR>`: Changes the Directory used to store temporary frames
 - `-c <FILE_NAME>` or `--charm-json <FILE_NAME>`: Changes the name of the json formatted charms
 - `-e <FILE_NAME>` or `--charm-encoded <FILE_NAME>`: Changes the name of the MHR-Wiki formatted charms
+- `-l <FILE_NAME>` or `--language <FILE_NAME>`: Changes the default language for the recordings. Use the list in [Supported languages](#supported-game-language) to know what to enter.
