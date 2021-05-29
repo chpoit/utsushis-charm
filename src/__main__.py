@@ -1,10 +1,18 @@
 import os
 import sys
 from .frame_extraction import extract_unique_frames
-from .charm_extraction import extract_charms, save_charms
+from .charm_extraction import (
+    extract_charms,
+    save_charms,
+    repair_invalid,
+    remove_duplicates,
+)
 from .charm_encoding import encode_charms
 from .arg_builder import build_args
 from .utils import print_licenses
+from .ui.MainWindow import MainWindow
+from .translator import Translator
+from .resources import get_language_code
 import logging
 
 logging.basicConfig(
@@ -14,24 +22,48 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+def handle_exception(exception, value, traceback):
+    logger.error(f"An error occured {exception}, {value}, {str(traceback)}")
+    print("An error occured", exception)
+
+
 def main(args):
     if args.license:
         print_licenses()
         sys.exit(0)
 
+    translator = Translator()
+
+    if args.console:
+        run_in_console(args)
+
+    else:
+        w = MainWindow(translator, args)
+        sys.stdout = w
+        w.report_callback_exception = handle_exception
+        w.mainloop()
+
+
+def run_in_console(args):
+    translator = Translator()
     input_dir = args.input_dir
     frame_dir = args.frame_dir
     charm_json = args.charm_json
     charm_encoded = args.charm_encoded
 
+    lang = get_language_code(args.language)
+
     os.makedirs(input_dir, exist_ok=True)
     os.makedirs(frame_dir, exist_ok=True)
 
     if not args.skip_frames:
-        extract_unique_frames(input_dir, frame_dir)
+        extract_unique_frames(input_dir, frame_dir, translator)
 
     if not args.skip_charms:
-        charms = extract_charms(frame_dir)
+        charms = extract_charms(frame_dir, lang, translator)
+        if charms.has_invalids():
+            charms = repair_invalid(lang, charms, translator)
+            charms = remove_duplicates(charms, mode="a")
 
         save_charms(charms, charm_json)
         print(f"Saved {len(charms)} charms")
@@ -42,10 +74,5 @@ def main(args):
         'Charms encoded under "charms.encoded.txt". Use the contents of that file on the MHR Wiki armor set builder'
     )
 
-
-if __name__ == "__main__":
-    try:
-        args = build_args()
-        main(args)
-    except Exception as e:
-        logger.error(f"Crashed with {e}")
+    if not args.autoexit:
+        input("Press Enter to Exit...")

@@ -12,13 +12,23 @@
             "console": "integratedTerminal"
         },
         {
+            "name": "Debug UI",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": []
+        },
+        {
             "name": "Frame Extraction",
             "type": "python",
             "request": "launch",
             "program": "main.py",
             "console": "integratedTerminal",
             "args": [
-                "--skip-charms"
+                "--skip-charms",
+                "--console",
+                "--autoexit"
             ]
         },
         {
@@ -28,7 +38,49 @@
             "program": "main.py",
             "console": "integratedTerminal",
             "args": [
-                "--skip-frames"
+                "--skip-frames",
+                "--console",
+                "--autoexit"
+            ]
+        },
+        {
+            "name": "Debug UI (With parse errors)",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--skip-frames",
+                "-f",
+                "frames2"
+            ]
+        },
+        {
+            "name": "Charm Extraction (With parse errors, Console)",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--skip-frames",
+                "--console",
+                "-f",
+                "frames2",
+                "--autoexit"
+            ]
+        },
+        {
+            "name": "Charm Extraction (French)",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--skip-frames",
+                "--console",
+                "-l",
+                "French",
+                "--autoexit"
             ]
         },
         {
@@ -40,7 +92,9 @@
             "args": [
                 "--skip-frames",
                 "--frames",
-                "debug-frames"
+                "debug-frames",
+                "--console",
+                "--autoexit"
             ]
         }
     ]

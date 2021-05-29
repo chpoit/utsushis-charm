@@ -1,13 +1,15 @@
 import json
+from .parse_errors import ParseError
 
 
 class Charm:
-    def __init__(self, slots, frame_loc, skills=None):
+    def __init__(self, slots, skills=None, frame_loc=None):
         if not skills:
             skills = {}
         self.slots = list(sorted(slots, reverse=True))
         self.frame = frame_loc
         self.skills = skills
+        self.frame_loc = frame_loc
 
     def __eq__(self, other):
         return self.is_identical(other)
@@ -66,3 +68,77 @@ class Charm:
 
     def has_skills(self):
         return len(self.skills)
+
+
+class InvalidCharm(Charm):
+    def __init__(self, charm: Charm, skill_errors: [(list, str, int, ParseError)]):
+        super().__init__(charm.slots, charm.skills, frame_loc=charm.frame_loc)
+        self.skill_errors = skill_errors
+
+    def get_errors(self):
+        yield from self.skill_errors
+
+    def repair(self, fixed_skills):
+        return Charm(self.slots, fixed_skills, self.frame_loc)
+
+    def to_dict(self):
+        base = super().to_dict()
+        simpler_errors = list(map(lambda x: list(map(str, x[1:])), self.skill_errors))
+        base["errors"] = simpler_errors
+        return base
+
+    def has_skills(self):
+        return True
+
+
+class CharmList(set):
+    def __init__(self, *args, **kwargs):
+        if args and len(args) > 0:
+            for item in args[0]:
+                self._test_item(item)
+        super(CharmList, self).__init__(*args, **kwargs)
+
+    def encode_all(self):
+        acc = ""
+        for charm in self:
+            acc += f"{charm.to_simple_encode()}\n"
+        return acc
+
+    def to_json(self):
+        return CharmList
+
+    def add(self, item: Charm):
+        self._test_item(item)
+        super().add(item)
+
+    def to_dict(self):
+        return list(map(lambda x: x.to_dict(), self))
+
+    def __add__(self, other):
+        ns = CharmList()
+        for item in self:
+            ns.add(item)
+        for item in other:
+            ns.add(item)
+        return ns
+
+    @staticmethod
+    def from_file(file_path):
+        with open(file_path, "r", encoding="utf-8") as charm_file:
+            data = json.load(charm_file)
+        return CharmList.from_dict(data)
+
+    @staticmethod
+    def from_dict(charm_dict):
+        new_list = CharmList()
+        for item in charm_dict:
+            new_list.add(Charm.from_dict(item))
+        return new_list
+
+    @staticmethod
+    def _test_item(obj):
+        if not (type(obj) == Charm or type(obj) == InvalidCharm):
+            raise TypeError("Items must be charms")
+
+    def has_invalids(self):
+        return any(filter(lambda x: type(x) == InvalidCharm, self))

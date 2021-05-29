@@ -12,6 +12,7 @@ converted.js
 *.exe
 *.zip
 ./*.png
+!data/**/*.json
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/rust

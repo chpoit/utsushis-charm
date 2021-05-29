@@ -4,6 +4,10 @@ import argparse
 def build_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
+        "--console", dest="console", action="store_true", help="Runs in console mode"
+    )
+
+    parser.add_argument(
         "--thirdparty",
         dest="license",
         action="store_true",
@@ -55,6 +59,22 @@ def build_args():
         required=False,
         help="Changes the name of the MHR-Wiki formatted charms",
         default="charms.encoded.txt",
+    )
+
+    parser.add_argument(
+        "-l",
+        "--language",
+        dest="language",
+        required=False,
+        help="Sets the language of the switch recording.",
+        default="English",
+    )
+
+    parser.add_argument(
+        "--autoexit",
+        dest="autoexit",
+        action="store_true",
+        help='Skips the "Press enter to exit" prompt in console mode.',
     )
 
     return parser.parse_args()

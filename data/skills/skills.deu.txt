@@ -1,0 +1,111 @@
+Affinitätsschlittern
+Angriffsbonus
+Artillerie
+Aufhetzer
+Ausdauerdieb
+Ausdauererholung
+Ausweichdistanz
+Ballistik
+Bestrafender Zug
+Betäubungswiderstand
+Blasentanz
+Blitz-Morphen
+Blocken
+Blocken hoch
+Bombardier
+Botaniker
+Chameleos-Segen
+Donner-Abgleich
+Donnerangriff
+Donnerwiderstand
+Drachenangriff
+Drachenherz
+Drachenwiderstand
+Eisangriff
+Eiswiderstand
+Erholung hoch
+Erholungstempo
+Erschütterngswdrstnd
+Explosionsangriff
+Explosionswiderstand
+Extraschuss
+Fangmeister
+Feuerangriff
+Feuerwiderstand
+Fokus
+Freie Mahlzeit
+Gegenschlag
+Geistiges Auge
+Geologe
+Giftangriff
+Giftwiderstand
+Glückserhöher
+Groll
+Göttlicher Segen
+Handwerk
+Heldentat
+Horn-Maestro
+Hungerwiderstand
+Höchstleistung
+Höchstmacht
+Höllenfeuer-Umhang
+Konstitution
+Kraftverlängerung
+Kritischer Blick
+Kritischer Boost
+Kritisches Element
+Kritisches Ziehen
+Kräftigen
+Kushala-Segen
+Latente Kraft
+Lähmer
+Lähmungsangriff
+Lähmungswiderstand
+Marathon-Läufer
+Meisterschliff
+Mist-Widerstand
+Munition hoch
+Mykologie
+Nachladetempo
+Normal / Schnell hoch
+Objektverlängerung
+Offensive Abwehr
+Ohrstöpsel
+Patronennachlader
+Perforation hoch
+Pestwiderstand
+Provozierer
+Prügler
+Rittmeister
+Rückstoßdämpfer
+Scharfschwert
+Schicksalssprung
+Schlafangriff
+Schlafwiderstand
+Schnelles Schärfen
+Schnelles Wegstecken
+Schnellessen
+Schnellfeuer hoch
+Schrot hoch
+Schutzpolitur
+Schwächevorteil
+Sehnenkraft
+Seilkäfer-Flüsterer
+Spezialmunitionboost
+Sprungmeister
+Sturmseele
+Teilezerstörer
+Teostra-Segen
+Unbeeindruckt
+Unverwundbarkeit
+Verteidigungsboost
+Wandläufer
+Wasserangriff
+Wasserwiderstand
+Wiederbelebung
+Wind-Abgleich
+Windsicher
+Wirkbereich
+Zerlegemeister
+Zerleger-Profi
+Zielsicherheit
