@@ -37,14 +37,6 @@ if DEBUG:
     logger.setLevel(logging.DEBUG)
 
 
-def is_skill(skill_dict, skill_name):
-    return skill_name.lower().strip() in skill_dict
-
-
-def fix_skill_name(skill_dict, skill_name):
-    return skill_dict[skill_name.lower().strip()]
-
-
 def ask_repair(
     language,
     all_skills,
@@ -322,7 +314,7 @@ def extract_basic_info(tess: Tesseract, frame_loc, frame):
 
 
 def save_charms(charms: CharmList, charm_json):
-    with open(charm_json, "w") as charm_file:
+    with open(charm_json, "w", encoding="utf-8") as charm_file:
         json.dump(charms.to_dict(), charm_file)
 
 

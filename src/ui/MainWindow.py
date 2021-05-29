@@ -4,14 +4,15 @@ import json
 import tkinter as tk
 from tkinter import filedialog, END
 from ..frame_extraction import extract_unique_frames
-from ..charm_extraction import extract_charms, save_charms
+from ..charm_extraction import extract_charms, save_charms, remove_duplicates
 from ..charm_encoding import encode_charms
 from ..Charm import Charm, CharmList
 from ..arg_builder import build_args
 from ..utils import print_licenses  # TODO
 from ..resources import get_resource_path, get_language_code, get_language_list
 from ..translator import Translator
-from .pbar_wrapper import PbarWrapper
+from .PbarWrapper import PbarWrapper
+from .ParseRepairWindow import ParseRepairWindow
 
 
 class MainWindow(tk.Tk):
@@ -250,14 +251,26 @@ class MainWindow(tk.Tk):
                     self.progress_callback,
                 )
 
+                if self.charms.has_invalids():
+                    fix_window = ParseRepairWindow(
+                        self, get_language_code(self.lang.get()), self._, self.charms
+                    )
+                    fix_window.fix_skills()
+                    self.wait_window(fix_window)
+                    repaired = fix_window.get_repaired()
+                    self.charms = remove_duplicates(repaired, mode="a")
+                    print(_("done-repairing"))
+                    self.progress_callback({"unique_charms": len(self.charms)})
+
             if self.autosave.get():
                 self.save_charms()
 
             self._update_save_status()
             self.print_end()
         except Exception as e:
-            self.run_btn["state"] = "normal"
             raise e
+        finally:
+            self.run_btn["state"] = "normal"
 
     def progress_callback(self, data):
         for key in data:
@@ -313,9 +326,9 @@ class MainWindow(tk.Tk):
         encoded = self.charms.encode_all()
         charm_dict = self.charms.to_dict()
 
-        with open(self.charm_json, "w") as json_file:
+        with open(self.charm_json, "w", encoding="utf-8") as json_file:
             json.dump(charm_dict, json_file)
-        with open(self.charm_encoded, "w") as encoded_file:
+        with open(self.charm_encoded, "w", encoding="utf-8") as encoded_file:
             encoded_file.write(encoded)
 
         print(_("charms-saved").format(self.charm_json, self.charm_encoded))

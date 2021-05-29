@@ -10,7 +10,7 @@ from .charm_extraction import (
 from .charm_encoding import encode_charms
 from .arg_builder import build_args
 from .utils import print_licenses
-from .ui.main_window import MainWindow
+from .ui.MainWindow import MainWindow
 from .translator import Translator
 from .resources import get_language_code
 import logging
@@ -20,6 +20,11 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
+
+
+def handle_exception(exception, value, traceback):
+    logger.error(f"An error occured {exception}, {value}, {str(traceback)}")
+    print("An error occured", exception)
 
 
 def main(args):
@@ -35,6 +40,7 @@ def main(args):
     else:
         w = MainWindow(translator, args)
         sys.stdout = w
+        w.report_callback_exception = handle_exception
         w.mainloop()
 
 

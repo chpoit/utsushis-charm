@@ -41,5 +41,15 @@
     "tess-download-pack": "Downloading {} language pack to: {}",
     "tess-download-done": "Finished downloading language pack",
     "tess-found-language": "Language pack was found",
-    "tess-permission-denied": "Could not download language pack to location, overriding TESSDATA_PREFIX."
+    "tess-permission-denied": "Could not download language pack to location, overriding TESSDATA_PREFIX.",
+    "done-repairing": "Finished fixing skills",
+    "skill-img": "Skill image:",
+    "parsed-text": "Text parsed from image",
+    "level": "Skill Level:",
+    "true-skill-name": "Enter real skill name (case insensitive)",
+    "cancel-skill": "Skip this charm",
+    "empty-skill": "Skill is empty",
+    "enter-skill": "Enter name",
+    "charms-to-fix": "Charms to fix:",
+    "repair-charms": "Fix Parsing Errors"
 }

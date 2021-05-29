@@ -56,9 +56,3 @@ class PbarWrapper(ttk.Progressbar):
         self["value"] = 0
         self["maximum"] = 100
 
-
-class PBarFrame(tk.Frame):
-    def __init__(self, parent, _, **kwargs):
-        super().__init__(parent, **kwargs)
-
-        self.pbar = PbarWrapper(self, _)

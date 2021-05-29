@@ -44,7 +44,19 @@
             ]
         },
         {
-            "name": "Charm Extraction (With parse errors)",
+            "name": "Debug UI (With parse errors)",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--skip-frames",
+                "-f",
+                "frames2"
+            ]
+        },
+        {
+            "name": "Charm Extraction (With parse errors, Console)",
             "type": "python",
             "request": "launch",
             "program": "main.py",

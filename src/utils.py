@@ -7,6 +7,14 @@ from .tesseract.tesseract_utils import process_image_with_tesseract
 from .resources import get_resource_path
 
 
+def is_skill(skill_dict, skill_name):
+    return skill_name.lower().strip() in skill_dict
+
+
+def fix_skill_name(skill_dict, skill_name):
+    return skill_dict[skill_name.lower().strip()]
+
+
 def _load_potentially_transparent(filename):
     pot_transparent = cv2.imread(filename, cv2.IMREAD_UNCHANGED)
     trans_mask = pot_transparent[:, :, 3] == 0
