@@ -12,9 +12,12 @@ This repo contains code that will allow you to extract all of your charms in Mon
 
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but ["this armor set searcher exists"](https://mhrise.wiki-db.com/sim/?hl=en). I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
-# New Update (Updated May 28th)
-- Now with a User Interface
-- Support for [Multiple Game languages](#supported-game-language)
+# New Update (Updated June 1st)
+- 1.5.1
+  - Resolves issues with local directory creation found in #20
+- 1.5
+  - Now with a User Interface
+  - Support for [Multiple Game languages](#supported-game-language)
 
 # Usage
 
@@ -85,7 +88,8 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 # FAQ
 - Q: Can I use a capture card instead?
   - I tested recording in 720p and 1080p with OBS using a Genki Shadowcast and everything worked. (MKV, others should work too)
-  - I recommend recording in 30fps to avoid doubling the frames to process
+    - Make sure you properly set the resolution of the Shadowcast at or above 720p. The default appears to be 360/480p. [Example found here](https://github.com/chpoit/utsushis-charm/issues/20#issuecomment-852183555)
+  - I recommend recording in 30fps to avoid increasingt the frames to process
     - 60 fps is fine, half of the frames are skipped.
   - I see no reason other capture cards should not work
   - 1080p adds extra processing due to a downscaling step to 720p (20-30% slower)

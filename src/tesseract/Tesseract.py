@@ -168,6 +168,7 @@ if __name__ == "__main__":
         pass
     except Exception as e:
         print(e)
+        logger.exception("Traceback")
         pass
 
     for t in test_img2:

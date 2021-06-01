@@ -257,9 +257,11 @@ def extract_charms(
                         logger.warn(_("logger-skill-less").format(frame_loc))
                 except Exception as e:
                     logger.error(_("logger-charm-error").format(frame_loc, e))
+                    logger.exception("Traceback")
 
     except Exception as e:
         logger.error(f"Crashed with {e}")
+        logger.exception("Traceback")
 
     return remove_duplicates(charms, charm_callback)
 
@@ -310,6 +312,7 @@ def extract_basic_info(tess: Tesseract, frame_loc, frame):
         return frame_loc, slots, skills, skill_text
     except Exception as e:
         logger.error(f"An error occured when analysing frame {frame_loc}. Error: {e}")
+        logger.exception("Traceback")
         return None
 
 
