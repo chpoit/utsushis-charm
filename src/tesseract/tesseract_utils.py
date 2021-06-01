@@ -38,6 +38,7 @@ def find_tesseract():
     locations = [
         ctypes.util.find_library("libtesseract-4"),  # win32
         ctypes.util.find_library("libtesseract302"),  # win32 version 3.2
+        ctypes.util.find_library("libtesseract"),  # others
         ctypes.util.find_library("tesseract"),  # others
     ]
 
@@ -70,7 +71,7 @@ def find_tesseract():
         ]
 
     for potential in filter(lambda x: x, locations):
-        if os.path.isfile(potential):
+        if os.path.isfile(potential) or potential.startswith("libtesseract.so."):
             logger.debug(f"Using tesseract at {potential}")
             return potential
 
@@ -107,11 +108,15 @@ def get_datapath():
     if "TESSDATA_PREFIX" not in os.environ:
         set_tessdata()
 
+    if os.environ["TESSDATA_PREFIX"] == "tessdata":
+        override_tessdata()
+
     return os.environ["TESSDATA_PREFIX"]
 
 
 def download_language_data(lang="eng", _=lambda x: x, retry=False):
     target_dir = get_datapath()
+    os.makedirs(target_dir, exist_ok=True)
     full_name = os.path.join(target_dir, f"{lang}.traineddata")
     if os.path.isfile(full_name):
         print(_("tess-found-language"))

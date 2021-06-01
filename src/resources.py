@@ -3,6 +3,9 @@ import shutil
 import platform
 from pathlib import Path
 from symspellpy.symspellpy import SymSpell
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 HOME = str(Path.home())
@@ -54,18 +57,32 @@ def get_language_from_code(language_code):
     return _reverse_language_code_mappings[language_code]
 
 
+def _backup_corrections(language_code):
+    backup_corr = {}
+    all_skills = get_all_skills()
+    for skill in all_skills.values():
+        for word in skill.split():
+            backup_corr[word] = word
+
+    return backup_corr
+
+
 def load_corrections(language_code, known_corrections=None):
-    known_corrections = known_corrections or {}
-    corrections_path = _corrections_path(language_code)
-    if not os.path.exists(corrections_path):
-        _create_default_skill_corrections(language_code)
+    try:
+        known_corrections = known_corrections or {}
+        corrections_path = _corrections_path(language_code)
+        if not os.path.isfile(corrections_path):
+            _create_default_skill_corrections(language_code)
 
-    with open(corrections_path, encoding="utf-8") as scf:
-        known_corrections = {
-            w: c for w, c in map(lambda x: x.strip().split(","), scf.readlines())
-        }
+        with open(corrections_path, encoding="utf-8") as scf:
+            known_corrections = {
+                w: c for w, c in map(lambda x: x.strip().split(","), scf.readlines())
+            }
 
-    return known_corrections
+        return known_corrections
+    except FileNotFoundError as e:
+        logger.exception("Had to load backup corrections")
+        return _backup_corrections(language_code)
 
 
 def get_spell_checker(language_code):
@@ -85,24 +102,21 @@ def add_corrections(language_code, known_corrections, *new_tuples):
 
 
 def _create_default_skill_corrections(language_code):
-    packaged_corrections = _alter_resource_path(
-        os.path.join("data", "skills", f"corrections.{language_code}.csv")
+    packaged_corrections = os.path.join(
+        get_resource_path("PACKAGED_SKILLS"), f"corrections.{language_code}.csv"
     )
     corrections_path = _corrections_path(language_code)
     shutil.copy(packaged_corrections, corrections_path)
 
 
 def _corrections_path(language_code):
-    return get_resource_path("skill_corrections").format(language_code)
+    return os.path.join(
+        get_resource_path("LOCAL_DIR"), f"corrections.{language_code}.csv"
+    )
 
 
 _resources = {
     "skill_directory": _alter_resource_path(os.path.join("data", "skills")),
-    "skill_corrections": os.path.join(
-        (os.getenv("LOCALAPPDATA") or HOME if WINDOWS else HOME),
-        "utsushis-charm",
-        "corrections.{}.csv",
-    ),
     "lv1": _alter_resource_path(os.path.join("images", "levels", "lv1.png")),
     "lv2": _alter_resource_path(os.path.join("images", "levels", "lv2.png")),
     "lv3": _alter_resource_path(os.path.join("images", "levels", "lv3.png")),
@@ -116,6 +130,11 @@ _resources = {
     "licences": _alter_resource_path("LICENSES"),
     "TRANSLATIONS": _alter_resource_path(os.path.join("data", "translation")),
     "ICON": _alter_resource_path(os.path.join("media", "icon.ico")),
+    "PACKAGED_SKILLS": _alter_resource_path(os.path.join("data", "skills")),
+    "LOCAL_DIR": os.path.join(
+        (os.getenv("LOCALAPPDATA") or HOME if WINDOWS else HOME),
+        "utsushis-charm",
+    ),
 }
 
 _language_code_mappings = {

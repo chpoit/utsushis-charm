@@ -12,7 +12,7 @@ from .arg_builder import build_args
 from .utils import print_licenses
 from .ui.MainWindow import MainWindow
 from .translator import Translator
-from .resources import get_language_code
+from .resources import get_language_code, get_resource_path
 import logging
 
 logging.basicConfig(
@@ -24,6 +24,7 @@ logger = logging.getLogger(__name__)
 
 def handle_exception(exception, value, traceback):
     logger.error(f"An error occured {exception}, {value}, {str(traceback)}")
+    logger.exception(f"An error occured")
     print("An error occured", exception)
 
 
@@ -31,6 +32,9 @@ def main(args):
     if args.license:
         print_licenses()
         sys.exit(0)
+
+    local_dir = get_resource_path("LOCAL_DIR")
+    os.makedirs(local_dir, exist_ok=True)
 
     translator = Translator()
 
