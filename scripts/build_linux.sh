@@ -5,9 +5,10 @@ version=$1
 
 echo Building version $version
 sub=_
-version="${version/./$sub}"
-archive_name="Utsushis-Charm_v${version}_linux.zip"
+version_str="${version/./$sub}"
+archive_name="Utsushis-Charm_v${version_str}_linux.zip"
 
+python ./scripts/update_ver.py %version%
 
 rm -f $archive_name
 rm -rf "./build"

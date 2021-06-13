@@ -127,7 +127,8 @@ _resources = {
     "mask": _alter_resource_path(os.path.join("images", "mask.png")),
     "charm_only": _alter_resource_path(os.path.join("images", "charm_only.png")),
     "skill_mask": _alter_resource_path(os.path.join("images", "skill_mask.png")),
-    "licences": _alter_resource_path("LICENSES"),
+    "internal_versions": _alter_resource_path(os.path.join("data", "versions.json")),
+    "LICENCES": _alter_resource_path("LICENSES"),
     "TRANSLATIONS": _alter_resource_path(os.path.join("data", "translation")),
     "ICON": _alter_resource_path(os.path.join("media", "icon.ico")),
     "PACKAGED_SKILLS": _alter_resource_path(os.path.join("data", "skills")),
@@ -135,6 +136,7 @@ _resources = {
         (os.getenv("LOCALAPPDATA") or HOME if WINDOWS else HOME),
         "utsushis-charm",
     ),
+    "versions": os.path.join(get_resource_path("LOCAL_DIR"), "versions.json"),
 }
 
 _language_code_mappings = {

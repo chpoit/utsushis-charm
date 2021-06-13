@@ -3,8 +3,10 @@ set skill_corrections="skill_corrections.csv"
 set version=%1
 echo "Building version %version%"
 
-set version=%version:.=_%
-set archive_name="Utsushis-Charm_v%version%.zip"
+set version_str=%version:.=_%
+set archive_name="Utsushis-Charm_v%version_str%.zip"
+
+python .\scripts\update_ver.py %version%
 
 del %archive_name%
 rd /s /q "build"

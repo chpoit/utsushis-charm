@@ -1,0 +1,30 @@
+{
+    "app": "1.5.2",
+    "skills": "3.0",
+    "languages": {
+        "eng": 1,
+        "jpn": 0,
+        "fra": 0,
+        "ita": 0,
+        "deu": 0,
+        "spa": 0,
+        "rus": 0,
+        "pol": 0,
+        "kor": 0,
+        "chi_tra": 0,
+        "chi_sim": 0
+    },
+    "corrections": {
+        "eng": 1,
+        "jpn": 1,
+        "fra": 1,
+        "ita": 1,
+        "deu": 1,
+        "spa": 1,
+        "rus": 1,
+        "pol": 1,
+        "kor": 1,
+        "chi_tra": 1,
+        "chi_sim": 1
+    }
+}
