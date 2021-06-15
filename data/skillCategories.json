@@ -1,0 +1,422 @@
+{
+    "Attack Boost": [
+        "core"
+    ],
+    "Agitator": [
+        "core-sup",
+        "crit"
+    ],
+    "Peak Performance": [
+        "core-sup"
+    ],
+    "Resentment": [
+        "core-sup"
+    ],
+    "Resuscitate": [
+        "niche",
+        "resuscitate-compatibility"
+    ],
+    "Critical Eye": [
+        "core",
+        "crit"
+    ],
+    "Critical Boost": [
+        "core",
+        "crit"
+    ],
+    "Weakness Exploit": [
+        "core",
+        "crit"
+    ],
+    "Latent Power": [
+        "core-sup"
+    ],
+    "Maximum Might": [
+        "core-sup"
+    ],
+    "Critical Element": [
+        "elemental",
+        "crit"
+    ],
+    "Master's Touch": [
+        "sharpness"
+    ],
+    "Fire Attack": [
+        "elemental",
+        "elemental-attack"
+    ],
+    "Water Attack": [
+        "elemental",
+        "elemental-attack"
+    ],
+    "Ice Attack": [
+        "elemental",
+        "elemental-attack"
+    ],
+    "Thunder Attack": [
+        "elemental",
+        "elemental-attack"
+    ],
+    "Dragon Attack": [
+        "elemental",
+        "elemental-attack"
+    ],
+    "Poison Attack": [
+        "status",
+        "status-attack"
+    ],
+    "Paralysis Attack": [
+        "status",
+        "status-attack"
+    ],
+    "Sleep Attack": [
+        "status",
+        "status-attack"
+    ],
+    "Blast Attack": [
+        "status",
+        "status-attack"
+    ],
+    "Handicraft": [
+        "sharpness"
+    ],
+    "Razor Sharp": [
+        "sharpness"
+    ],
+    "Spare Shot": [
+        "gunner-core"
+    ],
+    "Protective Polish": [
+        "sharpness"
+    ],
+    "Mind's Eye": [
+        "sharpness",
+        "core"
+    ],
+    "Ballistics": [
+        "gunner-sup"
+    ],
+    "Bludgeoner": [
+        "niche"
+    ],
+    "Bow Charge Plus": [
+        "bow"
+    ],
+    "Focus": [
+        "niche",
+        "sa",
+        "cb"
+    ],
+    "Power Prolonger": [
+        "niche",
+        "cb",
+        "sa"
+    ],
+    "Marathon Runner": [
+        "stamina"
+    ],
+    "Constitution": [
+        "stamina"
+    ],
+    "Stamina Surge": [
+        "stamina"
+    ],
+    "Guard": [
+        "shield"
+    ],
+    "Guard Up": [
+        "shield"
+    ],
+    "Offensive Guard": [
+        "shield"
+    ],
+    "Critical Draw": [
+        "niche"
+    ],
+    "Punishing Draw": [
+        "niche"
+    ],
+    "Quick Sheath": [
+        "niche"
+    ],
+    "Slugger": [
+        "status",
+        "status-attack",
+        "core",
+        "support"
+    ],
+    "Stamina Thief": [
+        "support"
+    ],
+    "Affinity Sliding": [
+        "niche"
+    ],
+    "Horn Maestro": [
+        "hh"
+    ],
+    "Artillery": [
+        "core",
+        "gl",
+        "cb",
+        "sticky"
+    ],
+    "Load Shells": [
+        "ammo",
+        "gl"
+    ],
+    "Special Ammo Boost": [
+        "gunner-sup"
+    ],
+    "Normal/Rapid Up": [
+        "gunner-core"
+    ],
+    "Pierce Up": [
+        "gunner-core"
+    ],
+    "Spread Up": [
+        "gunner-core"
+    ],
+    "Ammo Up": [
+        "gunner-sup",
+        "ammo"
+    ],
+    "Reload Speed": [
+        "gunner-sup"
+    ],
+    "Recoil Down": [
+        "gunner-sup"
+    ],
+    "Steadiness": [
+        "gunner-sup"
+    ],
+    "Rapid Fire Up": [
+        "gunner-core"
+    ],
+    "Defense Boost": [
+        "survival"
+    ],
+    "Divine Blessing": [
+        "survival"
+    ],
+    "Recovery Up": [
+        "survival",
+        "regen"
+    ],
+    "Recovery Speed": [
+        "survival",
+        "regen"
+    ],
+    "Speed Eating": [
+        "item"
+    ],
+    "Earplugs": [
+        "status",
+        "status-resist",
+        "survival"
+    ],
+    "Windproof": [
+        "status",
+        "status-resist",
+        "survival"
+    ],
+    "Tremor Resistance": [
+        "status",
+        "status-resist",
+        "survival"
+    ],
+    "Bubbly Dance": [
+        "status",
+        "status-resist",
+        "survival",
+        "resuscitate-compatibility"
+    ],
+    "Evade Window": [
+        "evade"
+    ],
+    "Evade Extender": [
+        "evade",
+        "core"
+    ],
+    "Fire Resistance": [
+        "status",
+        "status-resist",
+        "survival",
+        "elemental-damage-resist",
+        "survival"
+    ],
+    "Water Resistance": [
+        "status",
+        "status-resist",
+        "survival",
+        "elemental-damage-resist"
+    ],
+    "Ice Resistance": [
+        "status",
+        "status-resist",
+        "survival",
+        "elemental-damage-resist"
+    ],
+    "Thunder Resistance": [
+        "status",
+        "status-resist",
+        "survival",
+        "elemental-damage-resist"
+    ],
+    "Dragon Resistance": [
+        "status",
+        "status-resist",
+        "survival",
+        "elemental-damage-resist"
+    ],
+    "Blight Resistance": [
+        "status",
+        "status-resist"
+    ],
+    "Poison Resistance": [
+        "status",
+        "status-resist"
+    ],
+    "Paralysis Resistance": [
+        "status",
+        "status-resist"
+    ],
+    "Sleep Resistance": [
+        "status",
+        "status-resist"
+    ],
+    "Stun Resistance": [
+        "status",
+        "status-resist"
+    ],
+    "Muck Resistance": [
+        "status",
+        "status-resist"
+    ],
+    "Blast Resistance": [
+        "status",
+        "status-resist"
+    ],
+    "Botanist": [
+        "gathering"
+    ],
+    "Geologist": [
+        "gathering"
+    ],
+    "Partbreaker": [
+        "support"
+    ],
+    "Capture Master": [
+        "gathering",
+        "drops"
+    ],
+    "Carving Master": [
+        "gathering",
+        "drops"
+    ],
+    "Good Luck": [
+        "drops"
+    ],
+    "Speed Sharpening": [
+        "sharpness"
+    ],
+    "Bombardier": [
+        "item"
+    ],
+    "Mushroomancer": [
+        "item"
+    ],
+    "Item Prolonger": [
+        "item"
+    ],
+    "Wide-Range": [
+        "item",
+        "support"
+    ],
+    "Free Meal": [
+        "item"
+    ],
+    "Heroics": [
+        "core-sup"
+    ],
+    "Fortify": [
+        "core-sup"
+    ],
+    "Flinch Free": [
+        "core-sup"
+    ],
+    "Jump Master": [
+        "bad"
+    ],
+    "Carving Pro": [
+        "gathering"
+    ],
+    "Hunger Resistance": [
+        "item"
+    ],
+    "Leap of Faith": [
+        "survival",
+        "niche"
+    ],
+    "Diversion": [
+        "niche"
+    ],
+    "Master Mounter": [
+        "riding"
+    ],
+    "Wirebug Whisperer": [
+        "wirebug"
+    ],
+    "Wall Runner": [
+        "niche"
+    ],
+    "Counterstrike": [
+        "niche"
+    ],
+    "Rapid Morph": [
+        "cb",
+        "sa"
+    ],
+    "Hellfire Cloak": [
+        "status",
+        "status-resist",
+        "survival",
+        "resuscitate-compatibility"
+    ],
+    "Chameleos Blessing": [
+        "boss",
+        "set"
+    ],
+    "Kushala Blessing": [
+        "boss",
+        "set"
+    ],
+    "Teostra Blessing": [
+        "boss",
+        "set"
+    ],
+    "Dragonheart": [
+        "boss",
+        "status-resist",
+        "survival",
+        "resuscitate-compatibility",
+        "set"
+    ],
+    "Wind Alignment": [
+        "boss",
+        "drops",
+        "set",
+        "boss-mhr"
+    ],
+    "Thunder Alignment": [
+        "boss",
+        "drops",
+        "set",
+        "boss-mhr"
+    ],
+    "Stormsoul": [
+        "boss",
+        "drops",
+        "set",
+        "boss-mhr"
+    ]
+}

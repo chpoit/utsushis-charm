@@ -1,0 +1,60 @@
+{
+    "melee": {
+        "keep": [
+            "core",
+            "core-sup",
+            "shield",
+            "stamina",
+            "shield",
+            "sharpness",
+            "gs",
+            "sns",
+            "db",
+            "ls",
+            "hm",
+            "hh",
+            "la",
+            "gl",
+            "sa",
+            "cb",
+            "ig"
+        ],
+        "trash": [
+            "elemental-resist",
+            "gathering",
+            "item",
+            "elemental-damage-resist"
+        ]
+    },
+    "gunner": {
+        "keep": [
+            "core",
+            "core-sup",
+            "gunner-sup",
+            "gunner-core",
+            "sticky",
+            "ammo",
+            "lbg",
+            "hbg"
+        ],
+        "trash": [
+            "elemental-resist",
+            "gathering",
+            "item",
+            "elemental-damage-resist"
+        ]
+    },
+    "bow": {
+        "keep": [
+            "core",
+            "bow",
+            "stamina"
+        ],
+        "trash": [
+            "elemental-resist",
+            "gathering",
+            "item",
+            "elemental-damage-resist"
+        ]
+    }
+}
