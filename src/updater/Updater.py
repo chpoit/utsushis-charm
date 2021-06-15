@@ -114,4 +114,4 @@ class Updater:
                 reversed_skills[lang_code][data[lang_code][skill]] = skill
 
         with open(en_skill_dict.replace(".en.", ".alt."), "w", encoding="utf-8") as rev:
-            json.dump(reversed_skills, rev)
+            json.dump(reversed_skills, rev, ensure_ascii=False)
