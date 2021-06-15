@@ -3,7 +3,7 @@ from .Updater import Updater
 from ..ui.AskUpdate import AskUpdate, UpdateType
 
 
-def ask_main_update(version_checker, main_window, _):
+def ask_main_update(version_checker: VersionChecker, main_window, _):
     new_update, cur_ver, online_ver = version_checker.check_app_version()
 
     answer = False
@@ -15,7 +15,21 @@ def ask_main_update(version_checker, main_window, _):
     return answer
 
 
-def ask_language_update(version_checker, main_window, app_language_code, _):
+def ask_skill_update(version_checker: VersionChecker, main_window, _):
+    new_update, cur_ver, online_ver = version_checker.check_skill_version()
+
+    answer = False
+    if new_update:
+        answer = _spawn_window(main_window, _, UpdateType.Skills, cur_ver, online_ver)
+        if answer:
+            updater = Updater(_, version_checker)
+            updater.update_all_skills(online_ver)
+    return answer
+
+
+def ask_language_update(
+    version_checker: VersionChecker, main_window, app_language_code, _
+):
     new_update, cur_ver, online_ver = version_checker.check_language_version(
         app_language_code
     )
@@ -31,7 +45,9 @@ def ask_language_update(version_checker, main_window, app_language_code, _):
     return answer
 
 
-def ask_corrections_update(version_checker, main_window, skill_language_code, _):
+def ask_corrections_update(
+    version_checker: VersionChecker, main_window, skill_language_code, _
+):
     new_update, cur_ver, online_ver = version_checker.check_correction_version(
         skill_language_code
     )

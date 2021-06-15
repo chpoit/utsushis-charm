@@ -18,6 +18,7 @@ from .resources import get_language_code, get_resource_path
 from .updater.updater_utils import (
     ask_main_update,
     ask_language_update,
+    ask_skill_update,
     ask_corrections_update,
 )
 from .updater.VersionChecker import VersionChecker
@@ -42,8 +43,13 @@ def main(args):
         print_licenses()
         sys.exit(0)
 
-    local_dir = get_resource_path("LOCAL_DIR")
-    os.makedirs(local_dir, exist_ok=True)
+    dirs_to_init = [
+        get_resource_path("LOCAL_DIR"),
+        get_resource_path("LOCAL_TRANSLATIONS"),
+        get_resource_path("LOCAL_SKILLS"),
+    ]
+    for dir_to_init in dirs_to_init:
+        os.makedirs(dir_to_init, exist_ok=True)
 
     app_language_code = get_language_code(args.app_language)
     skill_language_code = get_language_code(args.language)
@@ -56,6 +62,8 @@ def main(args):
         main_window, translator = create_main_window(args)
 
         new_app_update = ask_main_update(version_checker, main_window, translator)
+        new_skills_update = ask_skill_update(version_checker, main_window, translator)
+
         new_lang_update = ask_language_update(
             version_checker, main_window, app_language_code, translator
         )

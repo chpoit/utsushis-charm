@@ -14,7 +14,7 @@ WINDOWS = platform.system() == "Windows"
 
 def get_all_skills(lang="eng"):
     all_skills = {}
-    skill_dir = get_resource_path("skill_directory")
+    skill_dir = get_resource_path("INTERNAL_SKILLS")
     skill_file = os.path.join(skill_dir, f"skills.{lang}.txt")
     with open(skill_file, encoding="utf-8") as slf:
         for line in slf.readlines():
@@ -24,7 +24,7 @@ def get_all_skills(lang="eng"):
 
 
 def get_word_freqs_location(lang="eng"):
-    skill_dir = get_resource_path("skill_directory")
+    skill_dir = get_resource_path("INTERNAL_SKILLS")
     return os.path.join(skill_dir, f"skills.{lang}.freq")
 
 
@@ -139,13 +139,22 @@ def get_corrections_url(language="eng"):
     return url
 
 
+def get_english_skill_mapping_url(language="eng"):
+    url = f"https://raw.githubusercontent.com/chpoit/utsushis-charm/master/data/skills/skill_mappings.en.json"
+    return url
+
+
+def get_english_skill_mappping_location():
+    return os.path.join(get_resource_path("LOCAL_SKILLS"), "skill_mappings.en.json")
+
+
 def get_translation_location(language="eng"):
     local_file = os.path.join(
         get_resource_path("LOCAL_TRANSLATIONS"), f"{language}.json"
     )
     if not os.path.isfile(local_file):
         os.makedirs(get_resource_path("LOCAL_TRANSLATIONS"), exist_ok=True)
-        lang_dir = get_resource_path("TRANSLATIONS")
+        lang_dir = get_resource_path("INTERNAL_TRANSLATIONS")
         lang_file = os.path.join(lang_dir, f"{language}.json")
         shutil.copy(lang_file, local_file)
     return local_file
@@ -159,7 +168,7 @@ _local_dir_full = os.path.join(
 )
 
 _resources = {
-    "skill_directory": _alter_resource_path(os.path.join("data", "skills")),
+    # masks/processing
     "lv1": _alter_resource_path(os.path.join("images", "levels", "lv1.png")),
     "lv2": _alter_resource_path(os.path.join("images", "levels", "lv2.png")),
     "lv3": _alter_resource_path(os.path.join("images", "levels", "lv3.png")),
@@ -170,14 +179,17 @@ _resources = {
     "mask": _alter_resource_path(os.path.join("images", "mask.png")),
     "charm_only": _alter_resource_path(os.path.join("images", "charm_only.png")),
     "skill_mask": _alter_resource_path(os.path.join("images", "skill_mask.png")),
+    # internals
     "internal_versions": _alter_resource_path(os.path.join("data", "versions.json")),
-    "LICENCES": _alter_resource_path("LICENSES"),
-    "TRANSLATIONS": _alter_resource_path(os.path.join("data", "translation")),
-    "ICON": _alter_resource_path(os.path.join("media", "icon.ico")),
+    "INTERNAL_TRANSLATIONS": _alter_resource_path(os.path.join("data", "translations")),
     "INTERNAL_SKILLS": _alter_resource_path(os.path.join("data", "skills")),
-    "LOCAL_DIR": _local_dir_full,
+    "LICENCES": _alter_resource_path("LICENSES"),
+    "ICON": _alter_resource_path(os.path.join("media", "icon.ico")),
+    # locals
     "versions": os.path.join(_local_dir_full, "versions.json"),
-    "LOCAL_TRANSLATIONS": os.path.join(_local_dir_full, "translation"),
+    "LOCAL_DIR": _local_dir_full,
+    "LOCAL_TRANSLATIONS": os.path.join(_local_dir_full, "translations"),
+    "LOCAL_SKILLS": os.path.join(_local_dir_full, "skills"),
 }
 
 _language_code_mappings = {
