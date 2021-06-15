@@ -11,6 +11,10 @@ logger = logging.getLogger(__name__)
 
 
 class VersionChecker:
+    def __init__(self):
+        self.snapshot = None
+        self.snapshot = self._get_online_versions()
+
     def check_app_version(self):
         local = self._get_version(True, "app")
         remote = self._get_version(False, "app")
@@ -96,6 +100,8 @@ class VersionChecker:
         return SimpleSemVer(version)
 
     def _get_online_versions(self):
+        if self.snapshot is not None:
+            return self.snapshot
 
         url = get_update_url()
         try:

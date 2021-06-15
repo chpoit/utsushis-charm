@@ -15,7 +15,13 @@ from .ui.AskUpdate import AskUpdate, UpdateType
 from .ui.MainWindow import MainWindow
 from .translator import Translator
 from .resources import get_language_code, get_resource_path
-from .updater.updater_utils import ask_main_update, ask_language_update
+from .updater.updater_utils import (
+    ask_main_update,
+    ask_language_update,
+    ask_corrections_update,
+)
+from .updater.VersionChecker import VersionChecker
+
 import logging
 
 logging.basicConfig(
@@ -40,16 +46,21 @@ def main(args):
     os.makedirs(local_dir, exist_ok=True)
 
     app_language_code = get_language_code(args.app_language)
+    skill_language_code = get_language_code(args.language)
 
     if args.console:
         run_in_console(args)
 
     else:
+        version_checker = VersionChecker()
         main_window, translator = create_main_window(args)
 
-        new_app_update = ask_main_update(main_window, translator)
+        new_app_update = ask_main_update(version_checker, main_window, translator)
         new_lang_update = ask_language_update(
-            main_window, app_language_code, translator
+            version_checker, main_window, app_language_code, translator
+        )
+        new_corrections_update = ask_corrections_update(
+            version_checker, main_window, skill_language_code, translator
         )
 
         if new_lang_update:
