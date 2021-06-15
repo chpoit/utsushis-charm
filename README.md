@@ -10,7 +10,7 @@
 
 This repo contains code that will allow you to extract all of your charms in Monster Hunter Rise from recordings taking with the switch's "save clip" feature.
 
-It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but ["this armor set searcher exists"](https://mhrise.wiki-db.com/sim/?hl=en). I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
+It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but [this armor set searcher](https://mhrise.wiki-db.com/sim/?hl=en) exists. I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
 # New Update (Updated June 1st)
 - 1.5.2
@@ -27,7 +27,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 
 ## Requirements
 - A computer (Windows)
-  - Linux and Mac might work too, you wont be able to run the EXE and will have to run from source in a terminal window. Refer to [Running from source](#Running-from-source)
+  - Linux and Mac might work too, you won’t be able to run the EXE and will have to run from source in a terminal window. Refer to [Running from source](#Running-from-source)
 - A USB cable to connect your switch to transfer files
 - [The latest version of this (Now with a User Interface)](https://github.com/chpoit/utsushis-charm/releases/latest)  downloaded to your computer (Utsushis-Charm_**vx_x**.zip)
   - You only need the executable. The inputs folder is only there for faster setup
@@ -102,7 +102,7 @@ Having translations for the instructions for other languages might be useful, bu
 - Q: Can I use a capture card instead?
   - I tested recording in 720p and 1080p with OBS using a Genki Shadowcast and everything worked. (MKV, others should work too)
     - Make sure you properly set the resolution of the Shadowcast at or above 720p. The default appears to be 360/480p. [Example found here](https://github.com/chpoit/utsushis-charm/issues/20#issuecomment-852183555)
-  - I recommend recording in 30fps to avoid increasingt the frames to process
+  - I recommend recording in 30 fps to avoid increasing the frames to process
     - 60 fps is fine, half of the frames are skipped.
   - I see no reason other capture cards should not work
   - 1080p adds extra processing due to a downscaling step to 720p (20-30% slower)
@@ -117,15 +117,15 @@ Having translations for the instructions for other languages might be useful, bu
 
 # Troubleshooting
 
-If the program starts and closes without anything happening, open the `app.log` file and use this section to try and fix your issues
+If the program starts and closes without anything happening, open the `app.log` file and use this section to try and fix your issues.
 
 ## Simple issues:
 - 0 charms found
   - Make sure your clips are in the inputs folder
-- I had to enter skill by hand but it wont accept it
+- I had to enter skill by hand but it won’t accept it
   - You need to enter them one word at a time, it might only not know what one of the words is.
   - Make sure you are writing it exactly how it is shown on the picture that pops up
-- I get through the First phase, but it stops when checking the first frame of
+- I get through the first phase, but it stops when checking the first frame of
   - This is an issue with Tesseract not being installed. Check the next bullet point.
 - Google Tesseract is not installed/not found
   - This should not happen in version 1.4 and above. 
@@ -135,7 +135,7 @@ If the program starts and closes without anything happening, open the `app.log` 
       -  `C:\Program Files\Tesseract-OCR` (Most likely, if you chose "Install for anyone")
       -  `C:\Users\<USERNAME>\AppData\Local\Tesseract-OCR` (If you chose "Install only for me")
       -  `C:\Program Files (x86)\Tesseract-OCR` (Version 4, less likely, would happen if you manually downloaded a 32bit installer)
-  -  It seems really random wether it'll add it to path. If there is a request for it, I might add a "bruteforce" method to find the exe so people don't have to worry about this.
+  -  It seems really random whether it'll add it to path. If there is a request for it, I might add a "brute force" method to find the exe so people don't have to worry about this.
 - Any other issue:
   - Consider creating a bug report [here](https://github.com/chpoit/utsushis-charm/issues/new)
 
@@ -169,7 +169,7 @@ In all seriousness, the work is done in a few broad steps:
 
 # Contribute
 
-- If you ran everything and had to correct some skills, you probably have new corrections in in your `Appdata/Local/utsushis-charm/skill_corrections.LANG.csv` or `~/utsushis-charm/skill_corrections.LANG.csv` file, consider creating a pull request to add them for others.
+- If you ran everything and had to correct some skills, you probably have new corrections in your `Appdata/Local/utsushis-charm/skill_corrections.LANG.csv` or `~/utsushis-charm/skill_corrections.LANG.csv` file, consider creating a pull request to add them for others.
 - If you feel like contributing anything, go ahead and submit a pull request I'll be happy to take a look and decide if it's something worth adding.
 - Please use the default settings of `black` to format the python source code.
 
@@ -183,11 +183,7 @@ In all seriousness, the work is done in a few broad steps:
     - Monkey brain is less accurate
     - Tesseract 4 works great
     - Need to do some "pixel poking" to make sure everything is lined up the same
-- [ ] Solution for people that don't want to bother with the hassle
 - [ ] Make the code not a mess
-- [ ] Use the page number in the "Is the last frame the same" check. (Low priority, charms still seem to get detected on page swap)
-- [ ] Docker image for deployment?
-- [ ] UI
 - [ ] ~~Multithreading for some of that SPEEEEED~~
   - Unfortunately, the joblib 'loky' backend wont work with frozen executables, and the other backends offer no noticeable gain in performance. This is getting shelved until a potential rewrite under a "faster" rewrite. Current execution time is 4-8 minutes so it's really not too bad.
 
@@ -236,8 +232,8 @@ Normal instructions apply once the application starts.
 - Running:
   - `source env/bin/activate` (if you use a virtual env)
 
-# Extra command line options
-If you run from source, or call the executable from the terminal you can make use of the following flags/arguments to achieve different functionality
+# Extra command-line options
+If you run from source, or call the executable from the terminal you can make use of the following flags/arguments to achieve different functionality.
 
 - `-h` or ` --help`: Shows arguments
 - `--thirdparty`: Shows 3rd party licenses
