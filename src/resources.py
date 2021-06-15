@@ -110,20 +110,15 @@ def add_corrections(language_code, known_corrections, *new_tuples):
     return known_corrections
 
 
-def _create_default_skill_corrections(language_code):
-    packaged_corrections = os.path.join(
-        get_resource_path("INTERNAL_SKILLS"), f"corrections.{language_code}.csv"
-    )
-    corrections_path = get_corrections_path(language_code)
-    shutil.copy(packaged_corrections, corrections_path)
-
-
 def get_corrections_path(language_code):
     local_file = os.path.join(
         get_resource_path("LOCAL_DIR"), f"corrections.{language_code}.csv"
     )
     if not os.path.isfile(local_file):
-        _create_default_skill_corrections(language_code)
+        packaged_corrections = os.path.join(
+            get_resource_path("INTERNAL_SKILLS"), f"corrections.{language_code}.csv"
+        )
+        shutil.copy(packaged_corrections, local_file)
     return local_file
 
 
