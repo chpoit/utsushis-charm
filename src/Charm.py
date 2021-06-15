@@ -7,6 +7,7 @@ class Charm:
         if not skills:
             skills = {}
         self.slots = list(sorted(slots, reverse=True))
+        self.frame = frame_loc
         self.skills = skills
         self.frame_loc = frame_loc
 
@@ -30,10 +31,10 @@ class Charm:
 
     @staticmethod
     def from_dict(json_data):
-        return Charm(json_data["slots"], json_data["skills"])
+        return Charm(json_data["slots"], json_data["frame"], json_data["skills"])
 
     def to_dict(self):
-        return {"slots": self.slots, "skills": self.skills}
+        return {"slots": self.slots, "skills": self.skills, "frame": self.frame}
 
     def is_identical(self, charm):
         if (
