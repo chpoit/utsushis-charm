@@ -4,7 +4,7 @@ import json
 from urllib import request
 import logging
 
-from ..resources import get_resource_path, get_update_url
+from ..resources import get_resource_path, get_update_url, get_versions_location
 from .SimpleSemVer import SimpleSemVer
 
 logger = logging.getLogger(__name__)
@@ -47,23 +47,6 @@ class VersionChecker:
     def is_outdated(self, local, remote):
         return local < remote
 
-    def _load_local_versions(self):
-        version_path = get_resource_path("versions")
-        if not os.path.exists(version_path):
-            self._create_local_versions()
-
-        self._ensure_proper_app_version()
-
-        with open(version_path) as version_file:
-            versions = json.load(version_file)
-
-        return versions
-
-    def _create_local_versions(self):
-        shutil.copy(
-            get_resource_path("internal_versions"), get_resource_path("versions")
-        )
-
     def _ensure_proper_app_version(self):
         with open(get_resource_path("internal_versions")) as internal:
             internal_data = json.load(internal)
@@ -98,6 +81,16 @@ class VersionChecker:
         if sub_key is not None:
             version = version[sub_key]
         return SimpleSemVer(version)
+
+    def _load_local_versions(self):
+        version_path = get_versions_location()
+
+        self._ensure_proper_app_version()
+
+        with open(version_path) as version_file:
+            versions = json.load(version_file)
+
+        return versions
 
     def _get_online_versions(self):
         if self.snapshot is not None:

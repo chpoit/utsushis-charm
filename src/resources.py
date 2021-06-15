@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 import platform
 from pathlib import Path
@@ -14,8 +15,13 @@ WINDOWS = platform.system() == "Windows"
 
 def get_all_skills(lang="eng"):
     all_skills = {}
-    skill_dir = get_resource_path("INTERNAL_SKILLS")
-    skill_file = os.path.join(skill_dir, f"skills.{lang}.txt")
+    skill_file = os.path.join(get_resource_path("LOCAL_SKILLS"), f"skills.{lang}.txt")
+    if not os.path.isfile(skill_file):
+        internal = os.path.join(
+            get_resource_path("INTERNAL_SKILLS"), f"skills.{lang}.txt"
+        )
+        shutil.copy(internal, skill_file)
+
     with open(skill_file, encoding="utf-8") as slf:
         for line in slf.readlines():
             skill_name = line.strip()
@@ -24,8 +30,13 @@ def get_all_skills(lang="eng"):
 
 
 def get_word_freqs_location(lang="eng"):
-    skill_dir = get_resource_path("INTERNAL_SKILLS")
-    return os.path.join(skill_dir, f"skills.{lang}.freq")
+    freq_file = os.path.join(get_resource_path("LOCAL_SKILLS"), f"skills.{lang}.freq")
+    if not os.path.isfile(freq_file):
+        internal = os.path.join(
+            get_resource_path("INTERNAL_SKILLS"), f"skills.{lang}.freq"
+        )
+        shutil.copy(internal, freq_file)
+    return freq_file
 
 
 def get_resource_path(resource):
@@ -33,9 +44,7 @@ def get_resource_path(resource):
 
 
 def _alter_resource_path(relative_path):
-    import sys
-
-    """ Get absolute path to resource, works for dev and for PyInstaller """
+    """Get absolute path to resource, works for dev and for PyInstaller"""
     try:
         # PyInstaller creates a temp folder and stores path in _MEIPASS
         base_path = sys._MEIPASS
@@ -158,6 +167,13 @@ def get_translation_location(language="eng"):
         lang_file = os.path.join(lang_dir, f"{language}.json")
         shutil.copy(lang_file, local_file)
     return local_file
+
+
+def get_versions_location():
+    version_file = get_resource_path("versions")
+    if not os.path.exists(version_file):
+        shutil.copy(get_resource_path("internal_versions"), version_file)
+    return version_file
 
 
 _local_root = os.getenv("LOCALAPPDATA") or HOME if WINDOWS else HOME
