@@ -12,7 +12,7 @@ This repo contains code that will allow you to extract all of your charms in Mon
 
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but [this armor set searcher](https://mhrise.wiki-db.com/sim/?hl=en) exists. I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
-# New Update (Updated June 1st)
+# New Update (Updated June 15th)
 - 1.5.2
   - Adds updated checking
     - Allows for independent skills/auto-corrections/localization updates
