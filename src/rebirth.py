@@ -1,12 +1,22 @@
-# ranking base on god talisman checker at https://gamewith.net/monsterhunter-rise/article/show/28392
-
 import json
 import os
+from .charm.Slots import Slots
 
-slotValue = [500, 3500, 4000]
+slots_to_keep = [
+    Slots(3, 2, 1),
+    Slots(3, 1, 1),
+    Slots(3, 2),
+    Slots(3, 1),
+    Slots(3),
+    Slots(2, 2, 1),
+    Slots(2, 1, 1),
+    Slots(2, 2),
+    Slots(2, 1),
+    Slots(2),
+    Slots(1, 1, 1),
+]
 
 
-# compare if a charm can be make with another
 def isCharm1InCharm2(charm1, charm2, skillToJewel):
     charmToSlot = [0, 0, 0]
 
@@ -66,79 +76,91 @@ def charmsGrader(charms):
 
 
 # main body
-try:
-    charms = json.load(open("charms.json", "r"))
-    skillToJewel = json.load(open(os.path.join("data", "skillsToJewel.json"), "r"))
-    scoreSkills = json.load(open(os.path.join("data", "skillsRank.json"), "r"))
 
-    # get skills we don't care
-    with open(os.path.join("data", "trashSkills.txt")) as f:
-        content = f.read()
-    f.close()
 
-    trashSkills = list(content.split("\n"))
-    trashSkills = list(filter(lambda skill: skill != "", trashSkills))
+def main():
+    try:
+        charms = json.load(open("charms.json", "r"))
+        skillToJewel = json.load(open(os.path.join("data", "skillsToJewel.json"), "r"))
+        scoreSkills = json.load(open(os.path.join("data", "skillsRank.json"), "r"))
 
-    charms = charmsGrader(charms)
+        # get skills we don't care
+        with open(os.path.join("data", "trashSkills.txt")) as f:
+            content = f.read()
+        f.close()
 
-    # add trash key quickly
-    for index, charm in enumerate(charms):
-        if len(charm["skillsLst"]) == 0:
-            charm["trash"] = True
-        else:
-            charm["trash"] = False
+        trashSkills = list(content.split("\n"))
+        trashSkills = list(filter(lambda skill: skill != "", trashSkills))
 
-    # compare each charm and add to rebirth list
-    for i in range(len(charms) - 1):
-        if charms[i]["trash"]:
-            continue
+        charms = charmsGrader(charms)
 
-        for j in range(i + 1, len(charms)):
-            if charms[j]["trash"]:
+        # add trash key quickly
+        for index, charm in enumerate(charms):
+            if len(charm["skillsLst"]) == 0:
+                charm["trash"] = True
+            else:
+                charm["trash"] = False
+
+        # compare each charm and add to rebirth list
+        for i in range(len(charms) - 1):
+            if charms[i]["trash"]:
                 continue
 
-            if isCharm1InCharm2(charms[i], charms[j], skillToJewel):
-                charms[i]["trash"] = True
-                print(
-                    f"conserve {json.dumps(charms[j], indent=3)}\n== et jete ==\n{json.dumps(charms[i], indent=3)}"
-                )
-                break
+            for j in range(i + 1, len(charms)):
+                if charms[j]["trash"]:
+                    continue
 
-            if isCharm1InCharm2(charms[j], charms[i], skillToJewel):
-                charms[j]["trash"] = True
-                print(
-                    f"== conserve ==\n{json.dumps(charms[i], indent=3)}\n== et jete ==\n{json.dumps(charms[j], indent=3)}"
-                )
+                if isCharm1InCharm2(charms[i], charms[j], skillToJewel):
+                    charms[i]["trash"] = True
+                    print(
+                        f"conserve {json.dumps(charms[j], indent=3)}\n== et jete ==\n{json.dumps(charms[i], indent=3)}"
+                    )
+                    break
 
-    charms = sorted(charms, key=lambda charm: charm["grade"])
-    charmsToRebirth = list(filter(lambda charm: charm["trash"], charms))
+                if isCharm1InCharm2(charms[j], charms[i], skillToJewel):
+                    charms[j]["trash"] = True
+                    print(
+                        f"== conserve ==\n{json.dumps(charms[i], indent=3)}\n== et jete ==\n{json.dumps(charms[j], indent=3)}"
+                    )
 
-    # remove skillsLst it useless now
-    for charm in charms:
-        charm.pop("skillsLst", None)
-        charm.pop("trash", None)
+        charms = sorted(charms, key=lambda charm: charm["grade"])
+        charmsToRebirth = list(filter(lambda charm: charm["trash"], charms))
 
-    for charm in charmsToRebirth:
-        charm.pop("skillsLst", None)
-        charm.pop("trash", None)
+        # remove skillsLst it useless now
+        for charm in charms:
+            charm.pop("skillsLst", None)
+            charm.pop("trash", None)
 
-    charmsRanked = {
-        "weak": list(filter(lambda charm: charm["grade"] < 2001, charms)),
-        "low-average": list(filter(lambda charm: 2000 < charm["grade"] < 5001, charms)),
-        "average": list(filter(lambda charm: 5000 < charm["grade"] < 10001, charms)),
-        "good": list(filter(lambda charm: 10000 < charm["grade"] < 15001, charms)),
-        "strong": list(filter(lambda charm: 15000 < charm["grade"] < 20001, charms)),
-        "god": list(filter(lambda charm: 20000 < charm["grade"], charms)),
-    }
+        for charm in charmsToRebirth:
+            charm.pop("skillsLst", None)
+            charm.pop("trash", None)
 
-    with open("charms.rebirth.json", "w") as f:
-        json.dump(charmsToRebirth, f)
-        f.close()
+        charmsRanked = {
+            "weak": list(filter(lambda charm: charm["grade"] < 2001, charms)),
+            "low-average": list(
+                filter(lambda charm: 2000 < charm["grade"] < 5001, charms)
+            ),
+            "average": list(
+                filter(lambda charm: 5000 < charm["grade"] < 10001, charms)
+            ),
+            "good": list(filter(lambda charm: 10000 < charm["grade"] < 15001, charms)),
+            "strong": list(
+                filter(lambda charm: 15000 < charm["grade"] < 20001, charms)
+            ),
+            "god": list(filter(lambda charm: 20000 < charm["grade"], charms)),
+        }
 
-    with open("charms.ranked.json", "w") as f:
-        json.dump(charmsRanked, f)
-        f.close()
+        with open("charms.rebirth.json", "w") as f:
+            json.dump(charmsToRebirth, f)
+            f.close()
+
+        with open("charms.ranked.json", "w") as f:
+            json.dump(charmsRanked, f)
+            f.close()
+
+    except Exception as e:
+        print("something goes wrong :\n{}".format(e))
 
 
-except Exception as e:
-    print("something goes wrong :\n{}".format(e))
+if __name__ == "__main__":
+    main()

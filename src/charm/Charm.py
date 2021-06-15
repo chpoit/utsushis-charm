@@ -1,12 +1,13 @@
 import json
-from .parse_errors import ParseError
+from ..parse_errors import ParseError
+from .Slots import Slots
 
 
 class Charm:
     def __init__(self, slots, skills=None, frame_loc=None):
         if not skills:
             skills = {}
-        self.slots = list(sorted(slots, reverse=True))
+        self.slots = Slots(slots)
         self.frame = frame_loc
         self.skills = skills
         self.frame_loc = frame_loc
@@ -18,9 +19,7 @@ class Charm:
         return not self.__eq__(other)
 
     def __hash__(self):
-        hashcumulator = ""
-        for i in self.slots:
-            hashcumulator += str(hash(i))
+        hashcumulator = str(hash(self.slots))
         for s in self.skills:
             k = self.skills[s]
             hashcumulator += str(hash(f"{s}_{k}"))
@@ -62,9 +61,8 @@ class Charm:
         if len(self.skills) <= 1:
             acc += ",0,"
 
-        for level in self.slots:
-            acc += f"{level},"
-        return acc[:-1]
+        acc += self.slots.to_simple_encode()
+        return acc
 
     def has_skills(self):
         return len(self.skills)

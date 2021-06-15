@@ -12,7 +12,7 @@
 # Level 3: 618, 217 -> Jewels were not removed
 
 from .parse_errors import ParseError
-from .Charm import Charm, CharmList, InvalidCharm
+from .charm.Charm import Charm, CharmList, InvalidCharm
 from .utils import *
 from .resources import (
     get_resource_path,
