@@ -13,6 +13,10 @@ This repo contains code that will allow you to extract all of your charms in Mon
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but ["this armor set searcher exists"](https://mhrise.wiki-db.com/sim/?hl=en). I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
 # New Update (Updated June 1st)
+- 1.5.2
+  - Adds updated checking
+    - Allows for independent skills/auto-corrections/localization updates
+  - Adds initial support for localization (only through command line flags however (`-a` or `--app-language`))
 - 1.5.1
   - Resolves issues with local directory creation found in #20
 - 1.5
@@ -84,6 +88,15 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
   - Korean
   - Traditional Chinese
   - Simplified Chinese
+
+## Supported App Language:
+- English
+
+Looking for people who can submit translations. Use (this file)[data/translations/eng.json] and replace the messages appropriately if you are interested in contributing. Create a pull request to show up as a contributor within Github. I can add you in this readme if you only want to create an issue with the translations.
+
+I am currently working on a translation to French.
+
+Having translations for the instructions for other languages might be useful, but it will require lots of maintenance. 
 
 # FAQ
 - Q: Can I use a capture card instead?
@@ -236,4 +249,5 @@ If you run from source, or call the executable from the terminal you can make us
 - `-f <FRAME_DIR>` or `--frames <FRAME_DIR>`: Changes the Directory used to store temporary frames
 - `-c <FILE_NAME>` or `--charm-json <FILE_NAME>`: Changes the name of the json formatted charms
 - `-e <FILE_NAME>` or `--charm-encoded <FILE_NAME>`: Changes the name of the MHR-Wiki formatted charms
-- `-l <FILE_NAME>` or `--language <FILE_NAME>`: Changes the default language for the recordings. Use the list in [Supported languages](#supported-game-language) to know what to enter.
+- `-l <LANG_NAME>` or `--language <LANG_NAME>`: Changes the default language for the recordings. Use the list in [Supported languages](#supported-game-language) to know what to enter.
+- `-a <LANG_NAME>` or `--app-language <LANG_NAME>`: Changes the language of the app. Use the list in [Supported languages](#supported-game-language) to know what to enter.

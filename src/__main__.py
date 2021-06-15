@@ -1,5 +1,6 @@
 import os
 import sys
+import tkinter as tk
 from .frame_extraction import extract_unique_frames
 from .charm_extraction import (
     extract_charms,
@@ -10,9 +11,18 @@ from .charm_extraction import (
 from .charm_encoding import encode_charms
 from .arg_builder import build_args
 from .utils import print_licenses
+from .ui.AskUpdate import AskUpdate, UpdateType
 from .ui.MainWindow import MainWindow
 from .translator import Translator
 from .resources import get_language_code, get_resource_path
+from .updater.updater_utils import (
+    ask_main_update,
+    ask_language_update,
+    ask_skill_update,
+    ask_corrections_update,
+)
+from .updater.VersionChecker import VersionChecker
+
 import logging
 
 logging.basicConfig(
@@ -33,19 +43,50 @@ def main(args):
         print_licenses()
         sys.exit(0)
 
-    local_dir = get_resource_path("LOCAL_DIR")
-    os.makedirs(local_dir, exist_ok=True)
+    dirs_to_init = [
+        get_resource_path("LOCAL_DIR"),
+        get_resource_path("LOCAL_TRANSLATIONS"),
+        get_resource_path("LOCAL_SKILLS"),
+    ]
+    for dir_to_init in dirs_to_init:
+        os.makedirs(dir_to_init, exist_ok=True)
 
-    translator = Translator()
+    app_language_code = get_language_code(args.app_language)
+    skill_language_code = get_language_code(args.language)
 
     if args.console:
         run_in_console(args)
 
     else:
-        w = MainWindow(translator, args)
-        sys.stdout = w
-        w.report_callback_exception = handle_exception
-        w.mainloop()
+        version_checker = VersionChecker()
+        main_window, translator = create_main_window(args)
+
+        new_app_update = ask_main_update(version_checker, main_window, translator)
+        new_skills_update = ask_skill_update(version_checker, main_window, translator)
+
+        new_lang_update = ask_language_update(
+            version_checker, main_window, app_language_code, translator
+        )
+        new_corrections_update = ask_corrections_update(
+            version_checker, main_window, skill_language_code, translator
+        )
+
+        if new_lang_update:
+            main_window, translator = create_main_window(args, main_window)
+
+        main_window.mainloop()
+
+
+def create_main_window(args, old_window=None):
+    app_language_code = get_language_code(args.app_language)
+    translator = Translator(app_language_code)
+    if old_window is not None:
+        old_window.destroy()
+    new_window = MainWindow(translator, args)
+    new_window.report_callback_exception = handle_exception
+    sys.stdout = new_window
+
+    return new_window, translator
 
 
 def run_in_console(args):

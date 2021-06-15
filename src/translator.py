@@ -1,7 +1,7 @@
 import os
 import json
 import sys
-from .resources import get_resource_path
+from .resources import get_translation_location
 
 
 class Translator:
@@ -12,8 +12,7 @@ class Translator:
         return self.get_tl(*args, **kwargs)
 
     def load_language(self, language):
-        lang_dir = get_resource_path("TRANSLATIONS")
-        lang_file = os.path.join(lang_dir, f"{language}.json")
+        lang_file = get_translation_location(language)
         if not os.path.isfile(lang_file):
             raise Exception("Invalid language file")
 

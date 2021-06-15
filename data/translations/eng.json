@@ -1,4 +1,6 @@
 {
+    "yes": "Yes",
+    "no": "No",
     "run": "Start Charm Extraction",
     "total-files": "Total Files: ",
     "files-done": "Files Done: ",
@@ -42,6 +44,9 @@
     "tess-download-done": "Finished downloading language pack",
     "tess-found-language": "Language pack was found",
     "tess-permission-denied": "Could not download language pack to location, overriding TESSDATA_PREFIX.",
+    "lang-permission-denied": "Could not download language file, keeping old version",
+    "skill-cor-permission-denied": "Could not download new skill corrections, keeping old version",
+    "skill-permission-denied": "Could not download new skills, keeping old skills",
     "done-repairing": "Finished fixing skills",
     "skill-img": "Skill image:",
     "parsed-text": "Text parsed from image",
@@ -51,5 +56,10 @@
     "empty-skill": "Skill is empty",
     "enter-skill": "Enter name",
     "charms-to-fix": "Charms to fix:",
-    "repair-charms": "Fix Parsing Errors"
+    "repair-charms": "Fix Parsing Errors",
+    "new-version": "A New Version is Available",
+    "new-app-update": "A new version for Utsushi's Charm is available (You: {} vs New: {}), do you want to download it?",
+    "new-skill-update": "New skills were released in-game (You: {} vs New: {}), do you want to update your skill list?",
+    "new-app-language-update": "An updated language file for Utsushi's Charm is available (You: {} vs New: {}), do you want to download it?",
+    "new-skill-correction-update": "New automatic skill corrections were submitted (You: {} vs New: {}), do you download them?"
 }
