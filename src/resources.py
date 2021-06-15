@@ -129,7 +129,6 @@ def get_corrections_path(language_code):
 
 def get_update_url():
     url = "https://raw.githubusercontent.com/chpoit/utsushis-charm/master/data/versions.json"
-    url = "https://raw.githubusercontent.com/chpoit/utsushis-charm/updater/data/versions.json"
     return url
 
 
