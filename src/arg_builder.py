@@ -71,6 +71,15 @@ def build_args():
     )
 
     parser.add_argument(
+        "-a",
+        "--app-language",
+        dest="app_language",
+        required=False,
+        help="Sets the language of the switch recording.",
+        default="English",
+    )
+
+    parser.add_argument(
         "--autoexit",
         dest="autoexit",
         action="store_true",

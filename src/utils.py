@@ -190,6 +190,10 @@ def _get_levels(img, inverted=False):
     return levels
 
 
+def rebuild_skills_from_file(en_skill_dict):
+    pass
+
+
 def print_licenses():
     print("Third party licenses")
     for f in os.scandir(get_resource_path("LICENCES")):

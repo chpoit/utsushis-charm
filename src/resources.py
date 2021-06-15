@@ -70,7 +70,7 @@ def _backup_corrections(language_code):
 def load_corrections(language_code, known_corrections=None):
     try:
         known_corrections = known_corrections or {}
-        corrections_path = _corrections_path(language_code)
+        corrections_path = get_corrections_path(language_code)
         if not os.path.isfile(corrections_path):
             _create_default_skill_corrections(language_code)
 
@@ -92,7 +92,7 @@ def get_spell_checker(language_code):
 
 
 def add_corrections(language_code, known_corrections, *new_tuples):
-    corrections_path = _corrections_path(language_code)
+    corrections_path = get_corrections_path(language_code)
     with open(corrections_path, "a", encoding="utf-8") as c_fp:
         for a, b in new_tuples:
             if not a in known_corrections:
@@ -103,17 +103,60 @@ def add_corrections(language_code, known_corrections, *new_tuples):
 
 def _create_default_skill_corrections(language_code):
     packaged_corrections = os.path.join(
-        get_resource_path("PACKAGED_SKILLS"), f"corrections.{language_code}.csv"
+        get_resource_path("INTERNAL_SKILLS"), f"corrections.{language_code}.csv"
     )
-    corrections_path = _corrections_path(language_code)
+    corrections_path = get_corrections_path(language_code)
     shutil.copy(packaged_corrections, corrections_path)
 
 
-def _corrections_path(language_code):
-    return os.path.join(
+def get_corrections_path(language_code):
+    local_file = os.path.join(
         get_resource_path("LOCAL_DIR"), f"corrections.{language_code}.csv"
     )
+    if not os.path.isfile(local_file):
+        _create_default_skill_corrections(language_code)
+    return local_file
 
+
+def get_update_url():
+    url = "https://raw.githubusercontent.com/chpoit/utsushis-charm/master/data/versions.json"
+    url = "https://raw.githubusercontent.com/chpoit/utsushis-charm/updater/data/versions.json"
+    return url
+
+
+def get_latest_url():
+    url = "https://github.com/chpoit/utsushis-charm/releases/latest"
+    return url
+
+
+def get_language_url(language="eng"):
+    url = f"https://raw.githubusercontent.com/chpoit/utsushis-charm/master/data/translation/{language}.json"
+    return url
+
+
+def get_corrections_url(language="eng"):
+    url = f"https://raw.githubusercontent.com/chpoit/utsushis-charm/master/data/skills/corrections.{language}.csv"
+    return url
+
+
+def get_translation_location(language="eng"):
+    local_file = os.path.join(
+        get_resource_path("LOCAL_TRANSLATIONS"), f"{language}.json"
+    )
+    if not os.path.isfile(local_file):
+        os.makedirs(get_resource_path("LOCAL_TRANSLATIONS"), exist_ok=True)
+        lang_dir = get_resource_path("TRANSLATIONS")
+        lang_file = os.path.join(lang_dir, f"{language}.json")
+        shutil.copy(lang_file, local_file)
+    return local_file
+
+
+_local_root = os.getenv("LOCALAPPDATA") or HOME if WINDOWS else HOME
+_local_dir_name = "utsushis-charm"
+_local_dir_full = os.path.join(
+    _local_root,
+    _local_dir_name,
+)
 
 _resources = {
     "skill_directory": _alter_resource_path(os.path.join("data", "skills")),
@@ -131,12 +174,10 @@ _resources = {
     "LICENCES": _alter_resource_path("LICENSES"),
     "TRANSLATIONS": _alter_resource_path(os.path.join("data", "translation")),
     "ICON": _alter_resource_path(os.path.join("media", "icon.ico")),
-    "PACKAGED_SKILLS": _alter_resource_path(os.path.join("data", "skills")),
-    "LOCAL_DIR": os.path.join(
-        (os.getenv("LOCALAPPDATA") or HOME if WINDOWS else HOME),
-        "utsushis-charm",
-    ),
-    "versions": os.path.join(get_resource_path("LOCAL_DIR"), "versions.json"),
+    "INTERNAL_SKILLS": _alter_resource_path(os.path.join("data", "skills")),
+    "LOCAL_DIR": _local_dir_full,
+    "versions": os.path.join(_local_dir_full, "versions.json"),
+    "LOCAL_TRANSLATIONS": os.path.join(_local_dir_full, "translation"),
 }
 
 _language_code_mappings = {
