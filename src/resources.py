@@ -80,8 +80,6 @@ def load_corrections(language_code, known_corrections=None):
     try:
         known_corrections = known_corrections or {}
         corrections_path = get_corrections_path(language_code)
-        if not os.path.isfile(corrections_path):
-            _create_default_skill_corrections(language_code)
 
         with open(corrections_path, encoding="utf-8") as scf:
             known_corrections = {
