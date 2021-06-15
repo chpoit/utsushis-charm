@@ -41,6 +41,8 @@ class Updater:
         except PermissionError as e:
             logger.exception("Could not write language file")
             print(_("lang-permission-denied"))
+        except Exception as e:
+            logger.exception("An error occurred")
 
     def update_skill_corrections(self, lang, new_version: SimpleSemVer):
         _ = self._
@@ -52,12 +54,12 @@ class Updater:
             Path(full_name_new).touch()
             request.urlretrieve(url, filename=full_name_new, data=None)
             self.version_checker.update_corrections_version(lang, new_version)
+            self.merge_corrections(full_name, full_name_new)
         except PermissionError as e:
             logger.exception("Could not write corrections file")
             print(_("skill-cor-permission-denied"))
-            return
-
-        self.merge_corrections(full_name, full_name_new)
+        except Exception as e:
+            logger.exception("An error occurred")
 
     def update_all_skills(self, new_version: SimpleSemVer):
         url = get_english_skill_mapping_url()
@@ -70,7 +72,8 @@ class Updater:
         except PermissionError as e:
             logger.exception("Could not write skill file")
             print(_("skill-permission-denied"))
-            return
+        except Exception as e:
+            logger.exception("An error occurred")
 
     def merge_corrections(self, full_name, full_name_new):
         with open(full_name, "r", encoding="utf-8") as old_f:

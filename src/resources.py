@@ -133,7 +133,7 @@ def get_latest_url():
 
 
 def get_language_url(language="eng"):
-    url = f"https://raw.githubusercontent.com/chpoit/utsushis-charm/master/data/translation/{language}.json"
+    url = f"https://raw.githubusercontent.com/chpoit/utsushis-charm/master/data/translations/{language}.json"
     return url
 
 

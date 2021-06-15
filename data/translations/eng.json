@@ -58,8 +58,8 @@
     "charms-to-fix": "Charms to fix:",
     "repair-charms": "Fix Parsing Errors",
     "new-version": "A New Version is Available",
-    "new-app-update": "A new version for Utsushi's Charm is available (You: {} vs New: {}), do you want to download it?",
-    "new-skill-update": "New skills were released in-game (You: {} vs New: {}), do you want to update your skill list?",
-    "new-app-language-update": "An updated language file for Utsushi's Charm is available (You: {} vs New: {}), do you want to download it?",
-    "new-skill-correction-update": "New automatic skill corrections were submitted (You: {} vs New: {}), do you download them?"
+    "new-app-update": "A new version for Utsushi's Charm is available (You: {}, New: {}), do you want to download it?",
+    "new-skill-update": "New skills were released in-game (You: {}, New: {}), do you want to update your skill list?",
+    "new-app-language-update": "An updated language file for Utsushi's Charm is available (You: {}, New: {}), do you want to download it?",
+    "new-skill-correction-update": "New automatic skill corrections were submitted (You: {}, New: {}), do you download them?"
 }

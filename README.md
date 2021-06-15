@@ -14,7 +14,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 
 # New Update (Updated June 1st)
 - 1.5.2
-  - Adds updated checking
+  - Adds update checking
     - Allows for independent skills/auto-corrections/localization updates
   - Adds initial support for localization (only through command line flags however (`-a` or `--app-language`))
 - 1.5.1
@@ -92,7 +92,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 ## Supported App Language:
 - English
 
-Looking for people who can submit translations. Use (this file)[data/translations/eng.json] and replace the messages appropriately if you are interested in contributing. Create a pull request to show up as a contributor within Github. I can add you in this readme if you only want to create an issue with the translations.
+Looking for people who can submit translations. Use [this file](data/translations/eng.json) and replace the messages appropriately if you are interested in contributing. Create a pull request to show up as a contributor within Github. I can add you in this readme if you only want to create an issue with the translations.
 
 I am currently working on a translation to French.
 

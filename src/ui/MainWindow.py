@@ -19,6 +19,7 @@ class MainWindow(tk.Tk):
     def __init__(self, _: Translator, args):
         super().__init__()
         self.charms = CharmList()
+        self.args = args
 
         self.title(_("Utsushi's Charm"))
         try:
@@ -43,6 +44,12 @@ class MainWindow(tk.Tk):
 
         self._regen_paths()
         self._build_ui()
+
+    def refresh(self, _: Translator = None):
+        if not _:
+            _ = self._
+        self.destroy()
+        self.__init__(_, self.args)
 
     def _build_ui(self, _: Translator = None):
         if not _:

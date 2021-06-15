@@ -72,16 +72,15 @@ def main(args):
         )
 
         if new_lang_update:
-            main_window, translator = create_main_window(args, main_window)
+            translator = Translator(app_language_code)
+            main_window.refresh(translator)
 
         main_window.mainloop()
 
 
-def create_main_window(args, old_window=None):
+def create_main_window(args):
     app_language_code = get_language_code(args.app_language)
     translator = Translator(app_language_code)
-    if old_window is not None:
-        old_window.destroy()
     new_window = MainWindow(translator, args)
     new_window.report_callback_exception = handle_exception
     sys.stdout = new_window
