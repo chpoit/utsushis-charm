@@ -7,6 +7,7 @@ class CharmGrade(IntEnum):
     Average = 2
     Good = 3
     Great = 4
+
     def __add__(self, other):
         other_type = type(other)
         score = self.value
@@ -17,5 +18,6 @@ class CharmGrade(IntEnum):
         score = max(score, 0)
         score = min(max(CharmGrade), score)
         return CharmGrade(score)
+
     def __sub__(self, other):
         return self + -other
