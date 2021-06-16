@@ -216,6 +216,7 @@ def batchify_lazy(lst, batch_size):
         i += 1
     yield batch
 
+
 def set_window_icon(window):
     try:
         icon = get_resource_path("ICON")
