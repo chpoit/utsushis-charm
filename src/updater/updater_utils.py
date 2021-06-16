@@ -1,5 +1,5 @@
 from . import Updater, VersionChecker
-from ..ui.AskUpdate import AskUpdate, UpdateType
+from ..ui import AskUpdateWindow, UpdateType
 
 
 def ask_main_update(version_checker: VersionChecker, main_window, _):
@@ -63,6 +63,6 @@ def ask_corrections_update(
 
 
 def _spawn_window(main_window, _, update_type, cur_ver, online_ver):
-    askup = AskUpdate(main_window, _, update_type, cur_ver, online_ver)
+    askup = AskUpdateWindow(main_window, _, update_type, cur_ver, online_ver)
     main_window.wait_window(askup)
     return askup.answer

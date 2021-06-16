@@ -11,8 +11,7 @@ from .charm_extraction import (
 from .charm_encoding import encode_charms
 from .arg_builder import build_args
 from .utils import print_licenses
-from .ui.AskUpdate import AskUpdate, UpdateType
-from .ui.MainWindow import MainWindow
+from .ui import MainWindow
 from .translator import Translator
 from .resources import get_language_code, get_resource_path
 from .updater import (

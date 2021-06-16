@@ -215,3 +215,10 @@ def batchify_lazy(lst, batch_size):
         batch.append(item)
         i += 1
     yield batch
+
+def set_window_icon(window):
+    try:
+        icon = get_resource_path("ICON")
+        window.iconbitmap(icon)
+    except:
+        pass

@@ -30,24 +30,20 @@ class Charm:
 
     @staticmethod
     def from_dict(json_data):
-        return Charm(json_data["slots"], json_data["frame"], json_data["skills"])
+        return Charm(json_data["slots"], json_data["skills"], json_data["frame"])
 
     def to_dict(self):
         return {"slots": self.slots, "skills": self.skills, "frame": self.frame}
 
-    def is_identical(self, charm):
-        if (
-            self.slots[0] != charm.slots[0]
-            or self.slots[1] != charm.slots[1]
-            or self.slots[2] != charm.slots[2]
-        ):
+    def is_identical(self, other):
+        if self.slots != other.slots:
             return False
 
-        if len(self.skills) != len(charm.skills):
+        if len(self.skills) != len(other.skills):
             return False
 
         for skill in self.skills:
-            if skill not in charm.skills or self.skills[skill] != charm.skills[skill]:
+            if skill not in other.skills or self.skills[skill] != other.skills[skill]:
                 return False
 
         return True

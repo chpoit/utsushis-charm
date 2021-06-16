@@ -3,6 +3,7 @@ import tkinter as tk
 from ..translator import Translator
 from ..resources import get_resource_path
 from ..updater import SimpleSemVer
+from ..utils import set_window_icon
 
 
 class UpdateType(Enum):
@@ -12,7 +13,7 @@ class UpdateType(Enum):
     SkillCorrections = 3
 
 
-class AskUpdate(tk.Toplevel):
+class AskUpdateWindow(tk.Toplevel):
     def __init__(
         self,
         parent,
@@ -25,11 +26,7 @@ class AskUpdate(tk.Toplevel):
         self._ = _
 
         self.title(_("new-version"))
-        try:
-            icon = get_resource_path("ICON")
-            self.iconbitmap(icon)
-        except:
-            pass
+        set_window_icon(self)
 
         self.answer = False
         self.message = self.build_message(update_type, local, remote, self._)
