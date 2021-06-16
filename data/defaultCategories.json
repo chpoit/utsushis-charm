@@ -1,60 +1,117 @@
 {
-    "melee": {
-        "keep": [
-            "core",
-            "core-sup",
-            "shield",
-            "stamina",
-            "shield",
-            "sharpness",
-            "gs",
-            "sns",
-            "db",
-            "ls",
-            "hm",
-            "hh",
-            "la",
-            "gl",
-            "sa",
-            "cb",
-            "ig"
-        ],
-        "trash": [
-            "elemental-resist",
-            "gathering",
-            "item",
-            "elemental-damage-resist"
-        ]
+    "skillGroups": {
+        "melee": {
+            "scores": {
+                "great": 2,
+                "keep": 1,
+                "trash": 0
+            },
+            "great": [
+                "crit",
+                "core"
+            ],
+            "keep": [
+                "core",
+                "core-sup",
+                "shield",
+                "stamina",
+                "shield",
+                "sharpness",
+                "gs",
+                "sns",
+                "db",
+                "ls",
+                "hm",
+                "hh",
+                "la",
+                "gl",
+                "sa",
+                "cb",
+                "ig"
+            ],
+            "trash": [
+                "elemental-resist",
+                "gathering",
+                "item",
+                "elemental-damage-resist"
+            ]
+        },
+        "gunner": {
+            "scores": {
+                "great": 2,
+                "keep": 1,
+                "trash": 0
+            },
+            "great": [
+                "crit",
+                "gunner-core",
+                "core"
+            ],
+            "keep": [
+                "core",
+                "core-sup",
+                "gunner-sup",
+                "gunner-core",
+                "sticky",
+                "ammo",
+                "lbg",
+                "hbg"
+            ],
+            "trash": [
+                "elemental-resist",
+                "gathering",
+                "item",
+                "elemental-damage-resist"
+            ]
+        },
+        "bow": {
+            "scores": {
+                "great": 2,
+                "keep": 1,
+                "trash": 0
+            },
+            "great": [
+                "crit",
+                "gunner-core",
+                "core"
+            ],
+            "keep": [
+                "core",
+                "bow",
+                "stamina"
+            ],
+            "trash": [
+                "elemental-resist",
+                "gathering",
+                "item",
+                "elemental-damage-resist"
+            ]
+        }
     },
-    "gunner": {
-        "keep": [
-            "core",
-            "core-sup",
-            "gunner-sup",
-            "gunner-core",
-            "sticky",
-            "ammo",
-            "lbg",
-            "hbg"
-        ],
-        "trash": [
-            "elemental-resist",
-            "gathering",
-            "item",
-            "elemental-damage-resist"
-        ]
-    },
-    "bow": {
-        "keep": [
-            "core",
-            "bow",
-            "stamina"
-        ],
-        "trash": [
-            "elemental-resist",
-            "gathering",
-            "item",
-            "elemental-damage-resist"
-        ]
+    "slotGroups": {
+        "default": {
+            "countScore": {
+                "3": 1,
+                "2": 1,
+                "1": 0
+            },
+            "slots": [
+                [
+                    3
+                ],
+                [
+                    2,
+                    2
+                ],
+                [
+                    2,
+                    1
+                ],
+                [
+                    1,
+                    1
+                ]
+            ]
+        }
     }
 }

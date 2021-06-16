@@ -2,7 +2,7 @@ from enum import Enum
 import tkinter as tk
 from ..translator import Translator
 from ..resources import get_resource_path
-from ..updater.SimpleSemVer import SimpleSemVer
+from ..updater import SimpleSemVer
 
 
 class UpdateType(Enum):

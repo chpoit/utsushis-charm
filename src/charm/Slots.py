@@ -10,6 +10,18 @@ class Slots:
     def to_simple_encode(self):
         return f"{self.slots[0]},{self.slots[1]},{self.slots[2]}"
 
+    def has_slots(self, *slots):
+        temp_copy = [slot for slot in self.slots]
+        for slot in slots:
+            if slot not in temp_copy:
+                return False
+            try:
+                temp_copy.remove(slot)
+            except IndexError:
+                return False
+
+        return True
+
     def __eq__(self, other):
         return (
             self.slots[0] != other.slots[0]
@@ -26,3 +38,6 @@ class Slots:
 
     def __hash__(self):
         return hash(str(self))
+
+    def __len__(self):
+        return len(list(filter(lambda x: x > 0, self.slots)))

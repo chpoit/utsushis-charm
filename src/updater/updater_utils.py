@@ -1,5 +1,4 @@
-from .VersionChecker import VersionChecker
-from .Updater import Updater
+from . import Updater, VersionChecker
 from ..ui.AskUpdate import AskUpdate, UpdateType
 
 

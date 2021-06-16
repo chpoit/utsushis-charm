@@ -15,13 +15,13 @@ from .ui.AskUpdate import AskUpdate, UpdateType
 from .ui.MainWindow import MainWindow
 from .translator import Translator
 from .resources import get_language_code, get_resource_path
-from .updater.updater_utils import (
+from .updater import (
     ask_main_update,
     ask_language_update,
     ask_skill_update,
     ask_corrections_update,
+    VersionChecker,
 )
-from .updater.VersionChecker import VersionChecker
 
 import logging
 
