@@ -15,7 +15,7 @@
         "chi_sim": 0
     },
     "corrections": {
-        "eng": 1,
+        "eng": "1.0.1",
         "jpn": 1,
         "fra": 1,
         "ita": 1,
