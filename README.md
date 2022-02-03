@@ -12,7 +12,14 @@ This repo contains code that will allow you to extract all of your charms in Mon
 
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but [this armor set searcher](https://mhrise.wiki-db.com/sim/?hl=en) exists. I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
-# Patch Notes (Updated June 15th)
+# Patch Notes (Updated Feb 3rd 2022)
+- 1.5.3
+  - Updated where language packs are downloaded from, 
+    - Github changed where "raw" data was fetched from and broke "fresh" installs 
+  - Updated the bundle tesseract to be version 5
+    - Shouldn't really change anything
+  - General update to bundled corrections and others
+    - For some reason the PC version of the game has the `Quick Sheath` skill as `Quick Sheathe`, added a correction to map it
 - 1.5.2
   - Adds update checking
     - Allows for independent skills/auto-corrections/localization updates
@@ -28,8 +35,9 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 ## Requirements
 - A computer (Windows)
   - Linux and Mac might work too, you won’t be able to run the EXE and will have to run from source in a terminal window. Refer to [Running from source](#Running-from-source)
+  - A 1.5.3 build for arch linux is provided, but it likely wont work, no bad in trying it anyway.
 - A USB cable to connect your switch to transfer files
-- [The latest version of this (Now with a User Interface)](https://github.com/chpoit/utsushis-charm/releases/latest)  downloaded to your computer (Utsushis-Charm_**vx_x**.zip)
+- [The latest version of this](https://github.com/chpoit/utsushis-charm/releases/latest) downloaded to your computer (Utsushis-Charm_**vx_x**.zip)
   - You only need the executable. The inputs folder is only there for faster setup
 - Being able to read
 
