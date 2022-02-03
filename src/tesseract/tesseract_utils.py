@@ -25,7 +25,7 @@ def _is_pyinstaller():
 
 def _get_pyinstaller_tesseract_path():
     base_path = sys._MEIPASS
-    bundled_path = os.path.join(base_path, "Tesseract-OCR", "libtesseract-4.dll")
+    bundled_path = os.path.join(base_path, "Tesseract-OCR", "libtesseract-5.dll")
     return bundled_path
 
 
@@ -37,6 +37,7 @@ def find_tesseract():
     # TODO: Make this resilient to "change" (tesseract version), probably not necessary
     locations = [
         ctypes.util.find_library("libtesseract-4"),  # win32
+        ctypes.util.find_library("libtesseract-5"),  # win32
         ctypes.util.find_library("libtesseract302"),  # win32 version 3.2
         ctypes.util.find_library("libtesseract"),  # others
         ctypes.util.find_library("tesseract"),  # others
@@ -44,6 +45,18 @@ def find_tesseract():
 
     if WINDOWS:
         locations += [
+            os.path.join(
+                os.getenv("ProgramW6432"), "Tesseract-OCR", "libtesseract-5.dll"
+            ),
+            os.path.join(
+                os.getenv("LOCALAPPDATA"), "Tesseract-OCR", "libtesseract-5.dll"
+            ),
+            os.path.join(
+                os.getenv("ProgramFiles"), "Tesseract-OCR", "libtesseract-5.dll"
+            ),
+            os.path.join(
+                os.getenv("programfiles(x86)"), "Tesseract-OCR", "libtesseract-5.dll"
+            ),
             os.path.join(
                 os.getenv("ProgramW6432"), "Tesseract-OCR", "libtesseract-4.dll"
             ),

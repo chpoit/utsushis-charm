@@ -225,12 +225,13 @@ Normal instructions apply once the application starts.
 ## Windows
 - Requirements
   - **Google Tesseract** installed and in path
-    - A copy of the version 4 is bundled with the release. Just run it, no extra packages needed
-      - You can download the installer here version here: [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.1.0.20190314.exe)
+    - A copy of the version 5.0.1 is bundled with the release. Just run it, no extra packages needed
+      - You can download the installer here version here: [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v5.0.1.20220118.exe)
     - Make sure it's in path
   - Python3 installed and in path
 - Running:
   - `source env/bin/activate` (if you use a virtual env)
+  - `python main.py`
 
 # Extra command-line options
 If you run from source, or call the executable from the terminal you can make use of the following flags/arguments to achieve different functionality.
