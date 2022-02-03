@@ -115,6 +115,9 @@ Having translations for the instructions for other languages might be useful, bu
   - I see no reason other capture cards should not work
   - 1080p adds extra processing due to a downscaling step to 720p (20-30% slower)
   - I also tested using an Mclassic without any issues.
+- Q: Does this Work for the PC version
+  - Yes. As long as your resolution is 720p or above, and has a 16:9 ratio, it should
+    - Basically, 1080p, 1440p, 4k and above should work without issues, albeit, the higher the resolution, the slower.
 
 # Notes
 - Version 1.5 is the last version that will officially support console mode, I may fix it from time to time if I need it for dev reasons, but I don't want to maintain a secondary workflow that will likely be used by nobody.
