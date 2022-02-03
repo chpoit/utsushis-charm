@@ -118,14 +118,15 @@ def download_language_data(lang="eng", _=lambda x: x, retry=False):
     target_dir = get_datapath()
     os.makedirs(target_dir, exist_ok=True)
     full_name = os.path.join(target_dir, f"{lang}.traineddata")
-    if os.path.isfile(full_name):
+    if os.path.isfile(full_name) and os.stat(full_name).st_size > 0:
         print(_("tess-found-language"))
         return
 
     pack_name = get_language_from_code(lang)
 
     url = (
-        f"https://github.com/tesseract-ocr/tessdata_best/raw/master/{lang}.traineddata"
+        f"https://raw.githubusercontent.com/tesseract-ocr/tessdata/main/{lang}.traineddata"
+        # f"https://github.com/tesseract-ocr/tessdata_best/raw/master/{lang}.traineddata"
     )
 
     print(_("tess-download-pack").format(pack_name, target_dir))
