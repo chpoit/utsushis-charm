@@ -8,7 +8,7 @@ from ..charm_extraction import extract_charms, save_charms, remove_duplicates
 from ..charm_encoding import encode_charms
 from ..Charm import Charm, CharmList
 from ..arg_builder import build_args
-from ..utils import print_licenses  # TODO
+from ..utils import print_licenses, set_window_icon  # TODO
 from ..resources import get_resource_path, get_language_code, get_language_list
 from ..translator import Translator
 from .PbarWrapper import PbarWrapper
@@ -22,11 +22,7 @@ class MainWindow(tk.Tk):
         self.args = args
 
         self.title(_("Utsushi's Charm"))
-        try:
-            icon = get_resource_path("ICON")
-            self.iconbitmap(icon)
-        except:
-            pass
+        set_window_icon(self)
 
         self._ = _
 

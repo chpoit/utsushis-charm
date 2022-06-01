@@ -1,6 +1,6 @@
 import os
 import tkinter as tk
-from ..utils import fix_skill_name, is_skill
+from ..utils import fix_skill_name, is_skill, set_window_icon
 from ..translator import Translator
 from ..charm_extraction import repair_invalid
 from ..resources import (
@@ -23,11 +23,7 @@ class ParseRepairWindow(tk.Toplevel):
     def __init__(self, parent, language, _: Translator, charms: CharmList):
         super().__init__(parent)
         self.title(_("repair-charms"))
-        try:
-            icon = get_resource_path("ICON")
-            self.iconbitmap(icon)
-        except:
-            pass
+        set_window_icon(self)
 
         self.language = language
         self._ = _

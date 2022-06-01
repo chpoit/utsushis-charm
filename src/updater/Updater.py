@@ -15,7 +15,7 @@ from urllib import request
 from pathlib import Path
 import logging
 import shutil
-from ..updater.SimpleSemVer import SimpleSemVer
+from . import SimpleSemVer
 from ..resources import get_resource_path
 
 logger = logging.getLogger(__name__)
