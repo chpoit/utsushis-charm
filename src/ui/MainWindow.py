@@ -9,17 +9,29 @@ from ..charm_encoding import encode_charms
 from ..Charm import Charm, CharmList
 from ..arg_builder import build_args
 from ..utils import print_licenses  # TODO
-from ..resources import get_resource_path, get_language_code, get_language_list
+from ..resources import (
+    get_language_from_code,
+    get_resource_path,
+    get_language_code,
+    get_language_list,
+    save_app_language,
+    save_game_language,
+    translate_lang,
+    untranslate_lang,
+)
 from ..translator import Translator
 from .PbarWrapper import PbarWrapper
 from .ParseRepairWindow import ParseRepairWindow
 
 
 class MainWindow(tk.Tk):
-    def __init__(self, _: Translator, args):
+    def __init__(self, _: Translator, args, skill_language_code, app_langs):
         super().__init__()
         self.charms = CharmList()
         self.args = args
+        self._unchanged_langs = app_langs
+        self._skill_language_code = skill_language_code
+        self.app_langs = list(map(translate_lang, app_langs))
 
         self.title(_("Utsushi's Charm"))
         try:
@@ -32,7 +44,8 @@ class MainWindow(tk.Tk):
 
         self.input_dir = tk.StringVar(value=args.input_dir)
         self.frame_dir = tk.StringVar(value=args.frame_dir)
-        self.lang = tk.StringVar(value=args.language)
+        self.lang = tk.StringVar(value=get_language_from_code(skill_language_code))
+        self.app_lang = tk.StringVar(value=translate_lang(_.language))
 
         self.charm_json = args.charm_json
         self.charm_encoded = args.charm_encoded
@@ -49,7 +62,24 @@ class MainWindow(tk.Tk):
         if not _:
             _ = self._
         self.destroy()
-        self.__init__(_, self.args)
+        self.__init__(_, self.args, self._skill_language_code, self._unchanged_langs)
+
+    def _update_lang(self, language: str):
+        untranslated = untranslate_lang(language)
+        if untranslated == self._.language:
+            return
+        code = get_language_code(untranslated)
+        print(language)
+        print(untranslated)
+        tr = Translator(code)
+        save_app_language(code)
+        self.refresh(tr)
+
+    def _update_game_lang(self, language: str):
+        untranslated = untranslate_lang(language)
+        code = get_language_code(untranslated)
+        self._skill_language_code = code
+        save_game_language(code)
 
     def _build_ui(self, _: Translator = None):
         if not _:
@@ -74,10 +104,10 @@ class MainWindow(tk.Tk):
                 runtime_frame, text=_("skip-charms"), variable=self.skip_charms
             )
 
-            self.autosave_box.grid(column=1, row=0, sticky="w")
-            self.del_frames_box.grid(column=1, row=1, sticky="w")
-            self.skip_frames_box.grid(column=1, row=2, sticky="w")
-            # self.skip_charms_box.grid(column=0, row=3, sticky="w") # Hidden for now
+            self.autosave_box.grid(column=1, row=1, sticky="w")
+            self.del_frames_box.grid(column=1, row=2, sticky="w")
+            self.skip_frames_box.grid(column=1, row=3, sticky="w")
+            # self.skip_charms_box.grid(column=0, row=4, sticky="w") # Hidden for now
             return runtime_frame
 
         def _buttons(parent=self):
@@ -98,7 +128,10 @@ class MainWindow(tk.Tk):
             )
 
             self.lang_menu = tk.OptionMenu(
-                button_frame, self.lang, *get_language_list()
+                button_frame,
+                self.lang,
+                *map(translate_lang, get_language_list()),
+                command=self._update_game_lang,
             )
 
             self.input_location_lbl = tk.Label(
@@ -110,17 +143,25 @@ class MainWindow(tk.Tk):
 
             self.lang_lbl = tk.Label(button_frame, text=_("recording-language"))
 
-            self.input_btn.grid(column=0, row=0, sticky="w")
-            self.frame_btn.grid(column=0, row=1, sticky="w")
+            self.app_lang_menu = tk.OptionMenu(
+                button_frame,
+                self.app_lang,
+                *self.app_langs,
+                command=self._update_lang,
+            )
 
-            self.input_location_lbl.grid(column=1, row=0, sticky="w")
-            self.frames_location_lbl.grid(column=1, row=1, sticky="w")
+            self.app_lang_menu.grid(column=0, row=0, sticky="w")
+            self.input_btn.grid(column=0, row=1, sticky="w")
+            self.frame_btn.grid(column=0, row=2, sticky="w")
 
-            self.lang_lbl.grid(column=0, row=2, sticky="w")
-            self.lang_menu.grid(column=1, row=2, sticky="w")
+            self.input_location_lbl.grid(column=1, row=1, sticky="w")
+            self.frames_location_lbl.grid(column=1, row=2, sticky="w")
 
-            self.save_charms_btn.grid(column=0, row=3, sticky="w")
-            self.copy_to_clip_btn.grid(column=0, row=4, sticky="w")
+            self.lang_lbl.grid(column=0, row=3, sticky="w")
+            self.lang_menu.grid(column=1, row=3, sticky="w")
+
+            self.save_charms_btn.grid(column=0, row=4, sticky="w")
+            self.copy_to_clip_btn.grid(column=0, row=5, sticky="w")
 
             return button_frame
 
@@ -249,7 +290,7 @@ class MainWindow(tk.Tk):
 
             if not self.skip_charms.get():
                 print(_("step-2-name"))
-                lang_code = get_language_code(self.lang.get())
+                lang_code = get_language_code(untranslate_lang(self.lang.get()))
                 self.charms = extract_charms(
                     self.frame_dir.get(),
                     lang_code,
@@ -259,9 +300,7 @@ class MainWindow(tk.Tk):
                 )
 
                 if self.charms.has_invalids():
-                    fix_window = ParseRepairWindow(
-                        self, get_language_code(self.lang.get()), self._, self.charms
-                    )
+                    fix_window = ParseRepairWindow(self, lang_code, self._, self.charms)
                     fix_window.fix_skills()
                     self.wait_window(fix_window)
                     repaired = fix_window.get_repaired()

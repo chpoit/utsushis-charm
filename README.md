@@ -257,5 +257,6 @@ If you run from source, or call the executable from the terminal you can make us
 - `-f <FRAME_DIR>` or `--frames <FRAME_DIR>`: Changes the Directory used to store temporary frames
 - `-c <FILE_NAME>` or `--charm-json <FILE_NAME>`: Changes the name of the json formatted charms
 - `-e <FILE_NAME>` or `--charm-encoded <FILE_NAME>`: Changes the name of the MHR-Wiki formatted charms
-- `-l <LANG_NAME>` or `--language <LANG_NAME>`: Changes the default language for the recordings. Use the list in [Supported languages](#supported-game-language) to know what to enter.
-- `-a <LANG_NAME>` or `--app-language <LANG_NAME>`: Changes the language of the app. Use the list in [Supported languages](#supported-game-language) to know what to enter.
+- `-l <LANG_NAME>` or `--language <LANG_NAME>`: Changes the default language for the recordings. Use the list in [Supported languages](#supported-game-language) to know what to enter. It only works for the first launch, data in the config file takes priority.
+- `-a <LANG_NAME>` or `--app-language <LANG_NAME>`: Changes the language of the app. Use the list in [Supported languages](#supported-game-language) to know what to enter. It only works for the first launch, data in the config file takes priority.
+- `--reset`: Resets data in the config. Currently forces the language to be overwritten in config with `-a` and `-l` arguments.
