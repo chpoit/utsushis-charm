@@ -1,6 +1,6 @@
-opencv-python
+opencv-python==4.5.5.62
 numpy
 scikit-image
 symspellpy
 tqdm
-pyinstaller
+pyinstaller==4.8
