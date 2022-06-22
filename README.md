@@ -238,7 +238,7 @@ Normal instructions apply once the application starts.
     - Make sure it's in path
   - Python3 installed and in path  
   - CPP Build tools https://visualstudio.microsoft.com/visual-cpp-build-tools/
-    - Check the C++ box when it asks you
+    - Check the C++ box when it asks you ([Check this stackoverflow answer for the exact thing to install](https://stackoverflow.com/a/64262038)
     - You might be able to only install https://aka.ms/vs/17/release/vc_redist.x64.exe
 - Running:
   - `./env/Scripts/activate` (if you use a virtual env)
