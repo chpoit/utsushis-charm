@@ -192,6 +192,7 @@ In all seriousness, the work is done in a few broad steps:
 - [ ] Maybe add a "This charm isn'T actully empty" thing. Some of my Special Ammo Boost lvl2s are just invisible (might be related to something else)
 - [ ] Improve the skill corrections UI/behavior
 - [ ] Make the code not a mess
+- [ ] Follow https://github.com/pyinstaller/pyinstaller/6889 to find when I can update opencv-python
 - [ ] ~~Multithreading for some of that SPEEEEED~~
   - Unfortunately, the joblib 'loky' backend wont work with frozen executables, and the other backends offer no noticeable gain in performance. This is getting shelved until a potential rewrite under a "faster" rewrite. Current execution time is 4-8 minutes so it's really not too bad.
 
