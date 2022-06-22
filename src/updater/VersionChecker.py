@@ -4,7 +4,7 @@ import json
 from urllib import request
 import logging
 
-from ..resources import get_resource_path, get_update_url, get_versions_location
+from ..resources import get_resource_path, get_update_url, get_versions_location, get_language_list, get_language_code, get_language_from_code
 from .SimpleSemVer import SimpleSemVer
 
 logger = logging.getLogger(__name__)
@@ -47,6 +47,20 @@ class VersionChecker:
     def is_outdated(self, local, remote):
         return local < remote
 
+    def get_language_versions(self):
+        versions = []
+        language_list = get_language_list()
+        codes = list(map(get_language_code,language_list))
+        for code in codes:
+            local = self._get_version(True, "languages", code)
+            remote = self._get_version(False, "languages", code)
+            if local == 0 and remote == 0:
+                continue
+            else:
+                versions.append((code, local, remote))
+                
+        return list(map(lambda x: (get_language_from_code(x[0]), x[0],x[1],x[2]), versions))
+    
     def _ensure_proper_app_version(self):
         with open(get_resource_path("internal_versions")) as internal:
             internal_data = json.load(internal)
@@ -65,6 +79,7 @@ class VersionChecker:
 
         with open(get_resource_path("versions"), "w") as local:
             json.dump(local_data, local)
+
 
     def _get_version(self, local: bool, main_key, sub_key=None):
         if local:

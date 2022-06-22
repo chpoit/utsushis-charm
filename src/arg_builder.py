@@ -66,7 +66,7 @@ def build_args():
         "--language",
         dest="language",
         required=False,
-        help="Sets the language of the switch recording.",
+        help="Sets the language of the switch recording. (only works for first launch)",
         default="English",
     )
 
@@ -75,8 +75,15 @@ def build_args():
         "--app-language",
         dest="app_language",
         required=False,
-        help="Sets the language of the switch recording.",
+        help="Sets the language of the app. (only works for first launch)",
         default="English",
+    )
+
+    parser.add_argument(
+        "--reset",
+        dest="reset_config",
+        action="store_true",
+        help='Resets data in the config. Currently forces the language to be overwritten in config with "-a" and "-l" arguments',
     )
 
     parser.add_argument(

@@ -5,6 +5,7 @@ import platform
 from pathlib import Path
 from symspellpy.symspellpy import SymSpell
 import logging
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -168,6 +169,56 @@ def get_versions_location():
     return version_file
 
 
+def _load_config():
+    config_path = get_resource_path("CONFIG")
+    with open(config_path, "r", encoding="utf-8") as config_f:
+        config = json.load(config_f)
+    return config
+
+
+def _write_config(config):
+    config_path = get_resource_path("CONFIG")
+    with open(config_path, "w", encoding="utf-8") as config_f:
+        json.dump(config, config_f)
+
+
+def get_app_language():
+    config = _load_config()
+    return config["app-language"]
+
+
+def save_app_language(app_language_code):
+    config = _load_config()
+    config["app-language"] = app_language_code
+    _write_config(config)
+
+
+def translate_lang(lang):
+    return _translated_langs[lang]
+
+
+def untranslate_lang(lang):
+    return _reverse_translated[lang]
+
+
+def get_game_language():
+    config = _load_config()
+    return config["game-language"]
+
+
+def save_game_language(app_language_code):
+    config = _load_config()
+    config["game-language"] = app_language_code
+    _write_config(config)
+
+
+def reverse(dict_):
+    reversed = {}
+    for key in dict_:
+        reversed[dict_[key]] = key
+    return reversed
+
+
 _local_root = os.getenv("LOCALAPPDATA") or HOME if WINDOWS else HOME
 _local_dir_name = "utsushis-charm"
 _local_dir_full = os.path.join(
@@ -198,7 +249,12 @@ _resources = {
     "LOCAL_DIR": _local_dir_full,
     "LOCAL_TRANSLATIONS": os.path.join(_local_dir_full, "translations"),
     "LOCAL_SKILLS": os.path.join(_local_dir_full, "skills"),
+    "CONFIG": os.path.join(_local_dir_full, "config.json"),
+    # config_keys
+    "app-language": "",
+    "game-language": "game-language",
 }
+
 
 _language_code_mappings = {
     "English": "eng",
@@ -214,20 +270,6 @@ _language_code_mappings = {
     "Simplified Chinese": "chi_sim",
 }
 
-_reverse_language_code_mappings = {
-    "eng": "English",
-    "jpn": "Japanese",
-    "fra": "French",
-    "ita": "Italian",
-    "deu": "German",
-    "spa": "Spanish",
-    "rus": "Russian",
-    "pol": "Polish",
-    "kor": "Korean",
-    "chi_tra": "Traditional Chinese",
-    "chi_sim": "Simplified Chinese",
-}
-
 _language_list = [
     "English",
     "Japanese",
@@ -241,3 +283,21 @@ _language_list = [
     "Traditional Chinese",
     "Simplified Chinese",
 ]
+
+# Most of these are probably wrong, I don't care.
+_translated_langs = {
+    "English": "English",
+    "Japanese": "日本語",
+    "French": "Français",
+    "Italian": "Italiana",
+    "German": "Deutsch",
+    "Spanish": "Español",
+    "Russian": "Русский",
+    "Polish": "Polski",
+    "Korean": "한국어",
+    "Traditional Chinese": "繁體中文",
+    "Simplified Chinese": "简体中文",
+}
+
+_reverse_translated = reverse(_translated_langs)
+_reverse_language_code_mappings = reverse(_language_code_mappings)

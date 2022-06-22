@@ -1,6 +1,8 @@
 import os
 import sys
 import tkinter as tk
+
+from .updater.Updater import Updater
 from .frame_extraction import extract_unique_frames
 from .charm_extraction import (
     extract_charms,
@@ -14,7 +16,14 @@ from .utils import print_licenses
 from .ui.AskUpdate import AskUpdate, UpdateType
 from .ui.MainWindow import MainWindow
 from .translator import Translator
-from .resources import get_language_code, get_resource_path
+from .resources import (
+    get_language_code,
+    get_resource_path,
+    get_app_language,
+    save_app_language,
+    get_game_language,
+    save_game_language,
+)
 from .updater.updater_utils import (
     ask_main_update,
     ask_language_update,
@@ -24,6 +33,7 @@ from .updater.updater_utils import (
 from .updater.VersionChecker import VersionChecker
 
 import logging
+import json
 
 logging.basicConfig(
     filename="app.log", filemode="w", format="%(name)s - %(levelname)s - %(message)s"
@@ -38,11 +48,7 @@ def handle_exception(exception, value, traceback):
     print("An error occured", exception)
 
 
-def main(args):
-    if args.license:
-        print_licenses()
-        sys.exit(0)
-
+def init_config(app_language_code, skill_language_code):
     dirs_to_init = [
         get_resource_path("LOCAL_DIR"),
         get_resource_path("LOCAL_TRANSLATIONS"),
@@ -51,37 +57,70 @@ def main(args):
     for dir_to_init in dirs_to_init:
         os.makedirs(dir_to_init, exist_ok=True)
 
+    config_path = get_resource_path("CONFIG")
+    if not os.path.exists(config_path) or os.stat(config_path).st_size == 0:
+        with open(config_path, "w", encoding="utf-8") as config_f:
+            json.dump(
+                {
+                    "app-language": app_language_code,
+                    "game-language": skill_language_code,
+                },
+                config_f,
+            )
+
+
+def main(args):
+    if args.license:
+        print_licenses()
+        sys.exit(0)
+
     app_language_code = get_language_code(args.app_language)
     skill_language_code = get_language_code(args.language)
+
+    init_config(app_language_code, skill_language_code)
+    if args.reset_config:
+        save_app_language(skill_language_code)
+        save_game_language(skill_language_code)
+
+    app_language_code = get_app_language()
+    skill_language_code = get_game_language()
 
     if args.console:
         run_in_console(args)
 
     else:
         version_checker = VersionChecker()
-        main_window, translator = create_main_window(args)
+
+        language_versions = version_checker.get_language_versions()
+        print(language_versions)
+        for language_version in language_versions:
+            lang, code, local, remote = language_version
+            if local < remote:
+                try:
+                    Updater(
+                        Translator(app_language_code), version_checker
+                    ).update_language(code, remote)
+                except:
+                    pass
+
+        main_window, translator = create_main_window(
+            args, skill_language_code, list(map(lambda x: x[0], language_versions))
+        )
 
         new_app_update = ask_main_update(version_checker, main_window, translator)
         new_skills_update = ask_skill_update(version_checker, main_window, translator)
 
-        new_lang_update = ask_language_update(
-            version_checker, main_window, app_language_code, translator
-        )
         new_corrections_update = ask_corrections_update(
             version_checker, main_window, skill_language_code, translator
         )
 
-        if new_lang_update:
-            translator = Translator(app_language_code)
-            main_window.refresh(translator)
-
         main_window.mainloop()
 
 
-def create_main_window(args):
+def create_main_window(args, skill_language_code, app_langs):
     app_language_code = get_language_code(args.app_language)
     translator = Translator(app_language_code)
-    new_window = MainWindow(translator, args)
+    new_window = MainWindow(translator, args, skill_language_code, app_langs)
     new_window.report_callback_exception = handle_exception
     sys.stdout = new_window
 

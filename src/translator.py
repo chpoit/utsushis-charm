@@ -1,12 +1,14 @@
 import os
 import json
 import sys
-from .resources import get_translation_location
+from .resources import get_translation_location, get_language_from_code
 
 
 class Translator:
     def __init__(self, language="eng"):
         self.load_language(language)
+        self.language_code = language
+        self.language = get_language_from_code(language)
 
     def __call__(self, *args, **kwargs):
         return self.get_tl(*args, **kwargs)
