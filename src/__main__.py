@@ -92,7 +92,7 @@ def main(args):
         version_checker = VersionChecker()
 
         language_versions = version_checker.get_language_versions()
-        print(language_versions)
+        
         for language_version in language_versions:
             lang, code, local, remote = language_version
             if local < remote:

@@ -7,7 +7,6 @@ from ..frame_extraction import extract_unique_frames
 from ..charm_extraction import extract_charms, save_charms, remove_duplicates
 from ..charm_encoding import encode_charms
 from ..Charm import Charm, CharmList
-from ..arg_builder import build_args
 from ..utils import print_licenses  # TODO
 from ..resources import (
     get_language_from_code,
@@ -22,11 +21,13 @@ from ..resources import (
 from ..translator import Translator
 from .PbarWrapper import PbarWrapper
 from .ParseRepairWindow import ParseRepairWindow
+import webbrowser
 
 
 class MainWindow(tk.Tk):
     def __init__(self, _: Translator, args, skill_language_code, app_langs):
         super().__init__()
+        self.wiki_url = "https://mhrise.wiki-db.com/sim/?hl=en"
         self.charms = CharmList()
         self.args = args
         self._unchanged_langs = app_langs
@@ -80,6 +81,17 @@ class MainWindow(tk.Tk):
         code = get_language_code(untranslated)
         self._skill_language_code = code
         save_game_language(code)
+
+    def _open_wiki(self, _: Translator = None):
+        if not _:
+            _ = self._
+        print(_("wiki-attempt"))
+        webbrowser.open(self.wiki_url)
+
+    def _copy_wiki_url(self):
+        self.clipboard_clear()
+        self.clipboard_append(self.wiki_url)
+        self.update()
 
     def _build_ui(self, _: Translator = None):
         if not _:
@@ -150,6 +162,14 @@ class MainWindow(tk.Tk):
                 command=self._update_lang,
             )
 
+            self.wiki_button = tk.Button(
+                button_frame, text=_("wiki-button"), command=self._open_wiki
+            )
+
+            self.wiki_clipboard_button = tk.Button(
+                button_frame, text=_("wiki-clipboard"), command=self._copy_wiki_url
+            )
+
             self.app_lang_menu.grid(column=0, row=0, sticky="w")
             self.input_btn.grid(column=0, row=1, sticky="w")
             self.frame_btn.grid(column=0, row=2, sticky="w")
@@ -162,6 +182,8 @@ class MainWindow(tk.Tk):
 
             self.save_charms_btn.grid(column=0, row=4, sticky="w")
             self.copy_to_clip_btn.grid(column=0, row=5, sticky="w")
+            self.wiki_button.grid(column=0, row=6, sticky="w")
+            self.wiki_clipboard_button.grid(column=0, row=7, sticky="w")
 
             return button_frame
 
