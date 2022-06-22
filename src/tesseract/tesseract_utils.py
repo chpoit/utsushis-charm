@@ -25,7 +25,11 @@ def _is_pyinstaller():
 
 def _get_pyinstaller_tesseract_path():
     base_path = sys._MEIPASS
-    bundled_path = os.path.join(base_path, "Tesseract-OCR", "libtesseract-5.dll")
+    if WINDOWS:
+        bundled_path = os.path.join(base_path, "Tesseract-OCR", "libtesseract-5.dll")
+    else:
+        bundled_path = os.path.join(base_path, "libtesseract.so.5")
+    print("Expected Tesseract location", bundled_path)
     return bundled_path
 
 

@@ -61,5 +61,8 @@
     "new-app-update": "une nouvelle version d'Utsushi's Charm est disponible (Locale: {}, Nouvelle: {}), voulez-vous la télécharger?",
     "new-skill-update": "Une nouvelle liste de skills est disponible (Locale: {}, Nouvelle: {}), voulez-vous la mettre à jour?",
     "new-app-language-update": "Une nouveau fichier de traduction pour Utsushi's Charm est disponible (Locale: {}, Nouvelle: {}), voulez-vous la télécharger?",
-    "new-skill-correction-update": "Des nouvelles corrections automatiques ont été soumises, (Locale: {}, Nouvelle: {}), voulez-vous les télécharger?"
+    "new-skill-correction-update": "Des nouvelles corrections automatiques ont été soumises, (Locale: {}, Nouvelle: {}), voulez-vous les télécharger?",
+    "wiki-button": "Visiter le MHR Set Searcher",
+    "wiki-clipboard": "Copier l'URL",
+    "wiki-attempt": "Tentative d'ouverture du site web..."
 }

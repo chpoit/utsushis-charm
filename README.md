@@ -12,33 +12,30 @@ This repo contains code that will allow you to extract all of your charms in Mon
 
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but [this armor set searcher](https://mhrise.wiki-db.com/sim/?hl=en) exists. I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
-# Patch Notes (Updated Feb 3rd 2022)
-- 1.5.3
-  - Updated where language packs are downloaded from, 
-    - Github changed where "raw" data was fetched from and broke "fresh" installs 
-  - Updated the bundle tesseract to be version 5
-    - Shouldn't really change anything
-  - General update to bundled corrections and others
-    - For some reason the PC version of the game has the `Quick Sheath` skill as `Quick Sheathe`, added a correction to map it
-- 1.5.2
-  - Adds update checking
-    - Allows for independent skills/auto-corrections/localization updates
-  - Adds initial support for localization (only through command line flags however (`-a` or `--app-language`))
-- 1.5.1
-  - Resolves issues with local directory creation found in #20
-- 1.5
-  - Now with a User Interface
-  - Support for [Multiple Game languages](#supported-game-language)
+# Patch Notes (Updated June 22nd 2022)
+- 1.6
+  - Added an app language dropdown
+  - Version Checker automatically updates language files
+    - Other updates (main app, skills and corrections) are still "on demand" when there is an update 
+  - App and game language are now stored inside a config file
+  - Added a --reset cmd option to clear the config file
+  - Languages in language dropdowns should show up in the actual language
+    - NOTE: They are probably wrong
+  - Added a "Go to Set Searcher" button
+ 
+ The rest of the patch notes can be found [here](PATCHNOTES.md)
 
 # Usage
 
 ## Requirements
 - A computer (Windows)
   - Linux and Mac might work too, you won’t be able to run the EXE and will have to run from source in a terminal window. Refer to [Running from source](#Running-from-source)
-  - A 1.5.3 build for arch linux is provided, but it likely wont work, no bad in trying it anyway.
+    - A 1.6.0 build for Arch Linux is provided, since it's pyinstaller it *should* work everywhere, but lets get real, it probably wont
+    - ~~A MacOS build is also provided for 1.6.0, but it's built on a hackintosh VM so you should assume it doesn't work and run from source.~~
 - A USB cable to connect your switch to transfer files
-- [The latest version of this](https://github.com/chpoit/utsushis-charm/releases/latest) downloaded to your computer (Utsushis-Charm_**vx_x**.zip)
-  - You only need the executable. The inputs folder is only there for faster setup
+  - Alternatively use a capture card and record the screen. View the [FAQ](#faq) for Genki Shadowcast information
+- [The latest version of Utsushi's Charm](https://github.com/chpoit/utsushis-charm/releases/latest) downloaded to your computer (Utsushis-Charm_**vx_x**.zip)
+  - You only need the executable. The inputs folder is only there for faster setup (Put the videos in there)
 - Being able to read
 
 ## Steps
@@ -46,7 +43,8 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 0. Unequip all jewels. You will create "fake" charms otherwise.
    - Item Box -> Manage Equipment -> Set Decorations -> Equipment Box -> Remove all (Press '-' on controller)
    - Don't ask, this is way out of scope for something that takes you 30 seconds to do.
-1. Download the release bundle and follow the [Requirements](##Requirements) section  (Utsushis-Charm_**vx_x**.zip)
+   - It wont break your loadouts, if you re-equip them, they will be put back in.
+1. Download the release bundle and follow the [Requirements](##Requirements) section  (Utsushis-Charm_**vx_x**.zip) (You should have done this already)
 2. Record clips similar to the following of you going through your charms. Try placing the UI in front of something that is very "flat" in color and doesn't have NPCs walking in front.
    - I can easily go through 2-3 pages of charms in 30 seconds.
    - Use a stopwatch on your phone if you have trouble timing the 30 seconds. I saved a clip every ~25 seconds.
@@ -118,6 +116,10 @@ Having translations for the instructions for other languages might be useful, bu
 - Q: Does this Work for the PC version
   - Yes. As long as your resolution is 720p or above, and has a 16:9 ratio, it should
     - Basically, 1080p, 1440p, 4k and above should work without issues, albeit, the higher the resolution, the slower.
+- Q: I'm trying to enter a skill in the Skill Correction thing and it doesn't work
+  - This might be because the PC version has a different name for the skill, add it to the corrections.lang.csv file, or tell me to do it.
+    - An example of this would be `Quick Sheath`, which is named `Quick Sheathe` on PC
+    - Make sure you give me both versions of the skill name if you think the PC version messed up again.
 
 # Notes
 - Version 1.5 is the last version that will officially support console mode, I may fix it from time to time if I need it for dev reasons, but I don't want to maintain a secondary workflow that will likely be used by nobody.
@@ -185,15 +187,10 @@ In all seriousness, the work is done in a few broad steps:
 - Please use the default settings of `black` to format the python source code.
 
 # TODOS:
-- [ ] Throw out Google Tesseract/Try newer version
-  - Version 4 works great, this is going on the back burner for a while
-  - Version 3 has trouble with quite a few words (Slugger, Recovery, Earplugs, Counterstrike, Maestro, etc.)
-  - I'm considering going full monkey brain and having one "mask" per skill like I'm doing for the slots and skill levels.
-  - The monkey brain approach would probably make it so this can be run completely unattended, at the cost of some extra storage space.
-  - Monkey brain results:
-    - Monkey brain is less accurate
-    - Tesseract 4 works great
-    - Need to do some "pixel poking" to make sure everything is lined up the same
+- [ ] Add an "Eager" mode where only a fraction of the frames are kept (should try to calculate the min frames to change to a charm and double or 1.5 times it)
+- [ ] Maybe finish the "charm value calculator #23" (The more I worked on it the less I find it useful)
+- [ ] Maybe add a "This charm isn'T actully empty" thing. Some of my Special Ammo Boost lvl2s are just invisible (might be related to something else)
+- [ ] Improve the skill corrections UI/behavior
 - [ ] Make the code not a mess
 - [ ] ~~Multithreading for some of that SPEEEEED~~
   - Unfortunately, the joblib 'loky' backend wont work with frozen executables, and the other backends offer no noticeable gain in performance. This is getting shelved until a potential rewrite under a "faster" rewrite. Current execution time is 4-8 minutes so it's really not too bad.

@@ -8,6 +8,12 @@ print(sys.argv)
 
 new_version = sys.argv[-1]
 
+if new_version is sys.argv[0]:
+    print("Version was not updated")
+    exit()
+
+print("Writing", new_version, "to file")
+
 with open(os.path.join("data", "versions.json"), "r") as f:
     versions = json.load(f)
 versions["app"] = new_version

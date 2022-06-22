@@ -12,6 +12,8 @@ logger = logging.getLogger(__name__)
 
 HOME = str(Path.home())
 WINDOWS = platform.system() == "Windows"
+LINUX = platform.system() == "Linux"
+MAC = platform.system() == "Darwin"
 
 
 def get_all_skills(lang="eng"):
