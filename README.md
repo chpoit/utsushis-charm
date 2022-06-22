@@ -237,9 +237,12 @@ Normal instructions apply once the application starts.
     - A copy of the version 5.0.1 is bundled with the release. Just run it, no extra packages needed
       - You can download the installer here version here: [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v5.0.1.20220118.exe)
     - Make sure it's in path
-  - Python3 installed and in path
+  - Python3 installed and in path  
+  - CPP Build tools https://visualstudio.microsoft.com/visual-cpp-build-tools/
+    - Check the C++ box when it asks you ([Check this stackoverflow answer for the exact thing to install](https://stackoverflow.com/a/64262038)
+    - You might be able to only install https://aka.ms/vs/17/release/vc_redist.x64.exe
 - Running:
-  - `source env/bin/activate` (if you use a virtual env)
+  - `./env/Scripts/activate` (if you use a virtual env)
   - `python main.py`
 
 # Extra command-line options
