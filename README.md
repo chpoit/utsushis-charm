@@ -237,6 +237,7 @@ Normal instructions apply once the application starts.
       - You can download the installer here version here: [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v5.0.1.20220118.exe)
     - Make sure it's in path
   - Python3 installed and in path
+  - CPP Build tools https://visualstudio.microsoft.com/visual-cpp-build-tools/
 - Running:
   - `source env/bin/activate` (if you use a virtual env)
   - `python main.py`
