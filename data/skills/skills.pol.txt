@@ -8,6 +8,9 @@ Atak uśpieniem
 Atak wodą
 Atak wybuchem
 Balistyka
+Bladescale Hone
+Blood Rite
+Bloodlust
 Bombardier
 Boskie błogosławień.
 Botanik
@@ -16,16 +19,23 @@ Bąblowy taniec
 Błogosł. Chameleosa
 Błogosław. Kushali
 Błogosław. Teostry
+Chain Crit
+Charge Master
+Coalescence
 Czas na unik
 Darmowy posiłek
+Dereliction
 Dobycie krytyczne
 Dotyk mistrza
 Duży zasięg
 Dywersja
 Długie trwanie
+Foray
+Furious
 Garda
 Garda ofensywna
 Geolog
+Grinder (S)
 Grzybomanta
 Kamienna twarz
 Kontratak
@@ -33,6 +43,7 @@ Kradzież wytrzymał.
 Krytyczne oko
 Lakier ochronny
 Lepsze ładow. łuku
+Mail of Hellfire
 Maksymalna moc
 Maratończyk
 Mistrz Wykrajania
@@ -65,6 +76,8 @@ Podżegacz
 Powalacz
 Przedłużenie mocy
 Przypływ wytrzym.
+Quick Breath
+Redirection
 Rozłamywacz
 Rękodzieło
 Skok wiary
@@ -72,6 +85,7 @@ Skupienie
 Smocze serce
 Smoczy atak
 Spec od wycinania
+Spiritbird’s Call
 Stałość
 Szczyt możliwości
 Szczęście
@@ -81,10 +95,13 @@ Szybkie chowanie
 Szybkie jedzenie
 Szybkie ostrzenie
 Szybkość regeneracji
+Tune-Up
 Tężyzna
 Uraza
 Uśpiona moc
+Wall-Runner (Boost)
 Wiatrochron
+Wirebug Whisperer
 Wirtuoz rogu
 Więcej amunicji
 Więcej normal./szyb.

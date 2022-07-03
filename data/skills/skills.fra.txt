@@ -14,7 +14,10 @@ Balistique
 Bastion
 Batto-jutsu
 Berserker
+Bladescale Hone
 Blizzard
+Blood Rite
+Bloodlust
 Bombardier
 Botaniste
 Bouchon d'oreilles
@@ -25,14 +28,18 @@ Bénédiction Teostra
 Cape Feu de l'enfer
 Carnassier
 Cercle de vie
+Chain Crit
 Chance
+Charge Master
 Chimiste
+Coalescence
 Cogneur
 Concentration
 Contre-attaque
 Corps et âme
 Crâne d'acier
 Cœur de dragon
+Dereliction
 Destructeur
 Destruction massive
 Diversion
@@ -41,10 +48,13 @@ Dégainage éclair
 Esprit indomptable
 Expert en dépeçage
 Feu du ciel
+Foray
 Force latente
+Furious
 Garde offensive
 Grenaille +
 Grimpeur
+Grinder (S)
 Géologiste
 Halo de guérison
 Héroïsme
@@ -56,6 +66,7 @@ La nuit porte conseil
 Machine de guerre
 Maelstrom
 Maestro
+Mail of Hellfire
 Main de maître
 Marathonien
 Matraquage
@@ -82,9 +93,11 @@ Pique-assiette
 Pourfendeur de dragon
 Puissance absolue
 Pyromane
+Quick Breath
 Rage élémentaire
 Recharge chargée
 Recul réduit
+Redirection
 Rengainage éclair
 Roi de la glisse
 Salve mortelle
@@ -94,17 +107,21 @@ Savoir-faire
 Sismologie
 Sniper
 Spartiate
+Spiritbird’s Call
 Tir parcimonieux
 Tir super rapide
 Totem élémentaire
 Toxicologie
 Trompe-la-mort
+Tune-Up
 Témérité
 Ultra garde
 Un pour tous
 Vengeance
 Vitesse de rechargement
 Vol d'endurance
+Wall-Runner (Boost)
+Wirebug Whisperer
 Âme de la tempête
 Ébullition
 Étanchéité

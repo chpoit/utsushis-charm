@@ -41,12 +41,18 @@ Bendición de Chameleos
 Bendición de Kushala
 Bendición de Teostra
 Bendición divina
+Bladescale Hone
+Blood Rite
+Bloodlust
 Bloqueo agresivo
 Bombardero
 Botánico
 Cadencia
 Carga prolongada
 Cargar arma
+Chain Crit
+Charge Master
+Coalescence
 Comida gratis
 Constitución
 Consumir
@@ -54,6 +60,7 @@ Contraataque
 Corazón de dragón
 Correparedes
 Danza burbujeante
+Dereliction
 Desenfundar
 Desenfunde veloz
 Despiece extra
@@ -71,15 +78,19 @@ Experto cortador
 Experto en salto
 Experto en setas
 Filo de cuchilla
+Foray
 Fortalecer
+Furious
 Gasto resistencia
 Geólogo
+Grinder (S)
 Guardia mejorada
 Heroicidad
 Impacto mejorado
 Instigador
 Intervalo evasivo
 Maestro capturas
+Mail of Hellfire
 Manto infernal
 Mejora de balance
 Mejora de salto
@@ -95,17 +106,23 @@ Plena forma
 Poder latente
 Potenciador crítico
 Punto débil
+Quick Breath
 Rayo unificado
 Recarga
 Recuperación
 Recuperación rápida
+Redirection
 Resentimiento
 Resistencia
 Rompepartes
+Spiritbird’s Call
 Tapones
 Tiempo de carga
 Tiro especial
 Tiro extra
 Toque del maestro
+Tune-Up
 Viento unificado
 Viento y trueno
+Wall-Runner (Boost)
+Wirebug Whisperer

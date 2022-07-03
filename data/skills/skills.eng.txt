@@ -4,9 +4,12 @@ Ammo Up
 Artillery
 Attack Boost
 Ballistics
+Bladescale Hone
 Blast Attack
 Blast Resistance
 Blight Resistance
+Blood Rite
+Bloodlust
 Bludgeoner
 Bombardier
 Botanist
@@ -15,7 +18,10 @@ Bubbly Dance
 Capture Master
 Carving Master
 Carving Pro
+Chain Crit
 Chameleos Blessing
+Charge Master
+Coalescence
 Constitution
 Counterstrike
 Critical Boost
@@ -23,6 +29,7 @@ Critical Draw
 Critical Element
 Critical Eye
 Defense Boost
+Dereliction
 Diversion
 Divine Blessing
 Dragon Attack
@@ -35,10 +42,13 @@ Fire Attack
 Fire Resistance
 Flinch Free
 Focus
+Foray
 Fortify
 Free Meal
+Furious
 Geologist
 Good Luck
+Grinder (S)
 Guard
 Guard Up
 Handicraft
@@ -54,6 +64,7 @@ Kushala Blessing
 Latent Power
 Leap of Faith
 Load Shells
+Mail of Hellfire
 Marathon Runner
 Master Mounter
 Master's Touch
@@ -73,6 +84,7 @@ Poison Resistance
 Power Prolonger
 Protective Polish
 Punishing Draw
+Quick Breath
 Quick Sheath
 Rapid Fire Up
 Rapid Morph
@@ -80,6 +92,7 @@ Razor Sharp
 Recoil Down
 Recovery Speed
 Recovery Up
+Redirection
 Reload Speed
 Resentment
 Resuscitate
@@ -90,6 +103,7 @@ Spare Shot
 Special Ammo Boost
 Speed Eating
 Speed Sharpening
+Spiritbird’s Call
 Spread Up
 Stamina Surge
 Stamina Thief
@@ -101,7 +115,9 @@ Thunder Alignment
 Thunder Attack
 Thunder Resistance
 Tremor Resistance
+Tune-Up
 Wall Runner
+Wall-Runner (Boost)
 Water Attack
 Water Resistance
 Weakness Exploit

@@ -8,13 +8,20 @@ Ausweichdistanz
 Ballistik
 Bestrafender Zug
 Betäubungswiderstand
+Bladescale Hone
 Blasentanz
 Blitz-Morphen
 Blocken
 Blocken hoch
+Blood Rite
+Bloodlust
 Bombardier
 Botaniker
+Chain Crit
 Chameleos-Segen
+Charge Master
+Coalescence
+Dereliction
 Donner-Abgleich
 Donnerangriff
 Donnerwiderstand
@@ -33,13 +40,16 @@ Fangmeister
 Feuerangriff
 Feuerwiderstand
 Fokus
+Foray
 Freie Mahlzeit
+Furious
 Gegenschlag
 Geistiges Auge
 Geologe
 Giftangriff
 Giftwiderstand
 Glückserhöher
+Grinder (S)
 Groll
 Göttlicher Segen
 Handwerk
@@ -61,6 +71,7 @@ Latente Kraft
 Lähmer
 Lähmungsangriff
 Lähmungswiderstand
+Mail of Hellfire
 Marathon-Läufer
 Meisterschliff
 Mist-Widerstand
@@ -76,6 +87,8 @@ Perforation hoch
 Pestwiderstand
 Provozierer
 Prügler
+Quick Breath
+Redirection
 Rittmeister
 Rückstoßdämpfer
 Scharfschwert
@@ -92,19 +105,23 @@ Schwächevorteil
 Sehnenkraft
 Seilkäfer-Flüsterer
 Spezialmunitionboost
+Spiritbird’s Call
 Sprungmeister
 Sturmseele
 Teilezerstörer
 Teostra-Segen
+Tune-Up
 Unbeeindruckt
 Unverwundbarkeit
 Verteidigungsboost
+Wall-Runner (Boost)
 Wandläufer
 Wasserangriff
 Wasserwiderstand
 Wiederbelebung
 Wind-Abgleich
 Windsicher
+Wirebug Whisperer
 Wirkbereich
 Zerlegemeister
 Zerleger-Profi

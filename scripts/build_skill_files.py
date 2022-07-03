@@ -18,9 +18,7 @@ mappings = {
 }
 
 
-csv_path = os.path.join(
-    "C:\\Users\\chpoit\\Downloads", "mh-rise skills language - Feuille 1.csv"
-)
+csv_path = os.path.join(".", "mh-rise skills language - Feuille 1.csv")
 
 sp = os.path.join("data", "skills")
 os.makedirs(sp, exist_ok=True)
@@ -53,12 +51,23 @@ for lang_code in mappings.values():
         for s_n in sorted(skills[lang_code]):
             skill_fp.write(f"{s_n}\n")
 
-    with open(freq_file, "w", encoding="utf-8") as freq_fp, open(
-        corrections_file, "w", encoding="utf-8"
-    ) as corrections_fp:
+    old_corrections = []
+    with open(corrections_file, "r", encoding="utf-8") as corrections_fp:
+        old_corrections = list(
+            map(
+                lambda l: l.strip().split(",")[0],
+                filter(lambda l: not not l, corrections_fp.readlines()),
+            )
+        )
+
+    with open(freq_file, "w", encoding="utf-8") as freq_fp:
         for word in sorted(freqs[lang_code]):
             freq_fp.write(f"{word} {freqs[lang_code][word]}\n")
+
+    with open(corrections_file, "w", encoding="utf-8") as corrections_fp:
+        for word in sorted(set([n for n in freqs[lang_code]] + old_corrections)):
             corrections_fp.write(f"{word},{word}\n")
+
 
 with open(
     os.path.join(sp, "skill_mappings.en.json"), "w", encoding="utf-8"

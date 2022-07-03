@@ -23,7 +23,10 @@ Battitore
 Benediz. Chameleos
 Benedizione Kushala
 Benedizione Teostra
+Bladescale Hone
 Blocco
+Blood Rite
+Bloodlust
 Bombardiere
 Bonus attacco
 Bonus critico
@@ -34,24 +37,31 @@ Botanico
 Car. d'arco potenz.
 Caricorazze
 Cavaliere provetto
+Chain Crit
+Charge Master
+Coalescence
 Concentrazione
 Contrattacco
 Critico elementale
 Critico rapido
 Cuor di drago
 Danza bollicine
+Dereliction
 Devastatore
 Diversione
 Eroismo
 Esperto di ricavo
 Estens. di potenza
 Estensione oggetti
+Foray
 Forma perfetta
 Fortuna
 Forza latente
 Fungomante
 Fuoco rapido+
+Furious
 Geologo
+Grinder (S)
 Guardia offensiva
 Guardia perfetta
 Guarigione
@@ -62,6 +72,7 @@ Maestro del corno
 Maestro del ricavo
 Maestro di cattura
 Maestro saltatore
+Mail of Hellfire
 Mantello infernale
 Maratoneta
 Massima potenza
@@ -76,7 +87,9 @@ Precisione
 Preveggenza
 Protezione udito
 Punto debole
+Quick Breath
 Rafforzamento
+Redirection
 Resist. stordimento
 Resistenza acqua
 Resistenza drago
@@ -101,11 +114,15 @@ Schivata
 Schivata estesa
 Sfoderata punitrice
 Spaccamostri
+Spiritbird’s Call
 Strato protettivo
 Super resistenza
 Tempestanima
 Tiro di riserva
 Tocco del maestro
 Trasforma rapido
+Tune-Up
 Velocità ricarica
 Ventaglio+
+Wall-Runner (Boost)
+Wirebug Whisperer
