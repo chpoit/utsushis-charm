@@ -12,8 +12,12 @@ This repo contains code that will allow you to extract all of your charms in Mon
 
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but [this armor set searcher](https://mhrise.wiki-db.com/sim/?hl=en) exists. I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
-# Patch Notes (Updated June 22nd 2022)
-- 1.6
+# Patch Notes (Updated July 3rd 2022)
+- Not a published version dot zero
+  - I added the english version of the Sunbreak skills, the app should ask you if you want to download them (You will need to restart it)
+    - Sometimes the pop ups are behind the main window
+  - The other languages use the english names as placeholders, sorry about that, feel free to submit the names.
+- 1.6 (June 22nd 2022)
   - Added an app language dropdown
   - Version Checker automatically updates language files
     - Other updates (main app, skills and corrections) are still "on demand" when there is an update 
