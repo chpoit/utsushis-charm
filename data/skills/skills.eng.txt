@@ -85,7 +85,7 @@ Power Prolonger
 Protective Polish
 Punishing Draw
 Quick Breath
-Quick Sheath
+Quick Sheathe
 Rapid Fire Up
 Rapid Morph
 Razor Sharp
@@ -103,7 +103,7 @@ Spare Shot
 Special Ammo Boost
 Speed Eating
 Speed Sharpening
-Spiritbird’s Call
+Spiritbird's Call
 Spread Up
 Stamina Surge
 Stamina Thief
@@ -117,7 +117,7 @@ Thunder Resistance
 Tremor Resistance
 Tune-Up
 Wall Runner
-Wall-Runner (Boost)
+Wall Runner (Boost)
 Water Attack
 Water Resistance
 Weakness Exploit

@@ -107,7 +107,7 @@ Savoir-faire
 Sismologie
 Sniper
 Spartiate
-Spiritbird’s Call
+Spiritbird's Call
 Tir parcimonieux
 Tir super rapide
 Totem élémentaire
@@ -120,7 +120,7 @@ Un pour tous
 Vengeance
 Vitesse de rechargement
 Vol d'endurance
-Wall-Runner (Boost)
+Wall Runner (Boost)
 Wirebug Whisperer
 Âme de la tempête
 Ébullition

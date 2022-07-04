@@ -43,6 +43,11 @@ for index, row in content.iterrows():
             freqs[lang_code][word] += 1
 
 
+def _printem(x):
+    print(x, x[0] != x[1])
+    return x
+
+
 for lang_code in mappings.values():
     skill_file = os.path.join(sp, f"skills.{lang_code}.txt")
     freq_file = os.path.join(sp, f"skills.{lang_code}.freq")
@@ -55,7 +60,7 @@ for lang_code in mappings.values():
     with open(corrections_file, "r", encoding="utf-8") as corrections_fp:
         old_corrections = list(
             map(
-                lambda l: l.strip().split(",")[0],
+                lambda l: l.strip().split(","),
                 filter(lambda l: not not l, corrections_fp.readlines()),
             )
         )
@@ -65,8 +70,21 @@ for lang_code in mappings.values():
             freq_fp.write(f"{word} {freqs[lang_code][word]}\n")
 
     with open(corrections_file, "w", encoding="utf-8") as corrections_fp:
-        for word in sorted(set([n for n in freqs[lang_code]] + old_corrections)):
-            corrections_fp.write(f"{word},{word}\n")
+        for word1 in sorted(
+            set(
+                [f"{n},{n}" for n in freqs[lang_code]]
+                + list(
+                    map(
+                        lambda x: f"{x[0]},{x[1]}",
+                        filter(
+                            lambda x: x[0] != x[1],
+                            map(_printem, old_corrections),
+                        ),
+                    )
+                )
+            )
+        ):
+            corrections_fp.write(f"{word1}\n")
 
 
 with open(

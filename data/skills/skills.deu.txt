@@ -105,7 +105,7 @@ Schwächevorteil
 Sehnenkraft
 Seilkäfer-Flüsterer
 Spezialmunitionboost
-Spiritbird’s Call
+Spiritbird's Call
 Sprungmeister
 Sturmseele
 Teilezerstörer
@@ -114,7 +114,7 @@ Tune-Up
 Unbeeindruckt
 Unverwundbarkeit
 Verteidigungsboost
-Wall-Runner (Boost)
+Wall Runner (Boost)
 Wandläufer
 Wasserangriff
 Wasserwiderstand

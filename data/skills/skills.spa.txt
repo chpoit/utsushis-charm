@@ -115,7 +115,7 @@ Redirection
 Resentimiento
 Resistencia
 Rompepartes
-Spiritbird’s Call
+Spiritbird's Call
 Tapones
 Tiempo de carga
 Tiro especial
@@ -124,5 +124,5 @@ Toque del maestro
 Tune-Up
 Viento unificado
 Viento y trueno
-Wall-Runner (Boost)
+Wall Runner (Boost)
 Wirebug Whisperer
