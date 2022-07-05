@@ -6,7 +6,7 @@ version=$1
 echo Building version $version
 sub=_
 version_str="${version/./$sub}"
-archive_name="Utsushis-Charm_v${version_str}_linux.zip"
+archive_name="Utsushis-Charm_v${version_str}_macos.zip"
 
 
 rm -f $archive_name

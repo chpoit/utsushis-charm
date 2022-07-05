@@ -12,10 +12,12 @@ This repo contains code that will allow you to extract all of your charms in Mon
 
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but [this armor set searcher](https://mhrise.wiki-db.com/sim/?hl=en) exists. I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
-# Patch Notes (Updated July 3rd 2022)
-- Not a published version dot zero
-  - I added the english version of the Sunbreak skills, the app should ask you if you want to download them (You will need to restart it)
-    - Sometimes the pop ups are behind the main window
+# Patch Notes (Updated July 5th 2022)
+- 1.6.1 (July 5th 2022)
+  - Tesseract location now goes through the entire list of OS-specific locations
+  - You can now set a custom tesseract location in the config (it has a higher priority)
+  - Added a few extra error messages
+  - New English Sunbreak skills and corrections are now bundled.
   - The other languages use the english names as placeholders, sorry about that, feel free to submit the names.
 - 1.6 (June 22nd 2022)
   - Added an app language dropdown
@@ -34,7 +36,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 ## Requirements
 - A computer (Windows)
   - Linux and Mac might work too, you won’t be able to run the EXE and will have to run from source in a terminal window. Refer to [Running from source](#Running-from-source)
-    - A 1.6.0 build for Arch Linux is provided, since it's pyinstaller it *should* work everywhere, but lets get real, it probably wont
+    - A 1.6.1 build for Arch Linux is provided, since it's pyinstaller it *should* work everywhere, but lets get real, it probably wont
     - ~~A MacOS build is also provided for 1.6.0, but it's built on a hackintosh VM so you should assume it doesn't work and run from source.~~
 - A USB cable to connect your switch to transfer files
   - Alternatively use a capture card and record the screen. View the [FAQ](#faq) for Genki Shadowcast information
