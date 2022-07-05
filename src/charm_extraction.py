@@ -254,7 +254,7 @@ def extract_charms(
                     if charm.has_skills():
                         charms.append(charm)
                     else:
-                        logger.warn(_("logger-skill-less").format(frame_loc))
+                        logger.warning(_("logger-skill-less").format(frame_loc))
                 except Exception as e:
                     logger.error(_("logger-charm-error").format(frame_loc, e))
                     logger.exception("Traceback")
@@ -286,7 +286,7 @@ def save_duplicates(charms, mode="w"):
             charm_dupes[charm] = []
         charm_dupes[charm].append(frame_loc)
 
-    with open(dupe_file_name, mode) as dupe_file:
+    with open(dupe_file_name, mode, encoding="utf-8") as dupe_file:
         for charm in filter(lambda x: len(charm_dupes[x]) > 1, charm_dupes):
             locations = charm_dupes[charm]
             dupe_file.write(f"{charm.to_dict()}\n")

@@ -91,6 +91,7 @@ with open(
     os.path.join(sp, "skill_mappings.en.json"), "w", encoding="utf-8"
 ) as skill_map_fp:
     json.dump(skills_reverse, skill_map_fp, ensure_ascii=False)
+
 with open(
     os.path.join(sp, "skill_mappings.alt.json"), "w", encoding="utf-8"
 ) as skill_map_fp:

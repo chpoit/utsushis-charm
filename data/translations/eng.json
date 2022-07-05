@@ -64,5 +64,9 @@
     "new-skill-correction-update": "New automatic skill corrections were submitted (You: {}, New: {}), do you download them?",
     "wiki-button": "Open MHR Set Searcher",
     "wiki-clipboard": "Copy URL",
-    "wiki-attempt": "Attempting to open the website..."
+    "wiki-attempt": "Attempting to open the website...",
+    "tess-wait-5-retry": "Waiting 5 seconds before trying to download the language pack again...",
+    "tess-url-error": "A URL error occured, this might be a DNS issue... retrying",
+    "tess-cannot-download": "Unable to download Tesseract language pack.",
+    "tess-not-found": "Tesseract was not found. Please install it, and if it is installed, pass it as a command line option at least once. If you have done both and it still isn't found, please open an issue on Github."
 }

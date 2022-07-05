@@ -18,7 +18,7 @@ class Translator:
         if not os.path.isfile(lang_file):
             raise Exception("Invalid language file")
 
-        with open(lang_file) as f:
+        with open(lang_file, encoding="utf-8") as f:
             self.translations = json.load(f)
 
     def get_tl(self, message_key):

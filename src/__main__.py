@@ -17,12 +17,14 @@ from .ui.AskUpdate import AskUpdate, UpdateType
 from .ui.MainWindow import MainWindow
 from .translator import Translator
 from .resources import (
+    default_lang,
     get_language_code,
     get_resource_path,
     get_app_language,
     save_app_language,
     get_game_language,
     save_game_language,
+    save_tesseract_location,
 )
 from .updater.updater_utils import (
     ask_main_update,
@@ -36,7 +38,7 @@ import logging
 import json
 
 logging.basicConfig(
-    filename="app.log", filemode="w", format="%(name)s - %(levelname)s - %(message)s"
+    filename="app.log", filemode="w", format="%(name)s - %(levelname)s - %(message)s",level='INFO', force=True
 )
 
 logger = logging.getLogger(__name__)
@@ -45,7 +47,15 @@ logger = logging.getLogger(__name__)
 def handle_exception(exception, value, traceback):
     logger.error(f"An error occured {exception}, {value}, {str(traceback)}")
     logger.exception(f"An error occured")
-    print("An error occured", exception)
+    print("An error occured", exception, str(traceback))
+
+
+def reset_config():
+    config_path = get_resource_path("CONFIG")
+    if os.path.exists(config_path):
+        os.remove(config_path)
+
+    init_config(get_language_code(default_lang()), get_language_code(default_lang()))
 
 
 def init_config(app_language_code, skill_language_code):
@@ -69,21 +79,30 @@ def init_config(app_language_code, skill_language_code):
             )
 
 
+def read_default_args(args):
+    if args.tess_dir is not None:
+        save_tesseract_location(args.tess_dir)
+
+    if args.app_language is not None:
+        app_language_code = get_language_code(args.app_language)
+        save_app_language(app_language_code)
+
+    if args.language is not None:
+        skill_language_code = get_language_code(args.language)
+        save_game_language(skill_language_code)
+
+
 def main(args):
     if args.license:
         print_licenses()
         sys.exit(0)
 
-    app_language_code = get_language_code(args.app_language)
-    skill_language_code = get_language_code(args.language)
-
-    init_config(app_language_code, skill_language_code)
     if args.reset_config:
-        save_app_language(skill_language_code)
-        save_game_language(skill_language_code)
+        reset_config()
 
     app_language_code = get_app_language()
     skill_language_code = get_game_language()
+    init_config(app_language_code, skill_language_code)
 
     if args.console:
         run_in_console(args)
@@ -92,7 +111,7 @@ def main(args):
         version_checker = VersionChecker()
 
         language_versions = version_checker.get_language_versions()
-        
+
         for language_version in language_versions:
             lang, code, local, remote = language_version
             if local < remote:
@@ -104,7 +123,10 @@ def main(args):
                     pass
 
         main_window, translator = create_main_window(
-            args, skill_language_code, list(map(lambda x: x[0], language_versions))
+            args,
+            skill_language_code,
+            app_language_code,
+            list(map(lambda x: x[0], language_versions)),
         )
 
         new_app_update = ask_main_update(version_checker, main_window, translator)
@@ -117,8 +139,7 @@ def main(args):
         main_window.mainloop()
 
 
-def create_main_window(args, skill_language_code, app_langs):
-    app_language_code = get_language_code(args.app_language)
+def create_main_window(args, skill_language_code, app_language_code, app_langs):
     translator = Translator(app_language_code)
     new_window = MainWindow(translator, args, skill_language_code, app_langs)
     new_window.report_callback_exception = handle_exception
