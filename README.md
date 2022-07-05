@@ -13,6 +13,8 @@ This repo contains code that will allow you to extract all of your charms in Mon
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but [this armor set searcher](https://mhrise.wiki-db.com/sim/?hl=en) exists. I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
 # Patch Notes (Updated July 5th 2022)
+The next non-bugfix version will have the option to ignore an update for those who don't care or don't have issues. Sorry for the double update in one day
+
 - 1.6.2 (July 5th 2022)
   - Fixed an issue with the creation of the config file
   - `--reset` commandline option now takes into account `-a` and `-l`
@@ -39,7 +41,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
 ## Requirements
 - A computer (Windows)
   - Linux and Mac might work too, you won’t be able to run the EXE and will have to run from source in a terminal window. Refer to [Running from source](#Running-from-source)
-    - A 1.6.1 build for Arch Linux is provided, since it's pyinstaller it *should* work everywhere, but lets get real, it probably wont
+    - A build for Arch Linux is provided, since it's pyinstaller it *should* work everywhere, but lets get real, it probably wont
     - ~~A MacOS build is also provided for 1.6.0, but it's built on a hackintosh VM so you should assume it doesn't work and run from source.~~
 - A USB cable to connect your switch to transfer files
   - Alternatively use a capture card and record the screen. View the [FAQ](#faq) for Genki Shadowcast information
