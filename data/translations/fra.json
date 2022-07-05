@@ -64,5 +64,9 @@
     "new-skill-correction-update": "Des nouvelles corrections automatiques ont été soumises, (Locale: {}, Nouvelle: {}), voulez-vous les télécharger?",
     "wiki-button": "Visiter le MHR Set Searcher",
     "wiki-clipboard": "Copier l'URL",
-    "wiki-attempt": "Tentative d'ouverture du site web..."
+    "wiki-attempt": "Tentative d'ouverture du site web...",
+    "tess-wait-5-retry":"Pause de 5 secondes avant de ré-essayer le téléchargement du language pack...",
+    "tess-url-error":"Une erreur d'URL s'est produite, potentiellement causé par une erreur DNS...",
+    "tess-cannot-download":"Impossible de télécharger le language pack Tesseract.",
+    "tess-not-found": "Tesseract n'a pas été trouv. Veuillez l'installer, s'il est installé, passez le à travers le command line au moins une fois. Si cette erreur continue d'apparaître, veuillez créer une issue sur Github.."
 }

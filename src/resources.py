@@ -147,6 +147,11 @@ def get_english_skill_mapping_url(language="eng"):
     url = f"https://raw.githubusercontent.com/chpoit/utsushis-charm/master/data/skills/skill_mappings.en.json"
     return url
 
+def get_wiki_url(skill_language_code):
+    if skill_language_code == "jpn":
+        return "https://mhrise.wiki-db.com/sim"
+    return "https://mhrise.wiki-db.com/sim/?hl=en"
+    
 
 def get_english_skill_mappping_location():
     return os.path.join(get_resource_path("LOCAL_SKILLS"), "skill_mappings.en.json")
@@ -214,12 +219,27 @@ def save_game_language(app_language_code):
     _write_config(config)
 
 
+def get_tesseract_location():
+    config = _load_config()
+    if "tesseract-directory" in config:
+        return config["tesseract-directory"]
+    return None
+
+
+def save_tesseract_location(location):
+    config = _load_config()
+    config["tesseract-directory"] = location
+    _write_config(config)
+
+
 def reverse(dict_):
     reversed = {}
     for key in dict_:
         reversed[dict_[key]] = key
     return reversed
 
+def default_lang():
+    return "English"
 
 _local_root = os.getenv("LOCALAPPDATA") or HOME if WINDOWS else HOME
 _local_dir_name = "utsushis-charm"

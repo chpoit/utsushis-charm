@@ -14,8 +14,8 @@ if new_version is sys.argv[0]:
 
 print("Writing", new_version, "to file")
 
-with open(os.path.join("data", "versions.json"), "r") as f:
+with open(os.path.join("data", "versions.json"), "r", encoding="utf-8") as f:
     versions = json.load(f)
 versions["app"] = new_version
-with open(os.path.join("data", "versions.json"), "w") as f:
+with open(os.path.join("data", "versions.json"), "w", encoding="utf-8") as f:
     json.dump(versions, f, indent=4)

@@ -3,6 +3,8 @@ import shutil
 import json
 import tkinter as tk
 from tkinter import filedialog, END
+
+from ..tesseract.tesseract_utils import does_tess_exist
 from ..frame_extraction import extract_unique_frames
 from ..charm_extraction import extract_charms, save_charms, remove_duplicates
 from ..charm_encoding import encode_charms
@@ -13,6 +15,7 @@ from ..resources import (
     get_resource_path,
     get_language_code,
     get_language_list,
+    get_wiki_url,
     save_app_language,
     save_game_language,
     translate_lang,
@@ -27,7 +30,7 @@ import webbrowser
 class MainWindow(tk.Tk):
     def __init__(self, _: Translator, args, skill_language_code, app_langs):
         super().__init__()
-        self.wiki_url = "https://mhrise.wiki-db.com/sim/?hl=en"
+        self.wiki_url = get_wiki_url(skill_language_code)
         self.charms = CharmList()
         self.args = args
         self._unchanged_langs = app_langs
@@ -58,6 +61,9 @@ class MainWindow(tk.Tk):
 
         self._regen_paths()
         self._build_ui()
+
+        if not does_tess_exist():
+            print(_("tess-not-found"))
 
     def refresh(self, _: Translator = None):
         if not _:

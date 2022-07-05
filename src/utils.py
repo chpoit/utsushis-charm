@@ -194,7 +194,7 @@ def print_licenses():
     print("Third party licenses")
     for f in os.scandir(get_resource_path("LICENCES")):
         print(f"License for {f.name}")
-        with open(f.path, "r") as l_f:
+        with open(f.path, "r", encoding="utf-8") as l_f:
             print(l_f.read())
 
         print("\n\n")

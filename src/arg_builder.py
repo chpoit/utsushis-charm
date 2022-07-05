@@ -35,6 +35,7 @@ def build_args():
         help="Changes the Input directory for videos",
         default="inputs",
     )
+    
     parser.add_argument(
         "-f",
         "--frames",
@@ -42,6 +43,15 @@ def build_args():
         required=False,
         help="Changes the Directory used to store temporary frames",
         default="frames",
+    )
+
+    parser.add_argument(
+        "-t",
+        "--tesseract",
+        dest="tess_dir",
+        required=False,
+        help="When you want to pass a custom tesseract location. It is saved to the config",
+        default=None,
     )
 
     parser.add_argument(
@@ -66,8 +76,8 @@ def build_args():
         "--language",
         dest="language",
         required=False,
-        help="Sets the language of the switch recording. (only works for first launch)",
-        default="English",
+        help="Sets the language of the switch recording. It is saved to the config",
+        default=None,
     )
 
     parser.add_argument(
@@ -75,8 +85,8 @@ def build_args():
         "--app-language",
         dest="app_language",
         required=False,
-        help="Sets the language of the app. (only works for first launch)",
-        default="English",
+        help="Sets the language of the app. It is saved to the config",
+        default=None,
     )
 
     parser.add_argument(

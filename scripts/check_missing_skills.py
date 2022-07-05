@@ -1,7 +1,7 @@
 import os
 
 all_skills = set()
-with open(os.path.join("data", "skill_list.txt")) as slf:
+with open(os.path.join("data", "skill_list.txt"), encoding="utf-8") as slf:
     for line in slf.readlines():
         skill_name = line.strip()
         all_skills.add(skill_name)
