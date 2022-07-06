@@ -10,9 +10,9 @@ assignees: chpoit
 **Device**
 - Switch or PC (Where do you play)
   - For PC, what is your screen resolution: 
-  - For PC, what is your OS: 
   - For switch, is your recording at least 720p (ignore if you are using the switch recording feature): 
 - Game language: 
+- OS: 
 - App version: 
 
 **app.log contents**
