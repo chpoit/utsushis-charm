@@ -247,6 +247,7 @@ Normal instructions apply once the application starts.
   - **Google Tesseract** installed and in path
     - A copy of the version 5.0.1 is bundled with the release. Just run it, no extra packages needed
       - You can download the installer here version here: [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v5.0.1.20220118.exe)
+      - [A list of versions is made available by UB Mannheim here](https://digi.bib.uni-mannheim.de/tesseract/) make sure you use the "w64" version, unless you're a weirdo who is still on a 32bit system.
     - Make sure it's in path
   - Python3 installed and in path  
   - CPP Build tools https://visualstudio.microsoft.com/visual-cpp-build-tools/
