@@ -13,6 +13,9 @@ This repo contains code that will allow you to extract all of your charms in Mon
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but [this armor set searcher](https://mhrise.wiki-db.com/sim/?hl=en) exists. I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
 # Patch Notes (Updated July 5th 2022)
+- 1.6.2 (July 5th 2022)
+  - Fixed an issue with the creation of the config file
+  - `--reset` commandline option now takes into account `-a` and `-l`
 - 1.6.1 (July 5th 2022)
   - Tesseract location now goes through the entire list of OS-specific locations
   - You can now set a custom tesseract location in the config (it has a higher priority)
@@ -267,3 +270,4 @@ If you run from source, or call the executable from the terminal you can make us
 - `-l <LANG_NAME>` or `--language <LANG_NAME>`: Changes the default language for the recordings. Use the list in [Supported languages](#supported-game-language) to know what to enter. It only works for the first launch, data in the config file takes priority.
 - `-a <LANG_NAME>` or `--app-language <LANG_NAME>`: Changes the language of the app. Use the list in [Supported languages](#supported-game-language) to know what to enter. It only works for the first launch, data in the config file takes priority.
 - `--reset`: Resets data in the config. Currently forces the language to be overwritten in config with `-a` and `-l` arguments.
+- `-t <TESSERACT_DIRECTORY>` or `--tesseract <TESSERACT_DIRECTORY>`: When you want to pass a custom tesseract location. It is saved to the config. Pass either the dll or .so.X file, or the directory containing it.

@@ -7,6 +7,8 @@ from symspellpy.symspellpy import SymSpell
 import logging
 import json
 
+from .exceptions.MissingTranslationError import MissingTranslationError
+
 logger = logging.getLogger(__name__)
 
 
@@ -61,12 +63,12 @@ def get_language_list():
     return _language_list
 
 
-def get_language_code(language):
-    return _language_code_mappings[language]
+def get_language_code(language: str):
+    return _language_code_mappings[language.strip()]
 
 
-def get_language_from_code(language_code):
-    return _reverse_language_code_mappings[language_code]
+def get_language_from_code(language_code: str):
+    return _reverse_language_code_mappings[language_code.strip()]
 
 
 def _backup_corrections(language_code):
@@ -147,11 +149,12 @@ def get_english_skill_mapping_url(language="eng"):
     url = f"https://raw.githubusercontent.com/chpoit/utsushis-charm/master/data/skills/skill_mappings.en.json"
     return url
 
+
 def get_wiki_url(skill_language_code):
     if skill_language_code == "jpn":
         return "https://mhrise.wiki-db.com/sim"
     return "https://mhrise.wiki-db.com/sim/?hl=en"
-    
+
 
 def get_english_skill_mappping_location():
     return os.path.join(get_resource_path("LOCAL_SKILLS"), "skill_mappings.en.json")
@@ -165,6 +168,8 @@ def get_translation_location(language="eng"):
         os.makedirs(get_resource_path("LOCAL_TRANSLATIONS"), exist_ok=True)
         lang_dir = get_resource_path("INTERNAL_TRANSLATIONS")
         lang_file = os.path.join(lang_dir, f"{language}.json")
+        if not os.path.isfile(lang_file):
+            raise MissingTranslationError(get_language_from_code(language))
         shutil.copy(lang_file, local_file)
     return local_file
 
@@ -177,6 +182,7 @@ def get_versions_location():
 
 
 def _load_config():
+    init_config(get_language_code(default_lang()), get_language_code(default_lang()))
     config_path = get_resource_path("CONFIG")
     with open(config_path, "r", encoding="utf-8") as config_f:
         config = json.load(config_f)
@@ -184,9 +190,40 @@ def _load_config():
 
 
 def _write_config(config):
+    init_config(get_language_code(default_lang()), get_language_code(default_lang()))
     config_path = get_resource_path("CONFIG")
     with open(config_path, "w", encoding="utf-8") as config_f:
         json.dump(config, config_f)
+
+
+def reset_config(app_lang: str = None, skill_lang: str = None):
+    config_path = get_resource_path("CONFIG")
+    if os.path.exists(config_path):
+        os.remove(config_path)
+
+    app_lang = app_lang.strip() if app_lang else default_lang()
+    skill_lang = skill_lang.strip() if skill_lang else default_lang()
+
+    if app_lang not in _language_code_mappings:
+        app_lang = default_lang()
+
+    if skill_lang not in _language_code_mappings:
+        skill_lang = default_lang()
+
+    init_config(get_language_code(app_lang), get_language_code(skill_lang))
+
+
+def init_config(app_language_code, skill_language_code):
+    config_path = get_resource_path("CONFIG")
+    if not os.path.exists(config_path) or os.stat(config_path).st_size == 0:
+        with open(config_path, "w", encoding="utf-8") as config_f:
+            json.dump(
+                {
+                    "app-language": app_language_code,
+                    "game-language": skill_language_code,
+                },
+                config_f,
+            )
 
 
 def get_app_language():
@@ -238,8 +275,10 @@ def reverse(dict_):
         reversed[dict_[key]] = key
     return reversed
 
+
 def default_lang():
     return "English"
+
 
 _local_root = os.getenv("LOCALAPPDATA") or HOME if WINDOWS else HOME
 _local_dir_name = "utsushis-charm"

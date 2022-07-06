@@ -21,6 +21,7 @@ from .resources import (
     get_language_code,
     get_resource_path,
     get_app_language,
+    reset_config,
     save_app_language,
     get_game_language,
     save_game_language,
@@ -38,7 +39,11 @@ import logging
 import json
 
 logging.basicConfig(
-    filename="app.log", filemode="w", format="%(name)s - %(levelname)s - %(message)s",level='INFO', force=True
+    filename="app.log",
+    filemode="w",
+    format="%(name)s - %(levelname)s - %(message)s",
+    level="INFO",
+    force=True,
 )
 
 logger = logging.getLogger(__name__)
@@ -50,15 +55,7 @@ def handle_exception(exception, value, traceback):
     print("An error occured", exception, str(traceback))
 
 
-def reset_config():
-    config_path = get_resource_path("CONFIG")
-    if os.path.exists(config_path):
-        os.remove(config_path)
-
-    init_config(get_language_code(default_lang()), get_language_code(default_lang()))
-
-
-def init_config(app_language_code, skill_language_code):
+def init_dirs():
     dirs_to_init = [
         get_resource_path("LOCAL_DIR"),
         get_resource_path("LOCAL_TRANSLATIONS"),
@@ -66,17 +63,6 @@ def init_config(app_language_code, skill_language_code):
     ]
     for dir_to_init in dirs_to_init:
         os.makedirs(dir_to_init, exist_ok=True)
-
-    config_path = get_resource_path("CONFIG")
-    if not os.path.exists(config_path) or os.stat(config_path).st_size == 0:
-        with open(config_path, "w", encoding="utf-8") as config_f:
-            json.dump(
-                {
-                    "app-language": app_language_code,
-                    "game-language": skill_language_code,
-                },
-                config_f,
-            )
 
 
 def read_default_args(args):
@@ -93,16 +79,18 @@ def read_default_args(args):
 
 
 def main(args):
+    init_dirs()
     if args.license:
         print_licenses()
         sys.exit(0)
 
     if args.reset_config:
-        reset_config()
+        reset_config(args.app_language, args.language)
+
+    read_default_args(args)
 
     app_language_code = get_app_language()
     skill_language_code = get_game_language()
-    init_config(app_language_code, skill_language_code)
 
     if args.console:
         run_in_console(args)

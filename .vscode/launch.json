@@ -17,7 +17,9 @@
             "request": "launch",
             "program": "main.py",
             "console": "integratedTerminal",
-            "args": []
+            "args": [
+                // "--reset",
+            ]
         },
         {
             "name": "Frame Extraction",
