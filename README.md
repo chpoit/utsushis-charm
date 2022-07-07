@@ -1,6 +1,6 @@
 [![Github All Releases](https://img.shields.io/github/downloads/chpoit/utsushis-charm/total.svg)]() [![Github All Releases](https://img.shields.io/github/downloads/chpoit/utsushis-charm/latest/total.svg)]()
 
-# Utsushi's Charm (or how to easily import your charms with recordings)
+# Utsushi's Charm
 
 > Whenever I look at Utsushi I feel like I can do anything. Unfortunately, when I need to register my charms, I can't lose myself in Utsushi's charm.
 > Fortunately, now, with Utsushi's charm, I can lose myself in Utsushi's charm for longer.
