@@ -7,7 +7,7 @@
     "input-dir": "Dossier des vidéos: ",
     "frame-dir": "Dossier des frames: ",
     "skipping-frames": "Sauter l'extraction des frames: ",
-    "skip-frames": "Ignore l'extraction des frames\n (Récupération d'une exécution échouée)",
+    "skip-frames": "Sauter l'extraction des frames\n(Récupération d'une exécution échouée)",
     "skip-charms": "Sauter l'extraction des charmes (Pourquoi??)",
     "delete-frames": "Supprimer les anciens frames",
     "deleting-frames": "Suppression des frames: ",
@@ -65,8 +65,10 @@
     "wiki-button": "Visiter le MHR Set Searcher",
     "wiki-clipboard": "Copier l'URL",
     "wiki-attempt": "Tentative d'ouverture du site web...",
-    "tess-wait-5-retry":"Pause de 5 secondes avant de ré-essayer le téléchargement du language pack...",
-    "tess-url-error":"Une erreur d'URL s'est produite, potentiellement causé par une erreur DNS...",
-    "tess-cannot-download":"Impossible de télécharger le language pack Tesseract.",
-    "tess-not-found": "Tesseract n'a pas été trouv. Veuillez l'installer, s'il est installé, passez le à travers le command line au moins une fois. Si cette erreur continue d'apparaître, veuillez créer une issue sur Github.."
+    "tess-wait-5-retry": "Pause de 5 secondes avant de ré-essayer le téléchargement du language pack...",
+    "tess-url-error": "Une erreur d'URL s'est produite, potentiellement causé par une erreur DNS...",
+    "tess-cannot-download": "Impossible de télécharger le language pack Tesseract.",
+    "tess-not-found": "Tesseract n'a pas été trouv. Veuillez l'installer, s'il est installé, passez le à travers le command line au moins une fois. Si cette erreur continue d'apparaître, veuillez créer une issue sur Github..",
+    "remove-black-bars": "Détecter et retirer les barres noires des vidéos.\nDevrait permettre la capture du jeu en mode fenêtre sur PC.",
+    "remove-black-bars-info": "L'applicaiton va essayer d'enlever les barres noires autour du vidéo.\nC'est utile lorsque vous n'avez pas configuré la taille de la TV pour la switch.\nC'est 100% expérimental et un peu aléatoire.\nEnregistrez les vidéos comme il faut avant de vous plaindre :)"
 }

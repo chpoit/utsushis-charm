@@ -31,8 +31,8 @@ def resize_frame(frame):
     return frame
 
 
-def crop_frames(capture_device):
-    for i, f in read_frames(capture_device):
+def crop_frames(capture_device, remove_black_bars):
+    for i, f in read_frames(capture_device, remove_black_bars):
         yield i, crop_frame(f)
 
 
@@ -159,6 +159,7 @@ def is_validated_video_format(video_name):
 def extract_unique_frames(
     input_dir,
     frame_dir,
+    remove_black_bars=False,
     _=lambda x: x,
     iter_wrapper=None,
     frame_callback=lambda x: None,
@@ -193,7 +194,7 @@ def extract_unique_frames(
 
         previous_charm_marker = None
         with iter_wrapper(
-            crop_frames(cap),
+            crop_frames(cap, remove_black_bars),
             total=frame_count,
             desc=_("fn-total-charm").format(f_name, frame_count),
         ) as frame_pbar:
