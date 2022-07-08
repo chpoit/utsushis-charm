@@ -1,8 +1,11 @@
 import os
+import random
 import cv2
+
 from .utils import (
     apply_pre_crop_mask,
     get_frame_change_observation_section,
+    compare_pixel,
 )
 from tqdm import tqdm
 from math import floor
@@ -29,22 +32,110 @@ def resize_frame(frame):
 
 
 def crop_frames(capture_device):
-    results = []
     for i, f in read_frames(capture_device):
         yield i, crop_frame(f)
 
 
-def read_frames(capture_device):
+def _jitter_pos(pos: int, jitter_range: int = 10):
+    return pos + (random.randint(-jitter_range, jitter_range))
+
+
+# top, left, right, bottom
+def detect_black_bars(frame):
+    height, width = frame.shape[:2]
+
+    x_pos_base = floor(width / 2)
+    y_pos_base = floor(height / 2)
+    prev_pixel = None
+
+    i = 0
+    top = 5
+    left = 5
+    right = 5
+    bottom = 5
+    while True:
+        pixel = frame[top, _jitter_pos(x_pos_base)]
+        if prev_pixel is not None:
+            if compare_pixel(pixel, prev_pixel):
+                top += 1
+            else:
+                prev_pixel = None
+                break
+        else:
+            prev_pixel = pixel
+
+    while True:
+        pixel = frame[height - bottom - 1, _jitter_pos(x_pos_base)]
+        if prev_pixel is not None:
+            if compare_pixel(pixel, prev_pixel):
+                bottom += 1
+            else:
+                prev_pixel = None
+                break
+        else:
+            prev_pixel = pixel
+
+    while True:
+        pixel = frame[_jitter_pos(y_pos_base), left]
+        if prev_pixel is not None:
+            if compare_pixel(pixel, prev_pixel):
+                left += 1
+            else:
+                prev_pixel = None
+                break
+        else:
+            prev_pixel = pixel
+
+    while True:
+        pixel = frame[_jitter_pos(y_pos_base), width - right - 1]
+        if prev_pixel is not None:
+            if compare_pixel(pixel, prev_pixel):
+                right += 1
+            else:
+                prev_pixel = None
+                break
+        else:
+            prev_pixel = pixel
+
+    if top == 5:
+        top = 0
+    if left == 5:
+        left = 0
+    if right == 5:
+        right = 0
+    if bottom == 5:
+        bottom = 0
+
+    return (top, left, right, bottom)
+
+
+def crop_black_bars(frame, black_bars):
+    (top, left, right, bottom) = black_bars
+    height, width = frame.shape[:2]
+
+    y = top
+    y2 = height - bottom
+    x = left
+    x2 = width - right
+    return frame[y:y2, x:x2]
+
+
+def read_frames(capture_device, remove_black_bars=False):
     i = 0
     fps = capture_device.get(cv2.CAP_PROP_FPS)
+    black_bars = None
 
     while True:
         ret, frame = capture_device.read()
+        if i == 0:
+            black_bars = detect_black_bars(frame)
         if not ret:
             break
         if fps == 60 and (i % 2):
             pass
         else:
+            if remove_black_bars:
+                frame = crop_black_bars(frame, black_bars)
             yield i, resize_frame(frame)
         i += 1
 

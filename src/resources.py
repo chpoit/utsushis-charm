@@ -221,6 +221,7 @@ def init_config(app_language_code, skill_language_code):
                 {
                     "app-language": app_language_code,
                     "game-language": skill_language_code,
+                    "black-bar-threshold": 10,
                 },
                 config_f,
             )
@@ -228,7 +229,11 @@ def init_config(app_language_code, skill_language_code):
 
 def get_app_language():
     config = _load_config()
-    return config["app-language"]
+    return (
+        config["app-language"]
+        if "app-language" in config
+        else get_language_code(default_lang())
+    )
 
 
 def save_app_language(app_language_code):
@@ -247,7 +252,16 @@ def untranslate_lang(lang):
 
 def get_game_language():
     config = _load_config()
-    return config["game-language"]
+    return (
+        config["game-language"]
+        if "game-language" in config
+        else get_language_code(default_lang())
+    )
+
+
+def get_black_bar_threshold():
+    config = _load_config()
+    return config["black-bar-threshold"] if "black-bar-threshold" in config else 10
 
 
 def save_game_language(app_language_code):
@@ -296,6 +310,7 @@ _resources = {
     "slot1": _alter_resource_path(os.path.join("images", "slots", "slot1.png")),
     "slot2": _alter_resource_path(os.path.join("images", "slots", "slot2.png")),
     "slot3": _alter_resource_path(os.path.join("images", "slots", "slot3.png")),
+    "slot4": _alter_resource_path(os.path.join("images", "slots", "slot4.png")),
     "mask": _alter_resource_path(os.path.join("images", "mask.png")),
     "charm_only": _alter_resource_path(os.path.join("images", "charm_only.png")),
     "skill_mask": _alter_resource_path(os.path.join("images", "skill_mask.png")),
