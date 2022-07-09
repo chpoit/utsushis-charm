@@ -143,7 +143,7 @@ def find_tesseract(silent=False):
     )
 
 
-def override_tessdata():
+def use_localappdata_tess():
     base_path = HOME
     if WINDOWS:
         base_path = os.getenv("LOCALAPPDATA") or HOME
@@ -154,17 +154,13 @@ def override_tessdata():
 
 def set_tessdata():
     if _is_pyinstaller():
-        override_tessdata()
+        use_localappdata_tess()
         return
 
     if "TESSDATA_PREFIX" in os.environ:
         return
 
-    path = find_tesseract(silent=True)
-    path = os.path.dirname(path)
-    TESSDATA_PREFIX = os.path.join(path, "tessdata")
-    os.environ["TESSDATA_PREFIX"] = TESSDATA_PREFIX
-    logger.debug(f"Set 'TESSDATA_PREFIX' to {TESSDATA_PREFIX}")
+    use_localappdata_tess()
 
 
 def get_datapath():
@@ -172,7 +168,7 @@ def get_datapath():
         set_tessdata()
 
     if os.environ["TESSDATA_PREFIX"] == "tessdata":
-        override_tessdata()
+        use_localappdata_tess()
 
     return os.environ["TESSDATA_PREFIX"]
 
@@ -204,7 +200,7 @@ def download_language_data(lang="eng", _=lambda x: x, retry=False):
     except PermissionError as e:
         print(_("tess-permission-denied"))
         if not retry:
-            override_tessdata()
+            use_localappdata_tess()
             download_language_data(lang, _, retry=True)
     except URLError as e:
         print(_("tess-url-error"))

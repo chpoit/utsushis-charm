@@ -102,7 +102,9 @@ def load_corrections(language_code, known_corrections=None):
 
 def get_spell_checker(language_code):
     spell = SymSpell(max_dictionary_edit_distance=4)
-    spell.load_dictionary(get_word_freqs_location(language_code), 0, 1)
+    spell.load_dictionary(
+        get_word_freqs_location(language_code), 0, 1, encoding="utf-8"
+    )
     return spell
 
 

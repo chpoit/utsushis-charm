@@ -106,14 +106,13 @@ def get_slots(img):
     spot3 = img[y : y + h, x3 : x3 + w]
 
     slots = []
-    most_similar = None
     j = 1
     for spot in [spot1, spot2, spot3]:
-        score0 = structural_similarity(spot, slot0, multichannel=True)
-        score1 = structural_similarity(spot, slot1, multichannel=True)
-        score2 = structural_similarity(spot, slot2, multichannel=True)
-        score3 = structural_similarity(spot, slot3, multichannel=True)
-        score4 = structural_similarity(spot, slot4, multichannel=True)
+        score0 = structural_similarity(spot, slot0, channel_axis=-1)
+        score1 = structural_similarity(spot, slot1, channel_axis=-1)
+        score2 = structural_similarity(spot, slot2, channel_axis=-1)
+        score3 = structural_similarity(spot, slot3, channel_axis=-1)
+        score4 = structural_similarity(spot, slot4, channel_axis=-1)
 
         j += 1
         scores = [score0, score1, score2, score3, score4]
