@@ -48,7 +48,9 @@ class MainWindow(tk.Tk):
 
         self.input_dir = tk.StringVar(value=args.input_dir)
         self.frame_dir = tk.StringVar(value=args.frame_dir)
-        self.lang = tk.StringVar(value=get_language_from_code(skill_language_code))
+        self.lang = tk.StringVar(
+            value=translate_lang(get_language_from_code(skill_language_code))
+        )
         self.app_lang = tk.StringVar(value=translate_lang(_.language))
 
         self.charm_json = args.charm_json
@@ -56,6 +58,7 @@ class MainWindow(tk.Tk):
 
         self.skip_frames = tk.IntVar(value=args.skip_frames)
         self.skip_charms = tk.IntVar(value=args.skip_charms)
+        self.remove_black_bars = tk.IntVar(value=False)
         self.autosave = tk.IntVar(value=1)
         self.delete_frames_val = tk.IntVar()
 
@@ -122,9 +125,18 @@ class MainWindow(tk.Tk):
                 runtime_frame, text=_("skip-charms"), variable=self.skip_charms
             )
 
+            self.remove_black_bars_box = tk.Checkbutton(
+                runtime_frame,
+                text=_("remove-black-bars"),
+                variable=self.remove_black_bars,
+                command=self._black_bar_activated,
+            )
+
             self.autosave_box.grid(column=1, row=1, sticky="w")
             self.del_frames_box.grid(column=1, row=2, sticky="w")
             self.skip_frames_box.grid(column=1, row=3, sticky="w")
+            self.remove_black_bars_box.grid(column=1, row=4, sticky="w")
+
             # self.skip_charms_box.grid(column=0, row=4, sticky="w") # Hidden for now
             return runtime_frame
 
@@ -311,6 +323,7 @@ class MainWindow(tk.Tk):
                 extract_unique_frames(
                     self.input_dir.get(),
                     self.frame_dir.get(),
+                    self.remove_black_bars.get(),
                     _,
                     self.pbar,
                     self.progress_callback,
@@ -418,6 +431,12 @@ class MainWindow(tk.Tk):
     def _regen_paths(self):
         os.makedirs(self.input_dir.get(), exist_ok=True)
         os.makedirs(self.frame_dir.get(), exist_ok=True)
+
+    def _black_bar_activated(self, _=None):
+        if _ is None:
+            _ = self._
+        if self.remove_black_bars.get():
+            print(_("remove-black-bars-info"))
 
     def write(self, *message, end="\n", sep=" "):
         text = ""

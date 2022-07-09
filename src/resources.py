@@ -1,3 +1,4 @@
+from distutils.command.config import config
 import os
 import sys
 import shutil
@@ -6,6 +7,8 @@ from pathlib import Path
 from symspellpy.symspellpy import SymSpell
 import logging
 import json
+
+from .updater.SimpleSemVer import SimpleSemVer
 
 from .exceptions.MissingTranslationError import MissingTranslationError
 
@@ -99,7 +102,9 @@ def load_corrections(language_code, known_corrections=None):
 
 def get_spell_checker(language_code):
     spell = SymSpell(max_dictionary_edit_distance=4)
-    spell.load_dictionary(get_word_freqs_location(language_code), 0, 1)
+    spell.load_dictionary(
+        get_word_freqs_location(language_code), 0, 1, encoding="utf-8"
+    )
     return spell
 
 
@@ -221,6 +226,7 @@ def init_config(app_language_code, skill_language_code):
                 {
                     "app-language": app_language_code,
                     "game-language": skill_language_code,
+                    "black-bar-threshold": 10,
                 },
                 config_f,
             )
@@ -228,7 +234,11 @@ def init_config(app_language_code, skill_language_code):
 
 def get_app_language():
     config = _load_config()
-    return config["app-language"]
+    return (
+        config["app-language"]
+        if "app-language" in config
+        else get_language_code(default_lang())
+    )
 
 
 def save_app_language(app_language_code):
@@ -247,13 +257,41 @@ def untranslate_lang(lang):
 
 def get_game_language():
     config = _load_config()
-    return config["game-language"]
+    return (
+        config["game-language"]
+        if "game-language" in config
+        else get_language_code(default_lang())
+    )
+
+
+def get_black_bar_threshold():
+    config = _load_config()
+    return config["black-bar-threshold"] if "black-bar-threshold" in config else 10
 
 
 def save_game_language(app_language_code):
     config = _load_config()
     config["game-language"] = app_language_code
     _write_config(config)
+
+
+def save_ignored_update(version: SimpleSemVer):
+    config = _load_config()
+    config["skipped-version"] = str(version) if version is not None else version
+    _write_config(config)
+
+
+def get_ignored_update() -> SimpleSemVer:
+    config = _load_config()
+    try:
+        return (
+            SimpleSemVer(config["skipped-version"])
+            if "skipped-version" in config
+            else None
+        )
+    except:
+        save_ignored_update(None)
+        return None
 
 
 def get_tesseract_location():
@@ -296,6 +334,7 @@ _resources = {
     "slot1": _alter_resource_path(os.path.join("images", "slots", "slot1.png")),
     "slot2": _alter_resource_path(os.path.join("images", "slots", "slot2.png")),
     "slot3": _alter_resource_path(os.path.join("images", "slots", "slot3.png")),
+    "slot4": _alter_resource_path(os.path.join("images", "slots", "slot4.png")),
     "mask": _alter_resource_path(os.path.join("images", "mask.png")),
     "charm_only": _alter_resource_path(os.path.join("images", "charm_only.png")),
     "skill_mask": _alter_resource_path(os.path.join("images", "skill_mask.png")),

@@ -12,27 +12,16 @@ This repo contains code that will allow you to extract all of your charms in Mon
 
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but [this armor set searcher](https://mhrise.wiki-db.com/sim/?hl=en) exists. I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
-# Patch Notes (Updated July 5th 2022)
-The next non-bugfix version will have the option to ignore an update for those who don't care or don't have issues. Sorry for the double update in one day
-
-- 1.6.2 (July 5th 2022)
-  - Fixed an issue with the creation of the config file
-  - `--reset` commandline option now takes into account `-a` and `-l`
-- 1.6.1 (July 5th 2022)
-  - Tesseract location now goes through the entire list of OS-specific locations
-  - You can now set a custom tesseract location in the config (it has a higher priority)
-  - Added a few extra error messages
-  - New English Sunbreak skills and corrections are now bundled.
-  - The other languages use the english names as placeholders, sorry about that, feel free to submit the names.
-- 1.6 (June 22nd 2022)
-  - Added an app language dropdown
-  - Version Checker automatically updates language files
-    - Other updates (main app, skills and corrections) are still "on demand" when there is an update 
-  - App and game language are now stored inside a config file
-  - Added a --reset cmd option to clear the config file
-  - Languages in language dropdowns should show up in the actual language
-    - NOTE: They are probably wrong
-  - Added a "Go to Set Searcher" button
+# Patch Notes (Updated July 8th 2022)
+- 1.7 (July 8th 2022)
+  - Added level 4 slot support (#35)
+  - Fixed restarting the app after setting a different game language (#34)
+  - You can now ignore an update
+  - You can now add invalid skills (or skills that are not in the list, don't come to me if the builder doesn't work)
+  - You can record in windowed mode (See next point)
+  - You can now let the app remove black bars from videos
+    - It is experimental. You should fix your recordings first if it doesn't work
+    - Black bars can be caused by not setting your TV size to 100% in the switch settings.
  
  The rest of the patch notes can be found [here](PATCHNOTES.md)
 
@@ -124,6 +113,10 @@ Having translations for the instructions for other languages might be useful, bu
   - I see no reason other capture cards should not work
   - 1080p adds extra processing due to a downscaling step to 720p (20-30% slower)
   - I also tested using an Mclassic without any issues.
+- Q: I record with a capture card but there are black bars
+  - 99% of the time this will be caused by not having the screen size set to 100% in the switch settings
+  - In the remaining cases, you should check your recorder settings.
+  - You can try using the "Remove black bars" feature.
 - Q: Does this Work for the PC version
   - Yes. As long as your resolution is 720p or above, and has a 16:9 ratio, it should
     - Basically, 1080p, 1440p, 4k and above should work without issues, albeit, the higher the resolution, the slower.
@@ -131,6 +124,9 @@ Having translations for the instructions for other languages might be useful, bu
   - This might be because the PC version has a different name for the skill, add it to the corrections.lang.csv file, or tell me to do it.
     - An example of this would be `Quick Sheath`, which is named `Quick Sheathe` on PC
     - Make sure you give me both versions of the skill name if you think the PC version messed up again.
+- Q: Can I record in windowed mode
+  - Yes. 
+  - Yes, but if you have the "top bar" in your recording you will need the "Remove Black Bars" feature. You should try not recording the full window and only the game.
 
 # Notes
 - Version 1.5 is the last version that will officially support console mode, I may fix it from time to time if I need it for dev reasons, but I don't want to maintain a secondary workflow that will likely be used by nobody.

@@ -1,10 +1,11 @@
 import os
 import cv2
+from cv2 import norm
 import numpy as np
 from skimage.metrics import structural_similarity
 from math import floor
 from .tesseract.tesseract_utils import process_image_with_tesseract
-from .resources import get_resource_path
+from .resources import get_black_bar_threshold, get_resource_path
 
 
 def is_skill(skill_dict, skill_name):
@@ -98,22 +99,23 @@ def get_slots(img):
     slot1 = cv2.imread(get_resource_path("slot1"))
     slot2 = cv2.imread(get_resource_path("slot2"))
     slot3 = cv2.imread(get_resource_path("slot3"))
+    slot4 = cv2.imread(get_resource_path("slot4"))
 
     spot1 = img[y : y + h, x1 : x1 + w]
     spot2 = img[y : y + h, x2 : x2 + w]
     spot3 = img[y : y + h, x3 : x3 + w]
 
     slots = []
-    most_similar = None
     j = 1
     for spot in [spot1, spot2, spot3]:
-        score0 = structural_similarity(spot, slot0, multichannel=True)
-        score1 = structural_similarity(spot, slot1, multichannel=True)
-        score2 = structural_similarity(spot, slot2, multichannel=True)
-        score3 = structural_similarity(spot, slot3, multichannel=True)
+        score0 = structural_similarity(spot, slot0, channel_axis=-1)
+        score1 = structural_similarity(spot, slot1, channel_axis=-1)
+        score2 = structural_similarity(spot, slot2, channel_axis=-1)
+        score3 = structural_similarity(spot, slot3, channel_axis=-1)
+        score4 = structural_similarity(spot, slot4, channel_axis=-1)
 
         j += 1
-        scores = [score0, score1, score2, score3]
+        scores = [score0, score1, score2, score3, score4]
         best = max(scores)
         for i, s in enumerate(scores):
             if s == best:
@@ -215,3 +217,10 @@ def batchify_lazy(lst, batch_size):
         batch.append(item)
         i += 1
     yield batch
+
+
+def compare_pixel(pixel1, pixel2, threshold=None):
+    if threshold is None:
+        threshold = get_black_bar_threshold()
+    distance = norm(pixel1, pixel2)
+    return distance <= threshold

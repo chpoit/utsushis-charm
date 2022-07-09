@@ -29,7 +29,6 @@ from .resources import (
 )
 from .updater.updater_utils import (
     ask_main_update,
-    ask_language_update,
     ask_skill_update,
     ask_corrections_update,
 )
@@ -143,7 +142,7 @@ def run_in_console(args):
     charm_json = args.charm_json
     charm_encoded = args.charm_encoded
 
-    lang = get_language_code(args.language)
+    lang = get_game_language()
 
     os.makedirs(input_dir, exist_ok=True)
     os.makedirs(frame_dir, exist_ok=True)
