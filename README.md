@@ -199,7 +199,7 @@ In all seriousness, the work is done in a few broad steps:
 - [ ] Maybe add a "This charm isn'T actully empty" thing. Some of my Special Ammo Boost lvl2s are just invisible (might be related to something else)
 - [ ] Improve the skill corrections UI/behavior
 - [ ] Make the code not a mess
-- [ ] Follow https://github.com/pyinstaller/pyinstaller/6889 to find when I can update opencv-python
+- [ ] Follow https://github.com/pyinstaller/pyinstaller/issues/6889 to find when I can update opencv-python
 - [ ] ~~Multithreading for some of that SPEEEEED~~
   - Unfortunately, the joblib 'loky' backend wont work with frozen executables, and the other backends offer no noticeable gain in performance. This is getting shelved until a potential rewrite under a "faster" rewrite. Current execution time is 4-8 minutes so it's really not too bad.
 
@@ -243,6 +243,7 @@ Normal instructions apply once the application starts.
   - **Google Tesseract** installed and in path
     - A copy of the version 5.0.1 is bundled with the release. Just run it, no extra packages needed
       - You can download the installer here version here: [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v5.0.1.20220118.exe)
+      - [A list of versions is made available by UB Mannheim here](https://digi.bib.uni-mannheim.de/tesseract/) make sure you use the "w64" version, unless you're a weirdo who is still on a 32bit system.
     - Make sure it's in path
   - Python3 installed and in path  
   - CPP Build tools https://visualstudio.microsoft.com/visual-cpp-build-tools/
