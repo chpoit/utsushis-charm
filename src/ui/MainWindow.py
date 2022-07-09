@@ -48,7 +48,9 @@ class MainWindow(tk.Tk):
 
         self.input_dir = tk.StringVar(value=args.input_dir)
         self.frame_dir = tk.StringVar(value=args.frame_dir)
-        self.lang = tk.StringVar(value=get_language_from_code(skill_language_code))
+        self.lang = tk.StringVar(
+            value=translate_lang(get_language_from_code(skill_language_code))
+        )
         self.app_lang = tk.StringVar(value=translate_lang(_.language))
 
         self.charm_json = args.charm_json

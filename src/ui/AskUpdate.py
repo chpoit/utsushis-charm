@@ -12,7 +12,7 @@ class UpdateType(Enum):
     SkillCorrections = 3
 
 
-class Action(Enum):
+class UpdateAction(Enum):
     Nothing = 0
     Update = 1
     Ignore = 2
@@ -62,13 +62,13 @@ class AskUpdate(tk.Toplevel):
         ).format(local, remote)
 
     def yes(self):
-        self.answer = Action.Update
+        self.answer = UpdateAction.Update
         self.destroy()
 
     def no(self):
-        self.answer = Action.Nothing
+        self.answer = UpdateAction.Nothing
         self.destroy()
 
     def ignore(self):
-        self.answer = Action.Ignore
+        self.answer = UpdateAction.Ignore
         self.destroy()
