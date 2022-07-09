@@ -69,6 +69,7 @@
     "tess-url-error": "A URL error occured, this might be a DNS issue... retrying",
     "tess-cannot-download": "Unable to download Tesseract language pack.",
     "tess-not-found": "Tesseract was not found. Please install it, and if it is installed, pass it as a command line option at least once. If you have done both and it still isn't found, please open an issue on Github.",
-    "remove-black-bars": "Detect and remove black bars from videos.\nShould make windowed mode capture possible on PC.",
-    "remove-black-bars-info": "The app will attempt to remove black bars.\nThis should be useful if your switch isn't properly scaled (TV Size setting).\nThis is 100% experimental (and somewhat random). Fix your videos before you complain :)"
+    "remove-black-bars": "Remove black bars\nMay work with windowed capture",
+    "remove-black-bars-info": "The app will attempt to remove black bars.\nIt should work if you are recording in windowed mode.\nThis should be useful if your switch isn't properly scaled (TV Size setting).\nThis is 100% experimental (and somewhat random). Fix your videos before you complain :)",
+    "upd-ignore":"Ignore"
 }

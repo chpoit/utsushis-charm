@@ -69,6 +69,7 @@
     "tess-url-error": "Une erreur d'URL s'est produite, potentiellement causé par une erreur DNS...",
     "tess-cannot-download": "Impossible de télécharger le language pack Tesseract.",
     "tess-not-found": "Tesseract n'a pas été trouv. Veuillez l'installer, s'il est installé, passez le à travers le command line au moins une fois. Si cette erreur continue d'apparaître, veuillez créer une issue sur Github..",
-    "remove-black-bars": "Détecter et retirer les barres noires des vidéos.\nDevrait permettre la capture du jeu en mode fenêtre sur PC.",
-    "remove-black-bars-info": "L'applicaiton va essayer d'enlever les barres noires autour du vidéo.\nC'est utile lorsque vous n'avez pas configuré la taille de la TV pour la switch.\nC'est 100% expérimental et un peu aléatoire.\nEnregistrez les vidéos comme il faut avant de vous plaindre :)"
+    "remove-black-bars": "Retirer les barres noires\nDevrait marcher avec le mode fenêtre",
+    "remove-black-bars-info": "L'application va essayer d'enlever les barres noires autour du vidéo.\n¨Ça devrait aussi fonctionner si vous enregistrer le jeu en mode fenêtre.\nC'est utile lorsque vous n'avez pas configuré la taille de la TV pour la switch.\nC'est 100% expérimental et un peu aléatoire.\nEnregistrez les vidéos comme il faut avant de vous plaindre :)",
+    "upd-ignore": "Ignorer"
 }

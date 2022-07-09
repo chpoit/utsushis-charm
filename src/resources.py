@@ -1,3 +1,4 @@
+from distutils.command.config import config
 import os
 import sys
 import shutil
@@ -6,6 +7,8 @@ from pathlib import Path
 from symspellpy.symspellpy import SymSpell
 import logging
 import json
+
+from .updater.SimpleSemVer import SimpleSemVer
 
 from .exceptions.MissingTranslationError import MissingTranslationError
 
@@ -268,6 +271,25 @@ def save_game_language(app_language_code):
     config = _load_config()
     config["game-language"] = app_language_code
     _write_config(config)
+
+
+def save_ignored_update(version: SimpleSemVer):
+    config = _load_config()
+    config["skipped-version"] = str(version) if version is not None else version
+    _write_config(config)
+
+
+def get_ignored_update() -> SimpleSemVer:
+    config = _load_config()
+    try:
+        return (
+            SimpleSemVer(config["skipped-version"])
+            if "skipped-version" in config
+            else None
+        )
+    except:
+        save_ignored_update(None)
+        return None
 
 
 def get_tesseract_location():

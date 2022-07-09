@@ -12,6 +12,12 @@ class UpdateType(Enum):
     SkillCorrections = 3
 
 
+class Action(Enum):
+    Nothing = 0
+    Update = 1
+    Ignore = 2
+
+
 class AskUpdate(tk.Toplevel):
     def __init__(
         self,
@@ -20,6 +26,7 @@ class AskUpdate(tk.Toplevel):
         update_type: UpdateType,
         local: SimpleSemVer,
         remote: SimpleSemVer,
+        show_ignore=False,
     ):
         super().__init__(parent)
         self._ = _
@@ -40,6 +47,9 @@ class AskUpdate(tk.Toplevel):
         self.lang_lbl.grid(row=0, columnspan=2)
         self.yes_btn.grid(row=1, column=0, sticky="e")
         self.no_btn.grid(row=1, column=1, sticky="w")
+        if show_ignore:
+            self.ignore_btn = tk.Button(self, text=_("upd-ignore"), command=self.ignore)
+            self.ignore_btn.grid(row=2, column=0, columnspan=2)
 
     def build_message(self, update_type, local, remote, _):
         return _(
@@ -52,9 +62,13 @@ class AskUpdate(tk.Toplevel):
         ).format(local, remote)
 
     def yes(self):
-        self.answer = True
+        self.answer = Action.Update
         self.destroy()
 
     def no(self):
-        self.answer = False
+        self.answer = Action.Nothing
+        self.destroy()
+
+    def ignore(self):
+        self.answer = Action.Ignore
         self.destroy()

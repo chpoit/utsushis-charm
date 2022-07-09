@@ -29,7 +29,6 @@ from .resources import (
 )
 from .updater.updater_utils import (
     ask_main_update,
-    ask_language_update,
     ask_skill_update,
     ask_corrections_update,
 )
