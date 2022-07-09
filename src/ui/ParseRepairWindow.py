@@ -79,6 +79,11 @@ class ParseRepairWindow(tk.Toplevel):
             btn_cancel.grid(row=2, column=0, sticky="w")
             btn_empty.grid(row=2, column=1, sticky="w")
             self.btn_ok.grid(row=2, column=2, sticky="w")
+
+            self.btn_add_anyway = tk.Button(
+                frame, text=_("add-as-is"), command=self.select_as_is
+            )
+            self.btn_add_anyway.grid(row=3, column=0, columnspan=3)
             return frame
 
         def _lbl(parent=self):
@@ -119,9 +124,11 @@ class ParseRepairWindow(tk.Toplevel):
     def check_valid_skill(self, *args):
         new_name = self.selected.get()
         if not is_skill(self.all_skills, new_name):
+            self.btn_add_anyway["state"] = "normal"
             self.btn_ok["state"] = "disabled"
             self.unbind("<Return>")
         else:
+            self.btn_add_anyway["state"] = "disabled"
             self.btn_ok["state"] = "normal"
             self.bind("<Return>", self.select_skill)
 
@@ -140,13 +147,15 @@ class ParseRepairWindow(tk.Toplevel):
     def feed_error(self, error):
         self.current_error = error
         skill_img, parsed, level, error_type = error
+        if "chi" in self.language or self.language == "kor" or self.language == "jpn":
+            parsed = parsed.replace(" ", "")
         b, g, r = cv2.split(skill_img)
         im = Image.fromarray(cv2.merge((r, g, b)))
         imgtk = ImageTk.PhotoImage(image=im)
         self.img_value_lbl.configure(image=imgtk)
         self.img_value_lbl.image = imgtk
         self.parsed.set(parsed)
-        self.selected.set("")
+        self.selected.set(parsed)
         self.lvl.set(level)
         self.update()
 
@@ -163,6 +172,9 @@ class ParseRepairWindow(tk.Toplevel):
 
     def select_skill(self, *args):
         self.select("skill")
+
+    def select_as_is(self, *args):
+        self.select("as-is")
 
     def try_next_charm(self):
         try:
@@ -188,4 +200,7 @@ class ParseRepairWindow(tk.Toplevel):
             self.fixed_skills[
                 fix_skill_name(self.all_skills, self.selected.get())
             ] = self.current_error[2]
+        elif action == "as-is":
+            self.fixed_skills[self.selected.get()] = self.current_error[2]
+
         self.try_next_error()
