@@ -1,5 +1,25 @@
-# Patch Notes (Updated June 22nd 2022)
-- 1.6
+# Patch Notes
+- 1.7 (July 8th 2022)
+  - Added level 4 slot support (#35)
+  - Fixed restarting the app after setting a different game language (#34)
+  - You can now ignore an update
+  - You can now add invalid skills (or skills that are not in the list, don't come to me if the builder doesn't work)
+  - You can record in windowed mode (See next point)
+  - You can now let the app remove black bars from videos
+    - It is experimental. You should fix your recordings first if it doesn't work
+    - Black bars can be caused by not setting your TV size to 100% in the switch settings.
+
+# Older patch notes
+- 1.6.2 (July 5th 2022)
+  - Fixed an issue with the creation of the config file
+  - `--reset` commandline option now takes into account `-a` and `-l`
+- 1.6.1 (July 5th 2022)
+  - Tesseract location now goes through the entire list of OS-specific locations
+  - You can now set a custom tesseract location in the config (it has a higher priority)
+  - Added a few extra error messages
+  - New English Sunbreak skills and corrections are now bundled.
+  - The other languages use the english names as placeholders, sorry about that, feel free to submit the names.
+- 1.6 (June 22nd 2022)
   - Added an app language dropdown
   - Version Checker automatically updates language files
     - Other updates (main app, skills and corrections) are still "on demand" when there is an update 
@@ -8,10 +28,6 @@
   - Languages in language dropdowns should show up in the actual language
     - NOTE: They are probably wrong
   - Added a "Go to Set Searcher" button
-
-
-# Older patch notes
-
 - 1.5.3 (FEB 3rd 2022)
   - Updated where language packs are downloaded from, 
     - Github changed where "raw" data was fetched from and broke "fresh" installs 
