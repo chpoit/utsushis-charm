@@ -85,18 +85,20 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
   - English
   - French
 - Theoretical:
-  - Japanese
   - Italian
   - German
   - Spanish
   - Russian
   - Polish
   - Korean
-  - Traditional Chinese
-  - Simplified Chinese
-
+- Plenty of parsing issues (Resolution bases)
+  - Japanese
+  - Traditional Chinese #37
+  - Simplified Chinese #37
+  
 ## Supported App Language:
 - English
+- French
 
 Looking for people who can submit translations. Use [this file](data/translations/eng.json) and replace the messages appropriately if you are interested in contributing. Create a pull request to show up as a contributor within Github. I can add you in this readme if you only want to create an issue with the translations.
 
