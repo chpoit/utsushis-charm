@@ -91,7 +91,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
   - Russian
   - Polish
   - Korean
-- Plenty of parsing issues (Resolution bases)
+- Plenty of parsing issues (Resolution based)
   - Japanese
   - Traditional Chinese #37
   - Simplified Chinese #37
