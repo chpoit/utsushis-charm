@@ -3,4 +3,4 @@ numpy
 scikit-image
 symspellpy
 tqdm
-pyinstaller==4.8
+pyinstaller==5.2
