@@ -135,6 +135,11 @@ def get_update_url():
     return url
 
 
+def get_lastest_api_url():
+    url = "https://api.github.com/repos/chpoit/ustsushis-charm/releases/latest"
+    return url
+
+
 def get_latest_url():
     url = "https://github.com/chpoit/utsushis-charm/releases/latest"
     return url

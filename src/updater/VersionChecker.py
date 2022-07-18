@@ -5,6 +5,7 @@ from urllib import request
 import logging
 
 from ..resources import (
+    get_lastest_api_url,
     get_resource_path,
     get_update_url,
     get_versions_location,
@@ -21,6 +22,7 @@ class VersionChecker:
     def __init__(self):
         self.snapshot = None
         self.snapshot = self._get_online_versions()
+        self.latest_description = self._get_latest_body()
 
     def check_app_version(self):
         local = self._get_version(True, "app")
@@ -53,6 +55,9 @@ class VersionChecker:
 
     def is_outdated(self, local, remote):
         return local < remote
+
+    def get_latest_description(self):
+        return self.latest_description
 
     def get_language_versions(self):
         versions = []
@@ -129,4 +134,25 @@ class VersionChecker:
             return None
         except Exception as e:
             logger.exception(f"An unexpected error occurred loading online versions")
+            return None
+
+    def _get_latest_body(self):
+        if self.latest_description is not None:
+            return self.latest_description
+        # curl -H "Accept: application/vnd.github+json"
+        url = get_lastest_api_url()
+        try:
+            data_string = request.urlopen(url).read().decode()
+            data = json.loads(data_string)
+            if "body" in data:
+                return data["body"]
+            return None
+        except request.HTTPError as e:
+            sc = e.code
+            logger.exception(f"Could not load update description: {sc}")
+            return None
+        except Exception as e:
+            logger.exception(
+                f"An unexpected error occurred loading update information: {sc}"
+            )
             return None

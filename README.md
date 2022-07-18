@@ -13,6 +13,9 @@ This repo contains code that will allow you to extract all of your charms in Mon
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but [this armor set searcher](https://mhrise.wiki-db.com/sim/?hl=en) exists. I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
 # Patch Notes (Updated July 8th 2022)
+- 1.7.1
+  - The updater now displays information from the latest update
+  - Fixed the download of new app language files not present in the executable, but present online.
 - 1.7 (July 8th 2022)
   - Added level 4 slot support (#35)
   - Fixed restarting the app after setting a different game language (#34)
@@ -23,7 +26,7 @@ It's called Utsushi's charm because I thought it would be funny to make a comple
     - It is experimental. You should fix your recordings first if it doesn't work
     - Black bars can be caused by not setting your TV size to 100% in the switch settings.
  
- The rest of the patch notes can be found [here](PATCHNOTES.md)
+The rest of the patch notes can be found [here](PATCHNOTES.md)
 
 # Usage
 
@@ -194,8 +197,9 @@ In all seriousness, the work is done in a few broad steps:
 - Please use the default settings of `black` to format the python source code.
 
 # TODOS:
+- [ ] Implement a "monkey brain" way to identify kanji where I will have pictures of all skills and do a similarity check on all of them if the language is Japanese or Chinese, and possibly Korean, but Korean may be omitted since the characters are simpler.
 - [ ] Add an "Eager" mode where only a fraction of the frames are kept (should try to calculate the min frames to change to a charm and double or 1.5 times it)
-- [ ] Maybe finish the "charm value calculator #23" (The more I worked on it the less I find it useful)
+- [ ] ~~Maybe finish the "charm value calculator #23" (The more I worked on it the less I find it useful)~~ I Will not be working on it anymore for the [reasons explained here](https://old.reddit.com/r/MonsterHunterMeta/comments/vs2tle/sunbreakrise_easily_extract_all_your_charms/ifpec3o/)
 - [ ] Maybe add a "This charm isn'T actully empty" thing. Some of my Special Ammo Boost lvl2s are just invisible (might be related to something else)
 - [ ] Improve the skill corrections UI/behavior
 - [ ] Make the code not a mess
@@ -270,3 +274,12 @@ If you run from source, or call the executable from the terminal you can make us
 - `-a <LANG_NAME>` or `--app-language <LANG_NAME>`: Changes the language of the app. Use the list in [Supported languages](#supported-game-language) to know what to enter. It only works for the first launch, data in the config file takes priority.
 - `--reset`: Resets data in the config. Currently forces the language to be overwritten in config with `-a` and `-l` arguments.
 - `-t <TESSERACT_DIRECTORY>` or `--tesseract <TESSERACT_DIRECTORY>`: When you want to pass a custom tesseract location. It is saved to the config. Pass either the dll or .so.X file, or the directory containing it.
+
+
+# Included data
+
+
+## mh-rise skills language - Feuille 1.csv 
+The file located in [data\/mh-rise skills language - Feuille 1.csv](./data/mh-rise%20skills%20language%20-%20Feuille%201.csv) is a slightly modified version of the file found [here](https://docs.google.com/spreadsheets/d/1ce4_R7HvBPPYE63qyGfeI-nTTSBDsGCGc7ETTGHqYac/edit#gid=0). It is provided in the repository to aid in the rebuild of skill files for those interested.
+
+I added the new Sunbreak skills, but currently only english versions are available.

@@ -18,7 +18,7 @@ mappings = {
 }
 
 
-csv_path = os.path.join(".", "mh-rise skills language - Feuille 1.csv")
+csv_path = os.path.join(".", "data", "mh-rise skills language - Feuille 1.csv")
 
 sp = os.path.join("data", "skills")
 os.makedirs(sp, exist_ok=True)
