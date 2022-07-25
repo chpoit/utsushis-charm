@@ -33,7 +33,7 @@ class Updater:
         _ = self._
         url = get_language_url(lang)
 
-        full_name = get_translation_location(lang)
+        full_name = get_translation_location(lang, True)
         try:
             Path(full_name).touch()
             request.urlretrieve(url, filename=full_name, data=None)

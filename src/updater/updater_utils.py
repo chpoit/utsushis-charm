@@ -14,7 +14,13 @@ def ask_main_update(version_checker: VersionChecker, main_window, _):
             return answer
 
         answer = _spawn_window(
-            main_window, _, UpdateType.App, cur_ver, online_ver, True
+            main_window,
+            _,
+            UpdateType.App,
+            cur_ver,
+            online_ver,
+            True,
+            version_checker.get_latest_description(),
         )
         if answer == UpdateAction.Update:
             updater = Updater(_, version_checker)
@@ -56,7 +62,17 @@ def ask_corrections_update(
     return answer
 
 
-def _spawn_window(main_window, _, update_type, cur_ver, online_ver, show_ignore=False):
-    askup = AskUpdate(main_window, _, update_type, cur_ver, online_ver, show_ignore)
+def _spawn_window(
+    main_window,
+    _,
+    update_type,
+    cur_ver,
+    online_ver,
+    show_ignore=False,
+    patch_notes=None,
+):
+    askup = AskUpdate(
+        main_window, _, update_type, cur_ver, online_ver, show_ignore, patch_notes
+    )
     main_window.wait_window(askup)
     return askup.answer

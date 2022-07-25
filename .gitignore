@@ -13,8 +13,10 @@ converted.js
 *.zip
 ./*.png
 !data/**/*.json
+
+*.mp4
 # Found here https://docs.google.com/spreadsheets/d/1ce4_R7HvBPPYE63qyGfeI-nTTSBDsGCGc7ETTGHqYac/edit#gid=0
-mh-rise skills language - Feuille 1.csv 
+# mh-rise skills language - Feuille 1.csv 
 
 # Created by https://www.toptal.com/developers/gitignore/api/rust
 # Edit at https://www.toptal.com/developers/gitignore?templates=rust
