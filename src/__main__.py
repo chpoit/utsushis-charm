@@ -106,7 +106,10 @@ def main(args):
                     Updater(
                         Translator(app_language_code), version_checker
                     ).update_language(code, remote)
-                except:
+                except Exception as e:
+                    logger.error(
+                        f"Error downloading language update for {lang} with error {e}"
+                    )
                     pass
 
         main_window, translator = create_main_window(

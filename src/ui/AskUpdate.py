@@ -27,6 +27,7 @@ class AskUpdate(tk.Toplevel):
         local: SimpleSemVer,
         remote: SimpleSemVer,
         show_ignore=False,
+        patch_notes=None,
     ):
         super().__init__(parent)
         self._ = _
@@ -44,12 +45,19 @@ class AskUpdate(tk.Toplevel):
         self.yes_btn = tk.Button(self, text=_("yes"), command=self.yes)
         self.no_btn = tk.Button(self, text=_("no"), command=self.no)
 
+        row = 1 if patch_notes is None else 2
+
         self.lang_lbl.grid(row=0, columnspan=2)
-        self.yes_btn.grid(row=1, column=0, sticky="e")
-        self.no_btn.grid(row=1, column=1, sticky="w")
+        self.yes_btn.grid(row=row, column=0, sticky="e")
+        self.no_btn.grid(row=row, column=1, sticky="w")
+
         if show_ignore:
             self.ignore_btn = tk.Button(self, text=_("upd-ignore"), command=self.ignore)
-            self.ignore_btn.grid(row=2, column=0, columnspan=2)
+            self.ignore_btn.grid(row=row + 1, column=0, columnspan=2)
+
+        if patch_notes is not None:
+            self.update_label = tk.Label(self, text=patch_notes)
+            self.update_label.grid(row=1, columnspan=2, sticky="w")
 
     def build_message(self, update_type, local, remote, _):
         return _(

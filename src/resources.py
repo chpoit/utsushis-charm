@@ -136,7 +136,7 @@ def get_update_url():
 
 
 def get_lastest_api_url():
-    url = "https://api.github.com/repos/chpoit/ustsushis-charm/releases/latest"
+    url = "https://api.github.com/repos/chpoit/utsushis-charm/releases/latest"
     return url
 
 
@@ -170,12 +170,13 @@ def get_english_skill_mappping_location():
     return os.path.join(get_resource_path("LOCAL_SKILLS"), "skill_mappings.en.json")
 
 
-def get_translation_location(language="eng"):
+def get_translation_location(language="eng", for_creation=False):
     local_file = os.path.join(
         get_resource_path("LOCAL_TRANSLATIONS"), f"{language}.json"
     )
-    if not os.path.isfile(local_file):
-        os.makedirs(get_resource_path("LOCAL_TRANSLATIONS"), exist_ok=True)
+    os.makedirs(get_resource_path("LOCAL_TRANSLATIONS"), exist_ok=True)
+    
+    if not os.path.isfile(local_file) and not for_creation:
         lang_dir = get_resource_path("INTERNAL_TRANSLATIONS")
         lang_file = os.path.join(lang_dir, f"{language}.json")
         if not os.path.isfile(lang_file):

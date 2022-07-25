@@ -21,8 +21,9 @@ logger = logging.getLogger(__name__)
 class VersionChecker:
     def __init__(self):
         self.snapshot = None
+        self.latest_description = None
         self.snapshot = self._get_online_versions()
-        self.latest_description = self._get_latest_body()
+        self.latest_description = str(self._get_latest_body()).replace("\r", "")
 
     def check_app_version(self):
         local = self._get_version(True, "app")
