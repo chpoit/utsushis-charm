@@ -12,8 +12,8 @@ with open("requirements.txt") as reqf:
 
 setup(
     name="utsushis-charm",
-    version="1.5.0",
-    description="Read the latest Real Python tutorials",
+    version="1.8",
+    description="Easily get all your mhr and mhr:sunbreak charms",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/chpoit/utsushis-charm",

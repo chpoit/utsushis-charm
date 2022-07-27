@@ -14,6 +14,6 @@ rd /s /q "dist"
 md dist
 md "dist\inputs"
 
-cmd /c ".\env\Scripts\activate & python -m PyInstaller .\utsushis-charm.spec --onefile & .\env\scripts\deactivate;" 
+cmd /c ".\env\Scripts\activate & python -m PyInstaller .\utsushis-charm.spec & .\env\scripts\deactivate;" 
 
 7z a -tzip %archive_name% ".\dist\*"
