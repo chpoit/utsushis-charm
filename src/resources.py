@@ -175,7 +175,7 @@ def get_translation_location(language="eng", for_creation=False):
         get_resource_path("LOCAL_TRANSLATIONS"), f"{language}.json"
     )
     os.makedirs(get_resource_path("LOCAL_TRANSLATIONS"), exist_ok=True)
-    
+
     if not os.path.isfile(local_file) and not for_creation:
         lang_dir = get_resource_path("INTERNAL_TRANSLATIONS")
         lang_file = os.path.join(lang_dir, f"{language}.json")

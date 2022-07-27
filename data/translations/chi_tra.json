@@ -72,5 +72,6 @@
     "remove-black-bars": "刪除黑邊\n適用於視窗擷取",
     "remove-black-bars-info": "應用程式會嘗試刪除黑邊。如果你在視窗模式下錄製影片，這也許會有幫助（此為實驗性功能）在你抱怨問題之前請請嘗試修復你的影片 :)",
     "upd-ignore": "略過",
-    "add-as-is": "添加技能為"
+    "add-as-is": "添加技能為",
+    "non-16:9": "Non-16:9 video detected, attempting to crop"
 }

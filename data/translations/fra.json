@@ -72,5 +72,6 @@
     "remove-black-bars": "Retirer les barres noires\nDevrait marcher avec le mode fenêtre",
     "remove-black-bars-info": "L'application va essayer d'enlever les barres noires autour du vidéo.\n¨Ça devrait aussi fonctionner si vous enregistrer le jeu en mode fenêtre.\nC'est utile lorsque vous n'avez pas configuré la taille de la TV pour la switch.\nC'est 100% expérimental et un peu aléatoire.\nEnregistrez les vidéos comme il faut avant de vous plaindre :)",
     "upd-ignore": "Ignorer",
-    "add-as-is": "Ajouter tel quel"
+    "add-as-is": "Ajouter tel quel",
+    "non-16:9": "Vidéo n'ayant pas un format 16:9 détecté, tentative de correction..."
 }

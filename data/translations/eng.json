@@ -72,5 +72,6 @@
     "remove-black-bars": "Remove black bars\nMay work with windowed capture",
     "remove-black-bars-info": "The app will attempt to remove black bars.\nIt should work if you are recording in windowed mode.\nThis should be useful if your switch isn't properly scaled (TV Size setting).\nThis is 100% experimental (and somewhat random). Fix your videos before you complain :)",
     "upd-ignore": "Ignore",
-    "add-as-is": "Add skill as-is"
+    "add-as-is": "Add skill as-is",
+    "non-16:9": "Non-16:9 video detected, attempting to crop"
 }

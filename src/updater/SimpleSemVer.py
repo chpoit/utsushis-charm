@@ -2,7 +2,8 @@ class SimpleSemVer:
     def __init__(self, version=None):
         if not version:
             version = 0
-        if type(version) not in (str, float, int):
+
+        if type(version) not in (str, float, int) and version is not SimpleSemVer:
             raise TypeError(
                 "Invalid type used for SimpleSemVer, must be str, int or float"
             )
