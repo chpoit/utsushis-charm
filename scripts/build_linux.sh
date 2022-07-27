@@ -15,7 +15,7 @@ rm -rf "./build"
 rm -rf "./dist"
 mkdir -p dist/inputs
 
-source ./env/bin/activate && python -m PyInstaller ./utsushis-charm.spec --onefile
+source ./env/bin/activate && python -m PyInstaller ./utsushis-charm.spec
 
 chmod +x dist/utsushis-charm
 
