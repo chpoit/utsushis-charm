@@ -2,16 +2,16 @@
     "app": "1.7",
     "skills": "3.1.1",
     "languages": {
-        "eng": "1.2.1",
+        "eng": "1.4",
         "jpn": 0,
-        "fra": "1.2.1",
+        "fra": "1.4",
         "ita": 0,
         "deu": 0,
         "spa": 0,
         "rus": 0,
         "pol": 0,
         "kor": 0,
-        "chi_tra": 1,
+        "chi_tra": "1.4",
         "chi_sim": 0
     },
     "corrections": {

@@ -12,19 +12,10 @@ This repo contains code that will allow you to extract all of your charms in Mon
 
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but [this armor set searcher](https://mhrise.wiki-db.com/sim/?hl=en) exists. I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
-# Patch Notes (Updated July 25th 2022)
-- 1.7.1
-  - The updater now displays information from the latest update
-  - Fixed the download of new app language files not present in the executable, but present online.
-- 1.7 (July 8th 2022)
-  - Added level 4 slot support (#35)
-  - Fixed restarting the app after setting a different game language (#34)
-  - You can now ignore an update
-  - You can now add invalid skills (or skills that are not in the list, don't come to me if the builder doesn't work)
-  - You can record in windowed mode (See next point)
-  - You can now let the app remove black bars from videos
-    - It is experimental. You should fix your recordings first if it doesn't work
-    - Black bars can be caused by not setting your TV size to 100% in the switch settings.
+# Patch Notes (Updated July 27th 2022)
+- 1.8 (July 27th 2022)
+  - Added experimental non 16:9  support
+    - Only tested with 21:9
  
 The rest of the patch notes can be found [here](PATCHNOTES.md)
 
@@ -125,6 +116,7 @@ Having translations for the instructions for other languages might be useful, bu
 - Q: Does this Work for the PC version
   - Yes. As long as your resolution is 720p or above, and has a 16:9 ratio, it should
     - Basically, 1080p, 1440p, 4k and above should work without issues, albeit, the higher the resolution, the slower.
+    - Experimental non-16:9 support has been added in 1.8 (only tested with 21:9)
 - Q: I'm trying to enter a skill in the Skill Correction thing and it doesn't work
   - This might be because the PC version has a different name for the skill, add it to the corrections.lang.csv file, or tell me to do it.
     - An example of this would be `Quick Sheath`, which is named `Quick Sheathe` on PC

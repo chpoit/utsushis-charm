@@ -24,6 +24,35 @@ def crop_frame(frame):
     return cropped, charm_only
 
 
+def resize_to_16_9(frame):
+    known_drops = [(1280, 720), (1920, 1080), (2560, 1440), (3840, 2160)]
+    height, width = frame.shape[:2]
+
+    ratio = round(width / height, 1)
+    if ratio != 1.7 and ratio != 1.8:
+        valid_drops = list(
+            filter(lambda x: x[0] <= width and x[1] <= height, known_drops)
+        )
+        best_drop = valid_drops[-1]
+
+        if height > best_drop[1]:
+            odd_ratio = height / best_drop[1]
+            tW = width / odd_ratio
+            frame = cv2.resize(frame, [round(tW), best_drop[1]])
+
+        height, width = frame.shape[:2]
+        wCrop = floor((width - best_drop[0]) / 2)
+        hCrop = floor((height - best_drop[1]) / 2)
+
+        x = wCrop
+        x2 = width - wCrop
+        y = hCrop
+        y2 = height - hCrop
+        frame = frame[y:y2, x:x2]
+
+    return frame
+
+
 def resize_frame(frame):
     height, width = frame.shape[:2]
     if height != 720 or width != 1280:
@@ -31,8 +60,8 @@ def resize_frame(frame):
     return frame
 
 
-def crop_frames(capture_device, remove_black_bars):
-    for i, f in read_frames(capture_device, remove_black_bars):
+def crop_frames(capture_device, remove_black_bars, _=lambda x: x):
+    for i, f in read_frames(capture_device, remove_black_bars, _):
         yield i, crop_frame(f)
 
 
@@ -48,7 +77,6 @@ def detect_black_bars(frame):
     y_pos_base = floor(height / 2)
     prev_pixel = None
 
-    i = 0
     top = 5
     left = 5
     right = 5
@@ -120,23 +148,33 @@ def crop_black_bars(frame, black_bars):
     return frame[y:y2, x:x2]
 
 
-def read_frames(capture_device, remove_black_bars=False):
+def read_frames(capture_device, remove_black_bars=False, _=lambda x: x):
     i = 0
     fps = capture_device.get(cv2.CAP_PROP_FPS)
     black_bars = None
 
     while True:
         ret, frame = capture_device.read()
-        if i == 0:
-            black_bars = detect_black_bars(frame)
+
         if not ret:
             break
+
+        height, width = frame.shape[:2]
+        ratio = round(width / height, 1)
+
+        if ratio != 1.7 and ratio != 1.8:
+            if i == 0:
+                print(_("non-16:9"))
+            frame = resize_to_16_9(frame)
+        if i == 0:
+            black_bars = detect_black_bars(frame)
         if fps == 60 and (i % 2):
             pass
         else:
             if remove_black_bars:
                 frame = crop_black_bars(frame, black_bars)
             yield i, resize_frame(frame)
+
         i += 1
 
 
@@ -194,7 +232,7 @@ def extract_unique_frames(
 
         previous_charm_marker = None
         with iter_wrapper(
-            crop_frames(cap, remove_black_bars),
+            crop_frames(cap, remove_black_bars, _),
             total=frame_count,
             desc=_("fn-total-charm").format(f_name, frame_count),
         ) as frame_pbar:
