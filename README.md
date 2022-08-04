@@ -25,7 +25,7 @@ The rest of the patch notes can be found [here](PATCHNOTES.md)
 - A computer (Windows)
   - Linux and Mac might work too, you won’t be able to run the EXE and will have to run from source in a terminal window. Refer to [Running from source](#Running-from-source)
     - A build for Arch Linux is provided, since it's pyinstaller it *should* work everywhere, but lets get real, it probably wont
-    - ~~A MacOS build is also provided for 1.6.0, but it's built on a hackintosh VM so you should assume it doesn't work and run from source.~~
+    - Building for MacOS is turning out to be too much of a pain since I don't own one. No builds are provided and you will have to run from source.
 - A USB cable to connect your switch to transfer files
   - Alternatively use a capture card and record the screen. View the [FAQ](#faq) for Genki Shadowcast information
 - [The latest version of Utsushi's Charm](https://github.com/chpoit/utsushis-charm/releases/latest) downloaded to your computer (Utsushis-Charm_**vx_x**.zip)
