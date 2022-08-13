@@ -1,5 +1,7 @@
 (Boost),(Boost)
 (S),(S)
+Adrenaline,Adrenaline
+Attack,Attack
 Bladescale,Bladescale
 Blood,Blood
 Bloodlust,Bloodlust
@@ -9,10 +11,12 @@ Chain,Chain
 Charge,Charge
 Coalescence,Coalescence
 Crit,Crit
+Defiance,Defiance
 Dereliction,Dereliction
 Foray,Foray
 Furious,Furious
 Grinder,Grinder
+Guts,Guts
 Hellfire,Hellfire
 Hone,Hone
 KO술,KO술
@@ -22,7 +26,11 @@ Quick,Quick
 Redirection,Redirection
 Rite,Rite
 Runner,Runner
-Spiritbird's,Spiritbird's
+Rush,Rush
+Sneak,Sneak
+Spiribird's,Spiribird's
+Status,Status
+Trigger,Trigger
 Tune-Up,Tune-Up
 UP,UP
 Wall,Wall

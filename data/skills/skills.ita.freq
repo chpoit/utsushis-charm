@@ -1,5 +1,6 @@
 (Boost) 1
 (S) 1
+Adrenaline 1
 Affilatura 1
 Affinità 1
 Allineamento 2
@@ -11,6 +12,7 @@ Artigiano 1
 Artiglieria 1
 Atleta 1
 Attacco 9
+Attack 1
 Balistica 1
 Battitore 1
 Benediz. 1
@@ -37,6 +39,7 @@ Crit 1
 Critico 2
 Cuor 1
 Danza 1
+Defiance 1
 Dereliction 1
 Devastatore 1
 Diversione 1
@@ -55,6 +58,7 @@ Geologo 1
 Grinder 1
 Guardia 2
 Guarigione 1
+Guts 1
 Hellfire 1
 Hone 1
 Incantat. 1
@@ -89,12 +93,15 @@ Risentimento 1
 Rite 1
 Ruba 1
 Runner 1
+Rush 1
 Salto 1
 Scalatore 1
 Schivata 2
 Sfoderata 1
+Sneak 1
 Spaccamostri 1
-Spiritbird's 1
+Spiribird's 1
+Status 1
 Strato 1
 Super 1
 Tempestanima 1
@@ -102,6 +109,7 @@ Teostra 1
 Tiro 1
 Tocco 1
 Trasforma 1
+Trigger 1
 Tune-Up 1
 Velocità 1
 Ventaglio+ 1

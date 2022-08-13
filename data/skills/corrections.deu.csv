@@ -2,9 +2,11 @@
 (S),(S)
 /,/
 Abwehr,Abwehr
+Adrenaline,Adrenaline
 Affinitätsschlittern,Affinitätsschlittern
 Angriffsbonus,Angriffsbonus
 Artillerie,Artillerie
+Attack,Attack
 Aufhetzer,Aufhetzer
 Auge,Auge
 Ausdauerdieb,Ausdauerdieb
@@ -30,6 +32,7 @@ Chameleos-Segen,Chameleos-Segen
 Charge,Charge
 Coalescence,Coalescence
 Crit,Crit
+Defiance,Defiance
 Dereliction,Dereliction
 Donner-Abgleich,Donner-Abgleich
 Donnerangriff,Donnerangriff
@@ -61,6 +64,7 @@ Giftwiderstand,Giftwiderstand
 Glückserhöher,Glückserhöher
 Grinder,Grinder
 Groll,Groll
+Guts,Guts
 Göttlicher,Göttlicher
 Handwerk,Handwerk
 Heldentat,Heldentat
@@ -105,6 +109,7 @@ Redirection,Redirection
 Rite,Rite
 Rittmeister,Rittmeister
 Runner,Runner
+Rush,Rush
 Rückstoßdämpfer,Rückstoßdämpfer
 Scharfschwert,Scharfschwert
 Schicksalssprung,Schicksalssprung
@@ -121,12 +126,15 @@ Schärfen,Schärfen
 Segen,Segen
 Sehnenkraft,Sehnenkraft
 Seilkäfer-Flüsterer,Seilkäfer-Flüsterer
+Sneak,Sneak
 Spezialmunitionboost,Spezialmunitionboost
-Spiritbird's,Spiritbird's
+Spiribird's,Spiribird's
 Sprungmeister,Sprungmeister
+Status,Status
 Sturmseele,Sturmseele
 Teilezerstörer,Teilezerstörer
 Teostra-Segen,Teostra-Segen
+Trigger,Trigger
 Tune-Up,Tune-Up
 Unbeeindruckt,Unbeeindruckt
 Unverwundbarkeit,Unverwundbarkeit

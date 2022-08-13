@@ -4,6 +4,7 @@
 +,+
 Acier,Acier
 Acrobate,Acrobate
+Adrenaline,Adrenaline
 Affûtage,Affûtage
 Alignement,Alignement
 Anti-explosion,Anti-explosion
@@ -11,6 +12,7 @@ Anti-fange,Anti-fange
 Antigel,Antigel
 Antiparalysie,Antiparalysie
 Athlète,Athlète
+Attack,Attack
 Aura,Aura
 BOUM,BOUM
 Balistique,Balistique
@@ -43,6 +45,7 @@ Corps,Corps
 Crit,Crit
 Crâne,Crâne
 Cœur,Cœur
+Defiance,Defiance
 Dereliction,Dereliction
 Destructeur,Destructeur
 Destruction,Destruction
@@ -60,6 +63,7 @@ Garde,Garde
 Grenaille,Grenaille
 Grimpeur,Grimpeur
 Grinder,Grinder
+Guts,Guts
 Géologiste,Géologiste
 Halo,Halo
 Hellfire,Hellfire
@@ -108,18 +112,22 @@ Rengainage,Rengainage
 Rite,Rite
 Roi,Roi
 Runner,Runner
+Rush,Rush
 Salve,Salve
 Samouraï,Samouraï
 Saut,Saut
 Savoir-faire,Savoir-faire
 Sismologie,Sismologie
+Sneak,Sneak
 Sniper,Sniper
 Spartiate,Spartiate
-Spiritbird's,Spiritbird's
+Spiribird's,Spiribird's
+Status,Status
 Teostra,Teostra
 Tir,Tir
 Totem,Totem
 Toxicologie,Toxicologie
+Trigger,Trigger
 Trompe-la-mort,Trompe-la-mort
 Tune-Up,Tune-Up
 Témérité,Témérité

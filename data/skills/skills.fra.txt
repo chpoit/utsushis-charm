@@ -1,5 +1,6 @@
 Acier trempé
 Acrobate
+Adrenaline Rush
 Affûtage rapide
 Alignement tonnerre
 Alignement vent
@@ -39,6 +40,7 @@ Contre-attaque
 Corps et âme
 Crâne d'acier
 Cœur de dragon
+Defiance
 Dereliction
 Destructeur
 Destruction massive
@@ -55,6 +57,7 @@ Garde offensive
 Grenaille +
 Grimpeur
 Grinder (S)
+Guts
 Géologiste
 Halo de guérison
 Héroïsme
@@ -105,9 +108,11 @@ Samouraï
 Saut de la foi
 Savoir-faire
 Sismologie
+Sneak Attack
 Sniper
 Spartiate
-Spiritbird's Call
+Spiribird's Call
+Status Trigger
 Tir parcimonieux
 Tir super rapide
 Totem élémentaire

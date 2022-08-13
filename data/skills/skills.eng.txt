@@ -1,3 +1,4 @@
+Adrenaline Rush
 Affinity Sliding
 Agitator
 Ammo Up
@@ -29,6 +30,7 @@ Critical Draw
 Critical Element
 Critical Eye
 Defense Boost
+Defiance
 Dereliction
 Diversion
 Divine Blessing
@@ -51,6 +53,7 @@ Good Luck
 Grinder (S)
 Guard
 Guard Up
+Guts
 Handicraft
 Hellfire Cloak
 Heroics
@@ -99,14 +102,16 @@ Resuscitate
 Sleep Attack
 Sleep Resistance
 Slugger
+Sneak Attack
 Spare Shot
 Special Ammo Boost
 Speed Eating
 Speed Sharpening
-Spiritbird's Call
+Spiribird's Call
 Spread Up
 Stamina Surge
 Stamina Thief
+Status Trigger
 Steadiness
 Stormsoul
 Stun Resistance

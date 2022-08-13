@@ -1,5 +1,6 @@
 (Boost),(Boost)
 (S),(S)
+Adrenaline,Adrenaline
 Affilatura,Affilatura
 Affinità,Affinità
 Allineamento,Allineamento
@@ -11,6 +12,7 @@ Artigiano,Artigiano
 Artiglieria,Artiglieria
 Atleta,Atleta
 Attacco,Attacco
+Attack,Attack
 Balistica,Balistica
 Battitore,Battitore
 Benediz.,Benediz.
@@ -37,6 +39,7 @@ Crit,Crit
 Critico,Critico
 Cuor,Cuor
 Danza,Danza
+Defiance,Defiance
 Dereliction,Dereliction
 Devastatore,Devastatore
 Diversione,Diversione
@@ -55,6 +58,7 @@ Geologo,Geologo
 Grinder,Grinder
 Guardia,Guardia
 Guarigione,Guarigione
+Guts,Guts
 Hellfire,Hellfire
 Hone,Hone
 Incantat.,Incantat.
@@ -89,12 +93,15 @@ Risentimento,Risentimento
 Rite,Rite
 Ruba,Ruba
 Runner,Runner
+Rush,Rush
 Salto,Salto
 Scalatore,Scalatore
 Schivata,Schivata
 Sfoderata,Sfoderata
+Sneak,Sneak
 Spaccamostri,Spaccamostri
-Spiritbird's,Spiritbird's
+Spiribird's,Spiribird's
+Status,Status
 Strato,Strato
 Super,Super
 Tempestanima,Tempestanima
@@ -102,6 +109,7 @@ Teostra,Teostra
 Tiro,Tiro
 Tocco,Tocco
 Trasforma,Trasforma
+Trigger,Trigger
 Tune-Up,Tune-Up
 Velocità,Velocità
 Ventaglio+,Ventaglio+

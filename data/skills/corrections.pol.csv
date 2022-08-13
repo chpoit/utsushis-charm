@@ -1,7 +1,9 @@
 (Boost),(Boost)
 (S),(S)
+Adrenaline,Adrenaline
 Artyleria,Artyleria
 Atak,Atak
+Attack,Attack
 Balistyka,Balistyka
 Bladescale,Bladescale
 Blood,Blood
@@ -22,6 +24,7 @@ Coalescence,Coalescence
 Crit,Crit
 Czas,Czas
 Darmowy,Darmowy
+Defiance,Defiance
 Dereliction,Dereliction
 Dobycie,Dobycie
 Dotyk,Dotyk
@@ -34,6 +37,7 @@ Garda,Garda
 Geolog,Geolog
 Grinder,Grinder
 Grzybomanta,Grzybomanta
+Guts,Guts
 Hellfire,Hellfire
 Hone,Hone
 Kamienna,Kamienna
@@ -68,13 +72,16 @@ Redirection,Redirection
 Rite,Rite
 Rozłamywacz,Rozłamywacz
 Runner,Runner
+Rush,Rush
 Rękodzieło,Rękodzieło
 Skok,Skok
 Skupienie,Skupienie
 Smocze,Smocze
 Smoczy,Smoczy
+Sneak,Sneak
 Spec,Spec
-Spiritbird's,Spiritbird's
+Spiribird's,Spiribird's
+Status,Status
 Stałość,Stałość
 Szczyt,Szczyt
 Szczęście,Szczęście
@@ -83,6 +90,7 @@ Szybka,Szybka
 Szybkie,Szybkie
 Szybkość,Szybkość
 Teostry,Teostry
+Trigger,Trigger
 Tune-Up,Tune-Up
 Tężyzna,Tężyzna
 Uraza,Uraza

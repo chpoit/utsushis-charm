@@ -1,3 +1,4 @@
+Adrenaline Rush
 Artyleria
 Atak lodem
 Atak ogniem
@@ -24,6 +25,7 @@ Charge Master
 Coalescence
 Czas na unik
 Darmowy posiłek
+Defiance
 Dereliction
 Dobycie krytyczne
 Dotyk mistrza
@@ -37,6 +39,7 @@ Garda ofensywna
 Geolog
 Grinder (S)
 Grzybomanta
+Guts
 Kamienna twarz
 Kontratak
 Kradzież wytrzymał.
@@ -84,8 +87,10 @@ Skok wiary
 Skupienie
 Smocze serce
 Smoczy atak
+Sneak Attack
 Spec od wycinania
-Spiritbird's Call
+Spiribird's Call
+Status Trigger
 Stałość
 Szczyt możliwości
 Szczęście

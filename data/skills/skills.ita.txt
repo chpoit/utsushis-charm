@@ -1,3 +1,4 @@
+Adrenaline Rush
 Affilatura veloce
 Affinità scivolata
 Allineamento tuono
@@ -46,6 +47,7 @@ Critico elementale
 Critico rapido
 Cuor di drago
 Danza bollicine
+Defiance
 Dereliction
 Devastatore
 Diversione
@@ -65,6 +67,7 @@ Grinder (S)
 Guardia offensiva
 Guardia perfetta
 Guarigione
+Guts
 Incantat. ins. filo
 Istigatore
 Lama affilata
@@ -113,8 +116,10 @@ Scalatore
 Schivata
 Schivata estesa
 Sfoderata punitrice
+Sneak Attack
 Spaccamostri
-Spiritbird's Call
+Spiribird's Call
+Status Trigger
 Strato protettivo
 Super resistenza
 Tempestanima

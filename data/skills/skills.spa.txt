@@ -1,6 +1,7 @@
 Abanico+
 Acabado protector
 Adrenalina
+Adrenaline Rush
 Afilado rápido
 Afinidad
 Afinidad deslizante
@@ -60,6 +61,7 @@ Contraataque
 Corazón de dragón
 Correparedes
 Danza burbujeante
+Defiance
 Dereliction
 Desenfundar
 Desenfunde veloz
@@ -85,6 +87,7 @@ Gasto resistencia
 Geólogo
 Grinder (S)
 Guardia mejorada
+Guts
 Heroicidad
 Impacto mejorado
 Instigador
@@ -115,7 +118,9 @@ Redirection
 Resentimiento
 Resistencia
 Rompepartes
-Spiritbird's Call
+Sneak Attack
+Spiribird's Call
+Status Trigger
 Tapones
 Tiempo de carga
 Tiro especial
