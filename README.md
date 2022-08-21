@@ -21,6 +21,9 @@ The rest of the patch notes can be found [here](PATCHNOTES.md)
 
 # Usage
 
+## Video guides
+- [En français par Minashya](https://www.youtube.com/watch?v=JCwDj0QQtE4)
+
 ## Requirements
 - A computer (Windows)
   - Linux and Mac might work too, you won’t be able to run the EXE and will have to run from source in a terminal window. Refer to [Running from source](#Running-from-source)
