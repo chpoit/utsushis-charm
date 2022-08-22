@@ -23,6 +23,7 @@ The rest of the patch notes can be found [here](PATCHNOTES.md)
 
 ## Video guides
 - [En français par Minashya](https://www.youtube.com/watch?v=JCwDj0QQtE4)
+- [Chinese (Mandarin?) by Ippo Bnn](https://www.youtube.com/watch?v=YO2c2ktg9ws)
 
 ## Requirements
 - A computer (Windows)
