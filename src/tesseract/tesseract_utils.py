@@ -39,6 +39,7 @@ def _get_pyinstaller_tesseract_path():
         bundled_paths += [
             os.path.join(base_path, "libtesseract.so.5"),
             os.path.join(base_path, "libtesseract.so.4"),
+            os.path.join(base_path, "libtesseract.dylib"),
         ]
     return bundled_paths
 
@@ -59,6 +60,7 @@ def _get_config_tesseract_path():
             locations += [
                 os.path.join(configLocation, "libtesseract.so.5"),
                 os.path.join(configLocation, "libtesseract.so.4"),
+                os.path.join(configLocation, "libtesseract.dylib"),
             ]
     return locations
 
