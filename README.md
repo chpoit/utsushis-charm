@@ -224,14 +224,52 @@ Common requirements:
 Normal instructions apply once the application starts.
 
 ## MacOS
-- Requirements:
-  - have python3 and tesseract installed via brew (or some other way)
-  - Virtual env on mac (optional):  `virtualenv -p python3 env`
-- Running:
-  - Switch to the virtualenv `source env/bin/activate` (run at the root of the repository)
-  - Set TESSDATA_PREFIX: `export TESSDATA_PREFIX=/usr/local/Cellar/tesseract/<version>/share/tessdata`
-  - Install the project dependencies: `pip3 install .`
-  - Run with `python3 main.py`
+
+### Disclaimer
+I've tested this with MacOS Monterey 12.6 running on an M1 apple silicon and the app works like a charm (no pun intended), it should seamlessly work on an intel mac but I didn't test it. Also I've decided not to rely on the mac built-in version of python3 synce it is outdated and has issues with the tk libraries, which I had to update to make the app work. I've opted for a clean installation of python with brew.
+
+### Requirements
+Make sure you have brew installed on your machine, to install brew follow the [official guide](https://brew.sh).
+You should be able to launch the terminal and use it to follow trough, I'm writing this on the assuption you can use the terminal.
+
+### Setup
+
+We need to install the latest version of python with an updated version of the tk libs since the one shipped on OSX are outdated, the steps in short are: install pyenv, install an updated tcl-tk lib, install python with such tcl-tk lib, finally install tesseract. 
+
+- Install **pyenv** with brew: `brew install pyenv`
+- Add the following to your `zshrc` (should be located into your user dir)
+```
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+fi
+```
+- Add `eval "$(pyenv init --path)"` to your `zshprofile`
+- Install `tcl-tk` with brew: `brew install tcl-tk`
+- Add `tcl-tk` to your path: `echo 'export PATH="/opt/homebrew/opt/tcl-tk/bin:$PATH"' >> ~/.zshrc`
+- Restart your terminal
+- Install the latest version of python trough pyenv (3.10.6 when writing this) using the latest `tcl-tk` installed with brew (just copy this monster into your terminal):
+
+```
+env \                    
+  PATH="$(brew --prefix tcl-tk)/bin:$PATH" \
+  LDFLAGS="-L$(brew --prefix tcl-tk)/lib" \
+  CPPFLAGS="-I$(brew --prefix tcl-tk)/include" \
+  PKG_CONFIG_PATH="$(brew --prefix tcl-tk)/lib/pkgconfig" \
+  CFLAGS="-I$(brew --prefix tcl-tk)/include" \
+  PYTHON_CONFIGURE_OPTS="--with-tcltk-includes='-I$(brew --prefix tcl-tk)/include' --with-tcltk-libs='-L$(brew --prefix tcl-tk)/lib -ltcl8.6 -ltk8.6'" \
+  pyenv install 3.10.6
+```
+- run `python --version` to make sure everything's fine so far, you should read `Python 3.10.6`
+- install **tesseract** with brew: `brew install tesseract`
+
+You should be good to go.
+
+## Running Utsushi's Charm 
+
+- Download and extract / Clone this repo somewhere
+- Copy your clips in `path_to_your_repo/utsushis-charm/inputs` (optionally you can also specify a different folder)
+- Run the program from the root: `python main.py`, if the program errors because it isn't able to locate tesseract, run it with `python main.py -t /opt/homebrew/bin/tesseract`
+
 
 ## Linux
 - Requirements
