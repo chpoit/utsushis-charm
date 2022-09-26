@@ -225,14 +225,14 @@ Normal instructions apply once the application starts.
 
 ## MacOS
 
-### Disclaimer
+#### Disclaimer
 I've tested this with MacOS Monterey 12.6 running on an M1 apple silicon and the app works like a charm (no pun intended), it should seamlessly work on an intel mac but I didn't test it. Also I've decided not to rely on the mac built-in version of python3 synce it is outdated and has issues with the tk libraries, which I had to update to make the app work. I've opted for a clean installation of python with brew.
 
 ### Requirements
 Make sure you have brew installed on your machine, to install brew follow the [official guide](https://brew.sh).
 You should be able to launch the terminal and use it to follow trough, I'm writing this on the assuption you can use the terminal.
 
-### Setup
+#### Setup
 
 We need to install the latest version of python with an updated version of the tk libs since the one shipped on OSX are outdated, the steps in short are: install pyenv, install an updated tcl-tk lib, install python with such tcl-tk lib, finally install tesseract. 
 
@@ -264,7 +264,7 @@ env \
 
 You should be good to go.
 
-## Running Utsushi's Charm 
+#### Running Utsushi's Charm 
 
 - Download and extract / Clone this repo somewhere
 - Copy your clips in `path_to_your_repo/utsushis-charm/inputs` (optionally you can also specify a different folder)
