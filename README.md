@@ -224,7 +224,19 @@ Common requirements:
 Normal instructions apply once the application starts.
 
 ## MacOS
+### "Old" x86 macs
+You might need to follow the M1 instructions
 
+- Requirements:
+  - have python3 and tesseract installed via brew (or some other way)
+  - Virtual env on mac (optional):  `virtualenv -p python3 env`
+- Running:
+  - Switch to the virtualenv `source env/bin/activate` (run at the root of the repository)
+  - Set TESSDATA_PREFIX: `export TESSDATA_PREFIX=/usr/local/Cellar/tesseract/<version>/share/tessdata`
+  - Install the project dependencies: `pip3 install .`
+  - Run with `python3 main.py`
+
+### New M1 macs
 #### Disclaimer
 I've tested this with MacOS Monterey 12.6 running on an M1 apple silicon and the app works like a charm (no pun intended), it should seamlessly work on an intel mac but I didn't test it. Also I've decided not to rely on the mac built-in version of python3 synce it is outdated and has issues with the tk libraries, which I had to update to make the app work. I've opted for a clean installation of python with brew.
 
