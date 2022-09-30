@@ -22,9 +22,9 @@ The rest of the patch notes can be found [here](PATCHNOTES.md)
 # Usage
 
 ## Video guides
-- [[Youtube]] [En français par Minashya](https://www.youtube.com/watch?v=JCwDj0QQtE4)
-- [[Youtube]] [Traditional Chinese by Ippo Bnn](https://www.youtube.com/watch?v=YO2c2ktg9ws) 
-- [[bilibili]] [Simplified Chinese by Yi Liu (Gamecat)](https://www.bilibili.com/video/BV1fg411k7Le/?p=3)
+- \[Youtube\] [En français par Minashya](https://www.youtube.com/watch?v=JCwDj0QQtE4)
+- \[Youtube\] [Traditional Chinese by Ippo Bnn](https://www.youtube.com/watch?v=YO2c2ktg9ws) 
+- \[bilibili\] [Simplified Chinese by Yi Liu (Gamecat)](https://www.bilibili.com/video/BV1fg411k7Le/?p=3)
 
 ## Compatible websites
 - [MHR Wiki](https://mhrise.wiki-db.com/sim/?hl=en)
