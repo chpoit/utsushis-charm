@@ -16,10 +16,11 @@ Bombardier
 Botanist
 Bow Charge Plus
 Bubbly Dance
+Buildup Boost
+Burst
 Capture Master
 Carving Master
 Carving Pro
-Chain Crit
 Chameleos Blessing
 Charge Master
 Coalescence
@@ -38,6 +39,7 @@ Dragon Attack
 Dragon Resistance
 Dragonheart
 Earplugs
+Embolden
 Evade Extender
 Evade Window
 Fire Attack
@@ -61,6 +63,7 @@ Horn Maestro
 Hunger Resistance
 Ice Attack
 Ice Resistance
+Intrepid Heart
 Item Prolonger
 Jump Master
 Kushala Blessing

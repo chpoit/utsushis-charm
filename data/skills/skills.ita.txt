@@ -35,10 +35,11 @@ Bonus cura
 Bonus difesa
 Bonus muniz. spec.
 Botanico
+Buildup Boost
+Burst
 Car. d'arco potenz.
 Caricorazze
 Cavaliere provetto
-Chain Crit
 Charge Master
 Coalescence
 Concentrazione
@@ -51,6 +52,7 @@ Defiance
 Dereliction
 Devastatore
 Diversione
+Embolden
 Eroismo
 Esperto di ricavo
 Estens. di potenza
@@ -69,6 +71,7 @@ Guardia perfetta
 Guarigione
 Guts
 Incantat. ins. filo
+Intrepid Heart
 Istigatore
 Lama affilata
 Maestro del corno

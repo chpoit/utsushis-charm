@@ -18,7 +18,8 @@ Blood Rite
 Bloodlust
 Bombardier
 Botaniker
-Chain Crit
+Buildup Boost
+Burst
 Chameleos-Segen
 Charge Master
 Coalescence
@@ -32,6 +33,7 @@ Drachenherz
 Drachenwiderstand
 Eisangriff
 Eiswiderstand
+Embolden
 Erholung hoch
 Erholungstempo
 Erschütterngswdrstnd
@@ -62,6 +64,7 @@ Hungerwiderstand
 Höchstleistung
 Höchstmacht
 Höllenfeuer-Umhang
+Intrepid Heart
 Konstitution
 Kraftverlängerung
 Kritischer Blick

@@ -15,12 +15,13 @@ Bloodlust
 Bombardier
 Boskie błogosławień.
 Botanik
+Buildup Boost
+Burst
 Burzodusza
 Bąblowy taniec
 Błogosł. Chameleosa
 Błogosław. Kushali
 Błogosław. Teostry
-Chain Crit
 Charge Master
 Coalescence
 Czas na unik
@@ -32,6 +33,7 @@ Dotyk mistrza
 Duży zasięg
 Dywersja
 Długie trwanie
+Embolden
 Foray
 Furious
 Garda
@@ -40,6 +42,7 @@ Geolog
 Grinder (S)
 Grzybomanta
 Guts
+Intrepid Heart
 Kamienna twarz
 Kontratak
 Kradzież wytrzymał.

@@ -22,6 +22,8 @@ Bloodlust
 Bombardier
 Botaniste
 Bouchon d'oreilles
+Buildup Boost
+Burst
 Bénédiction
 Bénédiction Cham.
 Bénédiction Kushala
@@ -29,7 +31,6 @@ Bénédiction Teostra
 Cape Feu de l'enfer
 Carnassier
 Cercle de vie
-Chain Crit
 Chance
 Charge Master
 Chimiste
@@ -47,6 +48,7 @@ Destruction massive
 Diversion
 Dompteur de Filoptères
 Dégainage éclair
+Embolden
 Esprit indomptable
 Expert en dépeçage
 Feu du ciel
@@ -63,6 +65,7 @@ Halo de guérison
 Héroïsme
 Ignifuge
 Insomnie
+Intrepid Heart
 Invulnérabilité
 Jamais vaincu
 La nuit porte conseil
