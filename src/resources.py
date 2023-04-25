@@ -336,6 +336,7 @@ _resources = {
     "lv1": _alter_resource_path(os.path.join("images", "levels", "lv1.png")),
     "lv2": _alter_resource_path(os.path.join("images", "levels", "lv2.png")),
     "lv3": _alter_resource_path(os.path.join("images", "levels", "lv3.png")),
+    "lv4": _alter_resource_path(os.path.join("images", "levels", "lv4.png")),
     "slot0": _alter_resource_path(os.path.join("images", "slots", "slot0.png")),
     "slot1": _alter_resource_path(os.path.join("images", "slots", "slot1.png")),
     "slot2": _alter_resource_path(os.path.join("images", "slots", "slot2.png")),
