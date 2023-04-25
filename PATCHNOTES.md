@@ -1,9 +1,14 @@
 # Patch Notes
+- 1.9 (April 25th 2023)
+  - Updated the app to contain english tu3-tu5 skills
+  - Added lvl4 skill support
+  - Updated bundled tesseract version from 5.0.1 to 5.3.0
+  - Updated opencv to v4.7
+
+# Older patch notes
 - 1.8 (July 27th 2022)
   - Added experimental non 16:9  support
     - Only tested with 21:9
-
-# Older patch notes
 - 1.7.1 (July 25th 2022)
   - The updater now displays information from the latest update
   - Fixed the download of new app language files not present in the executable, but present online.
