@@ -9,6 +9,7 @@ Atak uśpieniem
 Atak wodą
 Atak wybuchem
 Balistyka
+Berserk
 Bladescale Hone
 Blood Rite
 Bloodlust
@@ -33,8 +34,10 @@ Dotyk mistrza
 Duży zasięg
 Dywersja
 Długie trwanie
+Element Exploit
 Embolden
 Foray
+Frenzied Bloodlust
 Furious
 Garda
 Garda ofensywna
@@ -42,6 +45,7 @@ Geolog
 Grinder (S)
 Grzybomanta
 Guts
+Heaven-Sent
 Intrepid Heart
 Kamienna twarz
 Kontratak
@@ -80,6 +84,7 @@ Pałkarz
 Piekielna peleryna
 Podżegacz
 Powalacz
+Powder Mantle
 Przedłużenie mocy
 Przypływ wytrzym.
 Quick Breath
@@ -95,6 +100,7 @@ Spec od wycinania
 Spiribird's Call
 Status Trigger
 Stałość
+Strife
 Szczyt możliwości
 Szczęście
 Szybk. przeładowania
@@ -109,6 +115,7 @@ Uraza
 Uśpiona moc
 Wall Runner (Boost)
 Wiatrochron
+Wind Mantle
 Wirebug Whisperer
 Wirtuoz rogu
 Więcej amunicji

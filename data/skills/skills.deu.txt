@@ -7,6 +7,7 @@ Ausdauerdieb
 Ausdauererholung
 Ausweichdistanz
 Ballistik
+Berserk
 Bestrafender Zug
 Betäubungswiderstand
 Bladescale Hone
@@ -33,6 +34,7 @@ Drachenherz
 Drachenwiderstand
 Eisangriff
 Eiswiderstand
+Element Exploit
 Embolden
 Erholung hoch
 Erholungstempo
@@ -46,6 +48,7 @@ Feuerwiderstand
 Fokus
 Foray
 Freie Mahlzeit
+Frenzied Bloodlust
 Furious
 Gegenschlag
 Geistiges Auge
@@ -58,6 +61,7 @@ Groll
 Guts
 Göttlicher Segen
 Handwerk
+Heaven-Sent
 Heldentat
 Horn-Maestro
 Hungerwiderstand
@@ -91,6 +95,7 @@ Ohrstöpsel
 Patronennachlader
 Perforation hoch
 Pestwiderstand
+Powder Mantle
 Provozierer
 Prügler
 Quick Breath
@@ -115,6 +120,7 @@ Spezialmunitionboost
 Spiribird's Call
 Sprungmeister
 Status Trigger
+Strife
 Sturmseele
 Teilezerstörer
 Teostra-Segen
@@ -127,6 +133,7 @@ Wandläufer
 Wasserangriff
 Wasserwiderstand
 Wiederbelebung
+Wind Mantle
 Wind-Abgleich
 Windsicher
 Wirebug Whisperer

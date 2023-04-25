@@ -24,6 +24,7 @@ Battitore
 Benediz. Chameleos
 Benedizione Kushala
 Benedizione Teostra
+Berserk
 Bladescale Hone
 Blocco
 Blood Rite
@@ -52,6 +53,7 @@ Defiance
 Dereliction
 Devastatore
 Diversione
+Element Exploit
 Embolden
 Eroismo
 Esperto di ricavo
@@ -61,6 +63,7 @@ Foray
 Forma perfetta
 Fortuna
 Forza latente
+Frenzied Bloodlust
 Fungomante
 Fuoco rapido+
 Furious
@@ -70,6 +73,7 @@ Guardia offensiva
 Guardia perfetta
 Guarigione
 Guts
+Heaven-Sent
 Incantat. ins. filo
 Intrepid Heart
 Istigatore
@@ -89,6 +93,7 @@ Paravento
 Pasto gratuito
 Pasto veloce
 Perforante
+Powder Mantle
 Precisione
 Preveggenza
 Protezione udito
@@ -124,6 +129,7 @@ Spaccamostri
 Spiribird's Call
 Status Trigger
 Strato protettivo
+Strife
 Super resistenza
 Tempestanima
 Tiro di riserva
@@ -133,4 +139,5 @@ Tune-Up
 Velocità ricarica
 Ventaglio+
 Wall Runner (Boost)
+Wind Mantle
 Wirebug Whisperer

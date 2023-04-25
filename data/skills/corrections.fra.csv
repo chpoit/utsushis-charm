@@ -18,6 +18,7 @@ BOUM,BOUM
 Balistique,Balistique
 Bastion,Bastion
 Batto-jutsu,Batto-jutsu
+Berserk,Berserk
 Berserker,Berserker
 Bladescale,Bladescale
 Blizzard,Blizzard
@@ -53,13 +54,16 @@ Destruction,Destruction
 Diversion,Diversion
 Dompteur,Dompteur
 Dégainage,Dégainage
+Element,Element
 Embolden,Embolden
 Esprit,Esprit
 Expert,Expert
+Exploit,Exploit
 Feu,Feu
 Filoptères,Filoptères
 Foray,Foray
 Force,Force
+Frenzied,Frenzied
 Furious,Furious
 Garde,Garde
 Grenaille,Grenaille
@@ -69,6 +73,7 @@ Guts,Guts
 Géologiste,Géologiste
 Halo,Halo
 Heart,Heart
+Heaven-Sent,Heaven-Sent
 Hellfire,Hellfire
 Hone,Hone
 Héroïsme,Héroïsme
@@ -84,6 +89,7 @@ Maelstrom,Maelstrom
 Maestro,Maestro
 Mail,Mail
 Main,Main
+Mantle,Mantle
 Marathonien,Marathonien
 Master,Master
 Matraquage,Matraquage
@@ -105,6 +111,7 @@ Perforant,Perforant
 Performance,Performance
 Pique-assiette,Pique-assiette
 Pourfendeur,Pourfendeur
+Powder,Powder
 Puissance,Puissance
 Pyromane,Pyromane
 Quick,Quick
@@ -127,6 +134,7 @@ Sniper,Sniper
 Spartiate,Spartiate
 Spiribird's,Spiribird's
 Status,Status
+Strife,Strife
 Teostra,Teostra
 Tir,Tir
 Totem,Totem
@@ -142,6 +150,7 @@ Vitesse,Vitesse
 Vol,Vol
 Wall,Wall
 Whisperer,Whisperer
+Wind,Wind
 Wirebug,Wirebug
 absolue,absolue
 archer,archer

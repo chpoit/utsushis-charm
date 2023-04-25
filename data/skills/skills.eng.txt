@@ -5,6 +5,7 @@ Ammo Up
 Artillery
 Attack Boost
 Ballistics
+Berserk
 Bladescale Hone
 Blast Attack
 Blast Resistance
@@ -39,6 +40,7 @@ Dragon Attack
 Dragon Resistance
 Dragonheart
 Earplugs
+Element Exploit
 Embolden
 Evade Extender
 Evade Window
@@ -49,6 +51,7 @@ Focus
 Foray
 Fortify
 Free Meal
+Frenzied Bloodlust
 Furious
 Geologist
 Good Luck
@@ -57,6 +60,7 @@ Guard
 Guard Up
 Guts
 Handicraft
+Heaven-Sent
 Hellfire Cloak
 Heroics
 Horn Maestro
@@ -87,6 +91,7 @@ Peak Performance
 Pierce Up
 Poison Attack
 Poison Resistance
+Powder Mantle
 Power Prolonger
 Protective Polish
 Punishing Draw
@@ -117,6 +122,7 @@ Stamina Thief
 Status Trigger
 Steadiness
 Stormsoul
+Strife
 Stun Resistance
 Teostra Blessing
 Thunder Alignment
@@ -131,5 +137,6 @@ Water Resistance
 Weakness Exploit
 Wide-Range
 Wind Alignment
+Wind Mantle
 Windproof
 Wirebug Whisperer

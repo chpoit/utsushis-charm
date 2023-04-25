@@ -5,6 +5,7 @@ Artyleria,Artyleria
 Atak,Atak
 Attack,Attack
 Balistyka,Balistyka
+Berserk,Berserk
 Bladescale,Bladescale
 Blood,Blood
 Bloodlust,Bloodlust
@@ -32,8 +33,11 @@ Dotyk,Dotyk
 Duży,Duży
 Dywersja,Dywersja
 Długie,Długie
+Element,Element
 Embolden,Embolden
+Exploit,Exploit
 Foray,Foray
+Frenzied,Frenzied
 Furious,Furious
 Garda,Garda
 Geolog,Geolog
@@ -41,6 +45,7 @@ Grinder,Grinder
 Grzybomanta,Grzybomanta
 Guts,Guts
 Heart,Heart
+Heaven-Sent,Heaven-Sent
 Hellfire,Hellfire
 Hone,Hone
 Intrepid,Intrepid
@@ -53,6 +58,7 @@ Lakier,Lakier
 Lepsze,Lepsze
 Mail,Mail
 Maksymalna,Maksymalna
+Mantle,Mantle
 Maratończyk,Maratończyk
 Master,Master
 Mistrz,Mistrz
@@ -69,6 +75,7 @@ Pałkarz,Pałkarz
 Piekielna,Piekielna
 Podżegacz,Podżegacz
 Powalacz,Powalacz
+Powder,Powder
 Przedłużenie,Przedłużenie
 Przypływ,Przypływ
 Quick,Quick
@@ -87,6 +94,7 @@ Spec,Spec
 Spiribird's,Spiribird's
 Status,Status
 Stałość,Stałość
+Strife,Strife
 Szczyt,Szczyt
 Szczęście,Szczęście
 Szybk.,Szybk.
@@ -103,6 +111,7 @@ Uśpiona,Uśpiona
 Wall,Wall
 Whisperer,Whisperer
 Wiatrochron,Wiatrochron
+Wind,Wind
 Wirebug,Wirebug
 Wirtuoz,Wirtuoz
 Więcej,Więcej

@@ -1,4 +1,5 @@
 Adrenaline Rush
+Berserk
 Bladescale Hone
 Blood Rite
 Bloodlust
@@ -8,20 +9,26 @@ Charge Master
 Coalescence
 Defiance
 Dereliction
+Element Exploit
 Embolden
 Foray
+Frenzied Bloodlust
 Furious
 Grinder (S)
 Guts
+Heaven-Sent
 Intrepid Heart
 Mail of Hellfire
+Powder Mantle
 Quick Breath
 Redirection
 Sneak Attack
 Spiribird's Call
 Status Trigger
+Strife
 Tune-Up
 Wall Runner (Boost)
+Wind Mantle
 Wirebug Whisperer
 ひるみ軽減
 アイテム使用強化

@@ -42,6 +42,7 @@ Bendición de Chameleos
 Bendición de Kushala
 Bendición de Teostra
 Bendición divina
+Berserk
 Bladescale Hone
 Blood Rite
 Bloodlust
@@ -73,6 +74,7 @@ Distracción
 Domacordópteros
 Duración de objetos
 Efecto área
+Element Exploit
 Elemento crítico
 Embolden
 Escudo
@@ -84,12 +86,14 @@ Experto en setas
 Filo de cuchilla
 Foray
 Fortalecer
+Frenzied Bloodlust
 Furious
 Gasto resistencia
 Geólogo
 Grinder (S)
 Guardia mejorada
 Guts
+Heaven-Sent
 Heroicidad
 Impacto mejorado
 Instigador
@@ -111,6 +115,7 @@ Perforante+
 Plena forma
 Poder latente
 Potenciador crítico
+Powder Mantle
 Punto débil
 Quick Breath
 Rayo unificado
@@ -124,6 +129,7 @@ Rompepartes
 Sneak Attack
 Spiribird's Call
 Status Trigger
+Strife
 Tapones
 Tiempo de carga
 Tiro especial
@@ -133,4 +139,5 @@ Tune-Up
 Viento unificado
 Viento y trueno
 Wall Runner (Boost)
+Wind Mantle
 Wirebug Whisperer
