@@ -101,13 +101,13 @@ def get_slots(img):
     slot3 = cv2.imread(get_resource_path("slot3"))
     slot4 = cv2.imread(get_resource_path("slot4"))
 
-    spot1 = img[y : y + h, x1 : x1 + w]
-    spot2 = img[y : y + h, x2 : x2 + w]
-    spot3 = img[y : y + h, x3 : x3 + w]
+    jewel_slot_1 = img[y : y + h, x1 : x1 + w]
+    jewel_slot_2 = img[y : y + h, x2 : x2 + w]
+    jewel_slot_3 = img[y : y + h, x3 : x3 + w]
 
     slots = []
     j = 1
-    for spot in [spot1, spot2, spot3]:
+    for spot in [jewel_slot_1, jewel_slot_2, jewel_slot_3]:
         score0 = structural_similarity(spot, slot0, channel_axis=-1)
         score1 = structural_similarity(spot, slot1, channel_axis=-1)
         score2 = structural_similarity(spot, slot2, channel_axis=-1)
@@ -163,15 +163,16 @@ def _get_levels(img, inverted=False):
     lv1 = cv2.imread(get_resource_path("lv1"), 0)
     lv2 = cv2.imread(get_resource_path("lv2"), 0)
     lv3 = cv2.imread(get_resource_path("lv3"), 0)
+    lv4 = cv2.imread(get_resource_path("lv4"), 0)
 
-    level1 = img[y1 : y1 + h, x : x + w]
-    level2 = img[y2 : y2 + h, x : x + w]
+    skill_1_level = img[y1 : y1 + h, x : x + w]
+    skill_2_level = img[y2 : y2 + h, x : x + w]
     if inverted:
-        level1 = cv2.bitwise_not(level1)
-        level2 = cv2.bitwise_not(level2)
+        skill_1_level = cv2.bitwise_not(skill_1_level)
+        skill_2_level = cv2.bitwise_not(skill_2_level)
 
     levels = []
-    for level in [level1, level2]:
+    for level in [skill_1_level, skill_2_level]:
         try:
             gs = cv2.cvtColor(level, cv2.COLOR_BGR2GRAY)
         except:
@@ -179,8 +180,9 @@ def _get_levels(img, inverted=False):
         score1 = structural_similarity(gs, lv1)
         score2 = structural_similarity(gs, lv2)
         score3 = structural_similarity(gs, lv3)
+        score4 = structural_similarity(gs, lv4)
 
-        scores = [score1, score2, score3]
+        scores = [score1, score2, score3, score4]
         best = max(scores)
         if best < 0.5:
             levels.append(0)

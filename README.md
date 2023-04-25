@@ -13,9 +13,12 @@ This repo contains code that will allow you to extract all of your charms in Mon
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but [this armor set searcher](https://mhrise.wiki-db.com/sim/?hl=en) exists. I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
 # Patch Notes (Updated July 27th 2022)
-- 1.8 (July 27th 2022)
-  - Added experimental non 16:9  support
-    - Only tested with 21:9
+- 1.9 (April 25th 2023)
+  - Updated the app to contain english tu3-tu5 skills
+  - Added lvl4 skill support
+  - Updated bundled tesseract version from 5.0.1 to 5.3.0
+  - Updated opencv to v4.7
+
  
 The rest of the patch notes can be found [here](PATCHNOTES.md)
 
@@ -298,8 +301,8 @@ You should be good to go.
 ## Windows
 - Requirements
   - **Google Tesseract** installed and in path
-    - A copy of the version 5.0.1 is bundled with the release. Just run it, no extra packages needed
-      - You can download the installer here version here: [Installer here](https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v5.0.1.20220118.exe)
+    - A copy of the version 5.3.0 is bundled with the release. Just run it, no extra packages needed
+      - You can download the installer here version here: [Installer here](langueService.)
       - [A list of versions is made available by UB Mannheim here](https://digi.bib.uni-mannheim.de/tesseract/) make sure you use the "w64" version, unless you're a weirdo who is still on a 32bit system.
     - Make sure it's in path
   - Python3 installed and in path  

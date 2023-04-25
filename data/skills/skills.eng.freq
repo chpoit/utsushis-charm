@@ -8,12 +8,13 @@ Ammo 2
 Artillery 1
 Attack 11
 Ballistics 1
+Berserk 1
 Bladescale 1
 Blast 2
 Blessing 4
 Blight 1
 Blood 1
-Bloodlust 1
+Bloodlust 2
 Bludgeoner 1
 Bombardier 1
 Boost 5
@@ -45,10 +46,10 @@ Dragonheart 1
 Draw 2
 Earplugs 1
 Eating 1
-Element 1
+Element 2
 Embolden 1
 Evade 2
-Exploit 1
+Exploit 2
 Extender 1
 Eye 2
 Faith 1
@@ -58,6 +59,7 @@ Focus 1
 Foray 1
 Fortify 1
 Free 2
+Frenzied 1
 Furious 1
 Geologist 1
 Good 1
@@ -66,6 +68,7 @@ Guard 3
 Guts 1
 Handicraft 1
 Heart 1
+Heaven-Sent 1
 Hellfire 2
 Heroics 1
 Hone 1
@@ -82,6 +85,7 @@ Load 1
 Luck 1
 Maestro 1
 Mail 1
+Mantle 2
 Marathon 1
 Master 5
 Master's 1
@@ -103,6 +107,7 @@ Pierce 1
 Plus 1
 Poison 2
 Polish 1
+Powder 1
 Power 2
 Pro 1
 Prolonger 2
@@ -139,6 +144,7 @@ Stamina 2
 Status 1
 Steadiness 1
 Stormsoul 1
+Strife 1
 Stun 1
 Surge 1
 Teostra 1
@@ -154,7 +160,7 @@ Water 2
 Weakness 1
 Whisperer 2
 Wide-Range 1
-Wind 1
+Wind 2
 Window 1
 Windproof 1
 Wirebug 2

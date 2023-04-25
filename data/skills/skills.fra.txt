@@ -14,6 +14,7 @@ BOUM !
 Balistique
 Bastion
 Batto-jutsu
+Berserk
 Berserker
 Bladescale Hone
 Blizzard
@@ -48,12 +49,14 @@ Destruction massive
 Diversion
 Dompteur de Filoptères
 Dégainage éclair
+Element Exploit
 Embolden
 Esprit indomptable
 Expert en dépeçage
 Feu du ciel
 Foray
 Force latente
+Frenzied Bloodlust
 Furious
 Garde offensive
 Grenaille +
@@ -62,6 +65,7 @@ Grinder (S)
 Guts
 Géologiste
 Halo de guérison
+Heaven-Sent
 Héroïsme
 Ignifuge
 Insomnie
@@ -97,6 +101,7 @@ Perforant +
 Performance optimale
 Pique-assiette
 Pourfendeur de dragon
+Powder Mantle
 Puissance absolue
 Pyromane
 Quick Breath
@@ -116,6 +121,7 @@ Sniper
 Spartiate
 Spiribird's Call
 Status Trigger
+Strife
 Tir parcimonieux
 Tir super rapide
 Totem élémentaire
@@ -129,6 +135,7 @@ Vengeance
 Vitesse de rechargement
 Vol d'endurance
 Wall Runner (Boost)
+Wind Mantle
 Wirebug Whisperer
 Âme de la tempête
 Ébullition
