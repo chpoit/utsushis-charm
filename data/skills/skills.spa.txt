@@ -72,6 +72,7 @@ Disparo múltiple
 Distancia evasiva
 Distracción
 Domacordópteros
+Dragon Conversion
 Duración de objetos
 Efecto área
 Element Exploit
@@ -87,6 +88,7 @@ Filo de cuchilla
 Foray
 Fortalecer
 Frenzied Bloodlust
+Frostcraft
 Furious
 Gasto resistencia
 Geólogo

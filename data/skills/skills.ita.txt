@@ -53,6 +53,7 @@ Defiance
 Dereliction
 Devastatore
 Diversione
+Dragon Conversion
 Element Exploit
 Embolden
 Eroismo
@@ -64,6 +65,7 @@ Forma perfetta
 Fortuna
 Forza latente
 Frenzied Bloodlust
+Frostcraft
 Fungomante
 Fuoco rapido+
 Furious

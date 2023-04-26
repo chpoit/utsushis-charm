@@ -31,6 +31,7 @@ Defiance
 Dereliction
 Dobycie krytyczne
 Dotyk mistrza
+Dragon Conversion
 Duży zasięg
 Dywersja
 Długie trwanie
@@ -38,6 +39,7 @@ Element Exploit
 Embolden
 Foray
 Frenzied Bloodlust
+Frostcraft
 Furious
 Garda
 Garda ofensywna

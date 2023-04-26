@@ -32,6 +32,7 @@ Donnerwiderstand
 Drachenangriff
 Drachenherz
 Drachenwiderstand
+Dragon Conversion
 Eisangriff
 Eiswiderstand
 Element Exploit
@@ -49,6 +50,7 @@ Fokus
 Foray
 Freie Mahlzeit
 Frenzied Bloodlust
+Frostcraft
 Furious
 Gegenschlag
 Geistiges Auge

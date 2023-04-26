@@ -37,6 +37,7 @@ Dereliction
 Diversion
 Divine Blessing
 Dragon Attack
+Dragon Conversion
 Dragon Resistance
 Dragonheart
 Earplugs
@@ -52,6 +53,7 @@ Foray
 Fortify
 Free Meal
 Frenzied Bloodlust
+Frostcraft
 Furious
 Geologist
 Good Luck

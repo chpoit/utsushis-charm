@@ -48,6 +48,7 @@ Destructeur
 Destruction massive
 Diversion
 Dompteur de Filoptères
+Dragon Conversion
 Dégainage éclair
 Element Exploit
 Embolden
@@ -57,6 +58,7 @@ Feu du ciel
 Foray
 Force latente
 Frenzied Bloodlust
+Frostcraft
 Furious
 Garde offensive
 Grenaille +
