@@ -1,4 +1,6 @@
 # Patch Notes
+- 1.9.1 (April 25th 2023)
+  - Added support for level 5-7 skills
 - 1.9 (April 25th 2023)
   - Updated the app to contain english tu3-tu5 skills
   - Added lvl4 skill support

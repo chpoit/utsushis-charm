@@ -12,7 +12,9 @@ This repo contains code that will allow you to extract all of your charms in Mon
 
 It's called Utsushi's charm because I thought it would be funny to make a complementary "Utsushi's Armor Search System", but [this armor set searcher](https://mhrise.wiki-db.com/sim/?hl=en) exists. I might still try to port Athena's ASS for MHW to MHR, but for now this works for me.
 
-# Patch Notes (Updated July 27th 2022)
+# Patch Notes (Updated April 25th 2023)
+- 1.9.1 (April 25th 2023)
+  - Added support for level 5-7 skills
 - 1.9 (April 25th 2023)
   - Updated the app to contain english tu3-tu5 skills
   - Added lvl4 skill support
