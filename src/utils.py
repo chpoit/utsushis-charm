@@ -160,10 +160,15 @@ def _get_levels(img, inverted=False):
     y1 = 117
     y2 = 167
 
-    lv1 = cv2.imread(get_resource_path("lv1"), 0)
-    lv2 = cv2.imread(get_resource_path("lv2"), 0)
-    lv3 = cv2.imread(get_resource_path("lv3"), 0)
-    lv4 = cv2.imread(get_resource_path("lv4"), 0)
+    level_images = [
+        cv2.imread(get_resource_path("lv1"), 0),
+        cv2.imread(get_resource_path("lv2"), 0),
+        cv2.imread(get_resource_path("lv3"), 0),
+        cv2.imread(get_resource_path("lv4"), 0),
+        cv2.imread(get_resource_path("lv5"), 0),
+        cv2.imread(get_resource_path("lv6"), 0),
+        cv2.imread(get_resource_path("lv7"), 0),
+    ]
 
     skill_1_level = img[y1 : y1 + h, x : x + w]
     skill_2_level = img[y2 : y2 + h, x : x + w]
@@ -177,12 +182,13 @@ def _get_levels(img, inverted=False):
             gs = cv2.cvtColor(level, cv2.COLOR_BGR2GRAY)
         except:
             gs = level
-        score1 = structural_similarity(gs, lv1)
-        score2 = structural_similarity(gs, lv2)
-        score3 = structural_similarity(gs, lv3)
-        score4 = structural_similarity(gs, lv4)
 
-        scores = [score1, score2, score3, score4]
+        scores = list(
+            map(
+                lambda level_image: structural_similarity(gs, level_image), level_images
+            )
+        )
+
         best = max(scores)
         if best < 0.5:
             levels.append(0)
